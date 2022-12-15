@@ -90,8 +90,8 @@ class Member : public User {
         Request acceptReQuest();
         Request declineRequest();
         RatingTenant rateTentant();
-        void deleteHouseList();
-        void addHouseList();
+        HouseList deleteHouseList();
+        HouseList addHouseList();
         void viewAllHouse();
         Request requestHouse();
         Request cancelRequest();
