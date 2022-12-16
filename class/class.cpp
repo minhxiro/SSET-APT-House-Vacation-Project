@@ -7,3 +7,20 @@ using std:: cin;
 using std:: cout;
 using std:: vector;
 
+// Member
+
+// House
+
+// Admin
+
+//Request
+
+// HouseList
+
+//Rating
+
+// Rating Tenant
+
+// System
+
+// User
