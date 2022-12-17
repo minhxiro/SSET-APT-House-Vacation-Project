@@ -1,0 +1,3 @@
+/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles/SSET_APT_House_Vacation_Project.dir
+/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
