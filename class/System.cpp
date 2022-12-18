@@ -163,7 +163,6 @@ int main(){
     for(string s: data){
         cout << s << "\n";
     }
-
 }
 
 
