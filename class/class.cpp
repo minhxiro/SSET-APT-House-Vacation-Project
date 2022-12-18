@@ -12,7 +12,10 @@ using std:: vector;
 // House
 
 // Admin
+ Admin::Admin() {}
+ void Admin::showAllMember(Member &allMember){
 
+ }
 //Request
 
 // HouseList
