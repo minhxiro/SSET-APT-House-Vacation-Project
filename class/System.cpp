@@ -131,3 +131,39 @@ vector<vector<string> > extractByRow(string dataFile) {
     return dataTable;
 }
 
+vector<string> extractByColumnIndex(int index, string dataFile){
+    std::fstream file;
+    string dataLine;
+    std::vector<string> dataColumnArray;
+    std::vector<string> dataRowsArray;
+    string cell;
+    file.open(dataFile, std::ios::in);
+    if (file.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        while (!file.eof()) {
+            std::stringstream ss;
+            dataRowsArray = {};
+            std::getline(file, dataLine);
+            ss << dataLine;
+            while (!ss.eof()) {
+                std::getline(ss, cell, ';');
+                dataRowsArray.push_back(cell);
+            }
+            dataColumnArray.push_back(dataRowsArray[index]);
+        }
+        file.close();
+    }
+    return dataColumnArray;
+}
+
+int main(){
+    std::vector<string> data;
+    data = extractByColumnIndex(0,"./data/members.dat");
+    for(string s: data){
+        cout << s << "\n";
+    }
+
+}
+
+
