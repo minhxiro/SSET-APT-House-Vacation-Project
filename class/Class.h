@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "System.h"
+#include "../SystemClass/System.h"
 using std:: string;
 using std:: cin;
 using std:: cout;
