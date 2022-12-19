@@ -10,7 +10,8 @@ using std::string;
 using std::cout;
 using std::regex;
 
-string trimString(string str) {
+
+string System::trimString(string str) {
     string finalStr = "";
     for (char ch: str) {
         if (ch == ' ') {
@@ -23,7 +24,7 @@ string trimString(string str) {
 }
 
 
-bool inputUsernameAuthentication(string username) {
+bool System::inputUsernameAuthentication(string username) {
     //false: Username should only contain 8 to 15 character and no white spaces!!!
     //true: continue
     regex reg("\\s");
@@ -38,7 +39,7 @@ bool inputUsernameAuthentication(string username) {
     }
 }
 
-bool inputNameAuthentication(string &name) {
+bool System::inputNameAuthentication(string &name) {
     //false: Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces
     //true: continue
     regex reg("^[a-zA-Z]*{8,20}$");
@@ -50,7 +51,7 @@ bool inputNameAuthentication(string &name) {
     }
 }
 
-bool inputPasswordAuthenticate(string &password) {
+bool System::inputPasswordAuthenticate(string &password) {
     //false: Minimum 8 and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character:
     //true: continue
     regex reg("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,10}$");
@@ -63,7 +64,7 @@ bool inputPasswordAuthenticate(string &password) {
 
 }
 
-bool inputPhoneAuthenticate(string &phoneNum) {
+bool System::inputPhoneAuthenticate(string &phoneNum) {
     //false: phone number must have 11 numbers and start with 0
     //true: continue
     regex reg("^(?=0)[0-9]{10}$");
@@ -76,7 +77,7 @@ bool inputPhoneAuthenticate(string &phoneNum) {
 }
 
 
-bool inputNumAuthenticate(string &num) {
+bool System::inputNumAuthenticate(string &num) {
     //false: The input must be a number
     //true: continue
     regex reg("^[0-9]$");
@@ -89,7 +90,7 @@ bool inputNumAuthenticate(string &num) {
 }
 
 
-bool inputRangeAuthenticate(string &range) {
+bool System::inputRangeAuthenticate(string &range) {
     //false: Range must be in this format number - number
     //true: continue
     regex reg("^[0-9]+[-][0-9]+$");
@@ -102,11 +103,15 @@ bool inputRangeAuthenticate(string &range) {
 }
 
 
-bool creditAuth(int credits);
+bool System::creditAuth(int credits){
 
-bool scoreAuth(int scores);
+}
 
-void addData(string data, string dataFile) {
+bool System::scoreAuth(int scores){
+
+}
+
+void System::addData(string data, string dataFile) {
     std::fstream file;
     file.open(dataFile, std::ios::app);
     if (file.fail()) {
@@ -118,7 +123,7 @@ void addData(string data, string dataFile) {
     }
 }
 
-vector<vector<string> > extractByRow(string dataFile) {
+vector<vector<string> > System::extractByRow(string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<vector<string> > dataTable;
@@ -144,7 +149,7 @@ vector<vector<string> > extractByRow(string dataFile) {
     return dataTable;
 }
 
-vector<string> extractByColumnIndex(int index, string dataFile) {
+vector<string> System::extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<string> dataColumnArray;
@@ -170,7 +175,7 @@ vector<string> extractByColumnIndex(int index, string dataFile) {
     return dataColumnArray;
 }
 
-void updateRowAtIndex(int index, string data, string dataFile) {
+void System::updateRowAtIndex(int index, string data, string dataFile, string newDataFile) {
     std::ifstream readFile;
     std::ofstream writeFile;
     int count = 0;
@@ -179,7 +184,7 @@ void updateRowAtIndex(int index, string data, string dataFile) {
     if (readFile.fail()) {
         cout << "Cannot reach the database \n";
     } else {
-        writeFile.open("./data/memberTemp.dat", std::ios::app);
+        writeFile.open(newDataFile, std::ios::app);
         while (!readFile.eof()) {
             getline(readFile, tempData);
             count++;
@@ -196,11 +201,41 @@ void updateRowAtIndex(int index, string data, string dataFile) {
         readFile.close();
         writeFile.close();
     }
-    remove("./data/members.dat");
-    rename("./data/memberTemp.dat", "./data/members.dat");
+    remove(dataFile.c_str());
+    rename(newDataFile.c_str(), dataFile.c_str());
 }
 
-string getCurrentDate() {
+void System::deleteRowData(int index, string dataFile, string newDataFile){
+    std::ifstream readFile;
+    std::ofstream writeFile;
+    int count = 0;
+    string tempData;
+    readFile.open(dataFile);
+    if (readFile.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        writeFile.open(newDataFile, std::ios::app);
+        while (!readFile.eof()) {
+            getline(readFile, tempData);
+            count++;
+            if (count == index) {
+                continue;
+            } else {
+                if ((count - 1) == 1) {
+                    writeFile << tempData;
+                } else {
+                    writeFile << "\n" + tempData;
+                }
+            }
+        }
+        readFile.close();
+        writeFile.close();
+    }
+    remove(dataFile.c_str());
+    rename(newDataFile.c_str(), dataFile.c_str());
+}
+
+string System::getCurrentDate() {
     string dateString;
     time_t t = time(NULL);
     tm *timePtr = localtime(&t);
@@ -209,7 +244,7 @@ string getCurrentDate() {
     return dateString;
 }
 
-int idAutoIncrement(string dataFile) {
+int System::idAutoIncrement(string dataFile) {
     std::fstream file;
     string dummy;
     int count = 0;
@@ -226,13 +261,13 @@ int idAutoIncrement(string dataFile) {
     return count;
 }
 
-
 int main() {
     std::vector<string> data;
-    addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
-    updateRowAtIndex(2, "1;trung2", "./data/members.dat");
-    cout << getCurrentDate() << "\n";
-    cout << idAutoIncrement("./data/members.dat") << "\n";
+    System system1;
+    system1.addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
+    system1.deleteRowData(1, "./data/members.dat", "./data/dataTemp.dat");
+    cout << system1.getCurrentDate() << "\n";
+    cout << system1.idAutoIncrement("./data/members.dat") << "\n";
 }
 
 

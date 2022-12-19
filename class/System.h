@@ -9,30 +9,58 @@
 
 #include <iostream>
 #include <vector>
+
 using std::string;
 using std::vector;
 
-class System{
-    friend string trimString(string str);
-    friend bool inputUsernameAuthentication(string username);
-    friend bool inputNameAuthentication(string &name);
-    friend bool inputPasswordAuthenticate(string &password);
-    friend bool inputPhoneAuthenticate(string &phoneNum);
-    friend bool inputNumAuthenticate(string &num);
-    friend bool inputRangeAuthenticate(string &range);
-    friend bool creditAuth(int credits);
-    friend bool scoreAuth(int scores);
-    friend void deleteRowData(int index, string dataFile);
-    friend void updateCellAtId(int id, string data, string dataFile);
-    friend void updateRowAtIndex(int index, string data, string dataFile);
-    friend void addData(string data, string dataFile);
-    friend vector<vector<string> > extractByRow(string dataFile);
-    friend vector<string> extractByColumnIndex(int index, string dataFile);
-    friend string getCurrentDate();
-    friend int idAutoIncrement(string dataFile);
-    friend void searchByCredits();
-    friend void searchById();
-    friend void searchByDate();
+class System {
+public:
+    string trimString(string str);
+
+    bool inputUsernameAuthentication(string username);
+
+    bool inputNameAuthentication(string &name);
+
+    bool inputPasswordAuthenticate(string &password);
+
+    bool inputPhoneAuthenticate(string &phoneNum);
+
+    bool inputNumAuthenticate(string &num);
+
+    bool inputRangeAuthenticate(string &range);
+
+    bool creditAuth(int credits);
+
+    bool scoreAuth(int scores);
+
+    void deleteRowData(int index, string dataFile, string newDataFile);
+
+    void updateCellAtId(int id, string data, string dataFile);
+
+    void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
+
+    void addData(string data, string dataFile);
+
+    vector<vector<string> > extractByRow(string dataFile);
+
+    vector<string> extractByColumnIndex(int index, string dataFile);
+
+    string getCurrentDate();
+
+    int idAutoIncrement(string dataFile);
+
+
+    void sortByCreditsPerDay();
+
+    void sortByRegion();
+
+    void sortByRequestStatus();
+
+    void searchByCredits();
+
+    void searchById();
+
+    void searchByDate();
 
 
 };
