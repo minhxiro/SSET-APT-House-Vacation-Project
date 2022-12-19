@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "System.h"
+
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -59,9 +59,7 @@ private:
 public:
     Admin();
     void showAllMember();
-    void viewHouseDetail(int id){
-
-    };
+    void viewHouseDetail(int id);
 
     virtual void showAllHouse();
     void viewMemberDetail();
@@ -70,7 +68,7 @@ public:
     void searchHouseById();
     void searchHouseByDateRange();
     void sortByMemberScore();
-    ~Admin() {}
+    ~Admin();
 };
 
 //Declare member class
@@ -160,5 +158,28 @@ public:
     ~RatingTenant();
 };
 // Declare system
+class System{
+    friend string trimString(string str);
+    friend bool inputUsernameAuthentication(string username);
+    friend bool inputNameAuthentication(string &name);
+    friend bool inputPasswordAuthenticate(string &password);
+    friend bool inputPhoneAuthenticate(string &phoneNum);
+    friend bool inputNumAuthenticate(string &num);
+    friend bool inputRangeAuthenticate(string &range);
+    friend bool creditAuth(int credits);
+    friend bool scoreAuth(int scores);
+    friend void deleteRowData(int index, string dataFile);
+    friend void updateCellAtId(int id, string data, string dataFile);
+    friend void updateRowAtIndex(int index, string data, string dataFile);
+    friend  void addData(string data, string dataFile);
+    friend vector<vector<string> > extractByRow(string dataFile);
+    friend vector<string> extractByColumnIndex(int index, string dataFile);
+    friend string getCurrentDate();
+    friend int idAutoIncrement(string dataFile);
+    friend void searchByCredits();
+    friend void searchById();
+    friend void searchByDate();
 
+
+};
 #endif
