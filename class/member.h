@@ -1,12 +1,12 @@
 #ifndef MEMBER_H
 #define MEMBER_H
 
-#include "user.h"
+#include "User.h"
 #include "enum.h"
-#include "rating.h"
-#include "ratingTenant.h"
-#include "house.h"
-#include "request.h"
+#include "Rating.h"
+#include "RatingTenant.h"
+#include "House.h"
+#include "Request.h"
 #include <vector>
 using std:: vector;
 class Member : public User {

@@ -1,8 +1,8 @@
 #ifndef ADMIN_H
 #define ADMIN_H
 #include <vector>
-#include "member.h"
-#include "house.h"
+#include "Member.h"
+#include "House.h"
 using std:: vector;
 class Admin : public User {
     private:

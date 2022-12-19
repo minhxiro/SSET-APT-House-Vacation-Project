@@ -1,7 +1,7 @@
 #ifndef HOUSE_H
 #define HOUSE_H
 #include "enum.h"
-#include "user.h"
+#include "User.h"
 #include <iostream>
 using std::string;
 class House {
