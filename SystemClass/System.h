@@ -35,8 +35,6 @@ public:
 
     void deleteRowData(int index, string dataFile, string newDataFile);
 
-    void updateCellAtId(int id, string data, string dataFile);
-
     void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
 
     void addData(string data, string dataFile);
@@ -48,7 +46,6 @@ public:
     string getCurrentDate();
 
     int idAutoIncrement(string dataFile);
-
 
     void sortByCreditsPerDay();
 
