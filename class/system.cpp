@@ -9,7 +9,8 @@ using std::string;
 using std::cout;
 using std::regex;
 
-string trimString(string str) {
+
+    string  trimString(string str) {
     string finalStr = "";
     for (char ch: str) {
         if (ch == ' ') {
@@ -233,3 +234,4 @@ int main() {
     cout << getCurrentDate() << "\n";
     cout << idAutoIncrement("./data/members.dat") << "\n";
 }
+
