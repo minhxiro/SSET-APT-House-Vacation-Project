@@ -1,7 +1,8 @@
-#ifndef _CLASS_
+#ifndef _CLASS_H
   
 
-#define CLASS
+
+#define _CLASS_H
   
 #include <iostream>
 #include <string>
@@ -11,7 +12,8 @@ using std:: cin;
 using std:: cout;
 using std:: vector;
 
-enum city {HUE, HANOI, SAIGON}; //enum for cities
+
+enum city {HUE = 1, HANOI = 2, SAIGON = 3}; //enum for cities
 
 enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
 
@@ -35,16 +37,14 @@ class User {
         string phonenum;
         
 
-        bool isOwner() {
-
-        }
     public:
         User();
         
         
         void login();
+        void checkLogin();
         void enterOtpCode();
-        void registre();
+        virtual void registre();
         void showAccountInfo();
         
         ~User();
@@ -58,7 +58,7 @@ class Admin : public User {
         vector <HouseList *> houseList;
     public:
         Admin();
-        void showAllMember(Member &allMember);
+        void showAllMember();
         void viewHouseDetail();
         void showAllHouse(HouseList& allHouse);
         void viewMemberDetail();
@@ -84,14 +84,16 @@ class Member : public User {
         vector <HouseList *> houseList;
     public:
         Member();
-        void showAllHouse(HouseList& allHouse);
+        virtual void registre();
+        virtual void showAccountInfo();
+        void showAllHouse();
         void searchHouseByRegion();
-        void reviewAllRequest(Request &userRequest);
+        void reviewAllRequest();
         Request acceptReQuest();
         Request declineRequest();
         RatingTenant rateTentant();
-        void deleteHouseList();
-        void addHouseList();
+        HouseList deleteHouseList();
+        HouseList addHouseList();
         void viewAllHouse();
         Request requestHouse();
         Request cancelRequest();
@@ -122,7 +124,8 @@ class House {
 };
 
 // Declare houselist
-class HouseList {
+
+class HouseList : public House {
     private:
         int houselistID;
         int ownerID;
