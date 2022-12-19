@@ -46,6 +46,15 @@ cmake_ninja_workdir = /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cm
 
 build cmake_object_order_depends_target_SSET_APT_House_Vacation_Project: phony || CMakeFiles/SSET_APT_House_Vacation_Project.dir
 
+build CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/Class.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class/Class.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
+  DEP_FILE = CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/Class.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk -std=gnu++14
+  INCLUDES = -I/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/SystemClass
+  OBJECT_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
+  OBJECT_FILE_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir/class
+  TARGET_COMPILE_PDB = CMakeFiles/SSET_APT_House_Vacation_Project.dir/
+  TARGET_PDB = SSET_APT_House_Vacation_Project.pdb
+
 build CMakeFiles/SSET_APT_House_Vacation_Project.dir/SystemClass/System.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/SystemClass/System.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
   DEP_FILE = CMakeFiles/SSET_APT_House_Vacation_Project.dir/SystemClass/System.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk -std=gnu++14
@@ -72,7 +81,7 @@ build CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o: 
 #############################################
 # Link the executable SSET_APT_House_Vacation_Project
 
-build SSET_APT_House_Vacation_Project: CXX_EXECUTABLE_LINKER__SSET_APT_House_Vacation_Project_Debug CMakeFiles/SSET_APT_House_Vacation_Project.dir/SystemClass/System.cpp.o CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o
+build SSET_APT_House_Vacation_Project: CXX_EXECUTABLE_LINKER__SSET_APT_House_Vacation_Project_Debug CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/Class.cpp.o CMakeFiles/SSET_APT_House_Vacation_Project.dir/SystemClass/System.cpp.o CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk
   OBJECT_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
   POST_BUILD = :
