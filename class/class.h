@@ -58,9 +58,9 @@ class Admin : public User {
         vector <HouseList *> houseList;
     public:
         Admin();
-        void showAllMember(Member &allMember);
-        void viewHouseDetail();
-        void showAllHouse(HouseList& allHouse);
+        void showAllMember();
+        void viewHouseDetail(int id);
+        virtual void showAllHouse();
         void viewMemberDetail();
         void viewAllReQuest(Request &userRequest);
         void searchHouseByCredit();
@@ -83,6 +83,7 @@ class Member : public User {
         vector <Request *> allRequest;
         vector <HouseList *> houseList;
     public:
+    friend class Admin;
         Member();
         void showAllHouse(HouseList& allHouse);
         void searchHouseByRegion();
@@ -132,6 +133,7 @@ class HouseList {
         houseStatus stat;
 
     public:
+    friend class Admin;
         HouseList();
         // Need view house detail
         ~HouseList();
