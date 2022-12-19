@@ -8,6 +8,4 @@ include_directories(class)
 add_executable(SSET_APT_House_Vacation_Project
         class/System.cpp
         class/System.h
-        class/Admin.h
-        class/Admin.cpp
         "House Vacation main.cpp")
