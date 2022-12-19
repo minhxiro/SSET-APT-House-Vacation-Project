@@ -52,7 +52,7 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class"
+					"path" : "/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/SystemClass"
 				}
 			],
 			"language" : "CXX",
@@ -117,12 +117,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "class/System.cpp",
+			"path" : "SystemClass/System.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "class/System.h",
+			"path" : "SystemClass/System.h",
 			"sourceGroupIndex" : 1
 		},
 		{
