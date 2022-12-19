@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
+#include <algorithm>
 #include "System.h"
 #include <regex>
 
@@ -10,6 +11,14 @@ using std::string;
 using std::cout;
 using std::regex;
 
+//bool System::isInteger(string num) {
+//    for (char ch: num) {
+//        if (ch == '.') {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
 
 string System::trimString(string str) {
     string finalStr;
@@ -103,11 +112,11 @@ bool System::inputRangeAuthenticate(string &range) {
 }
 
 
-bool System::creditAuth(int credits){
+bool System::creditAuth(int credits) {
 
 }
 
-bool System::scoreAuth(int scores){
+bool System::scoreAuth(int scores) {
 
 }
 
@@ -205,7 +214,7 @@ void System::updateRowAtIndex(int index, string data, string dataFile, string ne
     rename(newDataFile.c_str(), dataFile.c_str());
 }
 
-void System::deleteRowData(int index, string dataFile, string newDataFile){
+void System::deleteRowData(int index, string dataFile) {
     std::ifstream readFile;
     std::ofstream writeFile;
     int count = 0;
@@ -214,7 +223,7 @@ void System::deleteRowData(int index, string dataFile, string newDataFile){
     if (readFile.fail()) {
         cout << "Cannot reach the database \n";
     } else {
-        writeFile.open(newDataFile, std::ios::app);
+        writeFile.open("./data/dataTemp.dat", std::ios::app);
         while (!readFile.eof()) {
             getline(readFile, tempData);
             count++;
@@ -232,7 +241,7 @@ void System::deleteRowData(int index, string dataFile, string newDataFile){
         writeFile.close();
     }
     remove(dataFile.c_str());
-    rename(newDataFile.c_str(), dataFile.c_str());
+    rename("./data/dataTemp.dat", dataFile.c_str());
 }
 
 string System::getCurrentDate() {
@@ -261,11 +270,47 @@ int System::idAutoIncrement(string dataFile) {
     return count;
 }
 
+vector<vector<string> > System::sortAscending(int index, string dataFile) {
+    //extract the data from the dataFile
+    vector<vector<string> > data = extractByRow(dataFile);
+    for (int i = 0; i < data.size(); i++) {
+        if(i == data.size() - 1){
+            break;
+        }
+        for (int j = 1; j < data.size(); j++) {
+            vector<string> dataString = {};
+            if (std::stof(data[i][index]) > std::stof(data[j][index])) {
+                std::iter_swap(data.begin() + i, data.begin() + j);
+            }
+        }
+    }
+    //return sorted vector
+    return data;
+}
+
+void System::sortByCategory(string region) {
+
+}
+
+
+void System::searchByCredits() {
+
+}
+
+void System::searchById() {
+
+}
+
+void System::searchByDate() {
+
+}
+
 int main() {
     std::vector<string> data;
     System system1;
     system1.addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
-    system1.deleteRowData(1, "./data/members.dat", "./data/dataTemp.dat");
+    system1.deleteRowData(1, "./data/members.dat");
+    system1.sortAscending(2, "./data/rating.dat");
     cout << system1.getCurrentDate() << "\n";
     cout << system1.idAutoIncrement("./data/members.dat") << "\n";
 }

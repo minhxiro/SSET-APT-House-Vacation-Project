@@ -15,6 +15,8 @@ using std::vector;
 
 class System {
 public:
+//    bool isInteger(string num);
+
     string trimString(string str);
 
     bool inputUsernameAuthentication(string username);
@@ -33,7 +35,7 @@ public:
 
     bool scoreAuth(int scores);
 
-    void deleteRowData(int index, string dataFile, string newDataFile);
+    void deleteRowData(int index, string dataFile);
 
     void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
 
@@ -47,11 +49,9 @@ public:
 
     int idAutoIncrement(string dataFile);
 
-    void sortByCreditsPerDay();
+    vector<vector<string> >  sortAscending(int index, string dataFile);
 
-    void sortByRegion();
-
-    void sortByRequestStatus();
+    void sortByCategory(string type);
 
     void searchByCredits();
 
