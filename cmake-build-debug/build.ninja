@@ -36,7 +36,7 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug/
+cmake_ninja_workdir = /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug/
 # =============================================================================
 # Object build statements for EXECUTABLE target SSET_APT_House_Vacation_Project
 
@@ -46,28 +46,28 @@ cmake_ninja_workdir = /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cm
 
 build cmake_object_order_depends_target_SSET_APT_House_Vacation_Project: phony || CMakeFiles/SSET_APT_House_Vacation_Project.dir
 
-build CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/class.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class/class.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
+build CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/class.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/class/class.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
   DEP_FILE = CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/class.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk -std=gnu++14
-  INCLUDES = -I/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14
+  INCLUDES = -I/Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/class
   OBJECT_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
   OBJECT_FILE_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir/class
   TARGET_COMPILE_PDB = CMakeFiles/SSET_APT_House_Vacation_Project.dir/
   TARGET_PDB = SSET_APT_House_Vacation_Project.pdb
 
-build CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/System.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class/System.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
+build CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/System.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/class/System.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
   DEP_FILE = CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/System.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk -std=gnu++14
-  INCLUDES = -I/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14
+  INCLUDES = -I/Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/class
   OBJECT_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
   OBJECT_FILE_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir/class
   TARGET_COMPILE_PDB = CMakeFiles/SSET_APT_House_Vacation_Project.dir/
   TARGET_PDB = SSET_APT_House_Vacation_Project.pdb
 
-build CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/House$ Vacation$ main.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
+build CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o: CXX_COMPILER__SSET_APT_House_Vacation_Project_Debug /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/House$ Vacation$ main.cpp || cmake_object_order_depends_target_SSET_APT_House_Vacation_Project
   DEP_FILE = CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk -std=gnu++14
-  INCLUDES = -I/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/class
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14
+  INCLUDES = -I/Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/class
   OBJECT_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
   OBJECT_FILE_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
   TARGET_COMPILE_PDB = CMakeFiles/SSET_APT_House_Vacation_Project.dir/
@@ -82,7 +82,7 @@ build CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o: 
 # Link the executable SSET_APT_House_Vacation_Project
 
 build SSET_APT_House_Vacation_Project: CXX_EXECUTABLE_LINKER__SSET_APT_House_Vacation_Project_Debug CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/class.cpp.o CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/System.cpp.o CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.0.sdk
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6
   OBJECT_DIR = CMakeFiles/SSET_APT_House_Vacation_Project.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -95,7 +95,7 @@ build SSET_APT_House_Vacation_Project: CXX_EXECUTABLE_LINKER__SSET_APT_House_Vac
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -106,7 +106,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project -B/Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug
+  COMMAND = cd /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project -B/Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -122,7 +122,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 #############################################
-# Folder: /Users/trungngo/Desktop/SSET-APT-House-Vacation-Project/cmake-build-debug
+# Folder: /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug
 
 build all: phony SSET_APT_House_Vacation_Project
 
