@@ -25,6 +25,7 @@ class HouseList;
 class Rating;
 class RatingTenant;
 class System;
+class User;
 
 // Declare User class
 class User {
@@ -59,13 +60,17 @@ class Admin : public User {
     public:
         Admin();
         void showAllMember();
-        void viewHouseDetail(int id);
+        void viewHouseDetail(int id){
+
+        };
+
         virtual void showAllHouse();
         void viewMemberDetail();
         void viewAllReQuest(Request &userRequest);
         void searchHouseByCredit();
         void searchHouseById();
         void searchHouseByDateRange();
+        void sortByMemberScore();
         ~Admin() {}
 };
 
