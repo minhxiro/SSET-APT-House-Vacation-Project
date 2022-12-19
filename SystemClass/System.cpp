@@ -12,7 +12,7 @@ using std::regex;
 
 
 string System::trimString(string str) {
-    string finalStr = "";
+    string finalStr;
     for (char ch: str) {
         if (ch == ' ') {
             continue;
