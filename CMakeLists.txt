@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(class)
 
 add_executable(SSET_APT_House_Vacation_Project
-        class/class.cpp
         class/System.cpp
         class/System.h
+        class/class.cpp
+        class/class.h
         "House Vacation main.cpp")
