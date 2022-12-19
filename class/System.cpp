@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 #include "System.h"
 #include <regex>
 
@@ -105,6 +106,18 @@ bool creditAuth(int credits);
 
 bool scoreAuth(int scores);
 
+void addData(string data, string dataFile) {
+    std::fstream file;
+    file.open(dataFile, std::ios::app);
+    if (file.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        file << "\n" + data;
+        cout << "Your information has been successfully added! \n";
+        file.close();
+    }
+}
+
 vector<vector<string> > extractByRow(string dataFile) {
     std::fstream file;
     string dataLine;
@@ -131,7 +144,7 @@ vector<vector<string> > extractByRow(string dataFile) {
     return dataTable;
 }
 
-vector<string> extractByColumnIndex(int index, string dataFile){
+vector<string> extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<string> dataColumnArray;
@@ -157,12 +170,69 @@ vector<string> extractByColumnIndex(int index, string dataFile){
     return dataColumnArray;
 }
 
-int main(){
-    std::vector<string> data;
-    data = extractByColumnIndex(0,"./data/members.dat");
-    for(string s: data){
-        cout << s << "\n";
+void updateRowAtIndex(int index, string data, string dataFile) {
+    std::ifstream readFile;
+    std::ofstream writeFile;
+    int count = 0;
+    string tempData;
+    readFile.open(dataFile);
+    if (readFile.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        writeFile.open("./data/memberTemp.dat", std::ios::app);
+        while (!readFile.eof()) {
+            getline(readFile, tempData);
+            count++;
+            if (count == index) {
+                writeFile << "\n" + data;
+            } else {
+                if (count == 1) {
+                    writeFile << tempData;
+                } else {
+                    writeFile << "\n" + tempData;
+                }
+            }
+        }
+        readFile.close();
+        writeFile.close();
     }
+    remove("./data/members.dat");
+    rename("./data/memberTemp.dat", "./data/members.dat");
+}
+
+string getCurrentDate() {
+    string dateString;
+    time_t t = time(NULL);
+    tm *timePtr = localtime(&t);
+    dateString = std::to_string(timePtr->tm_mday) + "/" + std::to_string((timePtr->tm_mon) + 1) + "/" +
+                 std::to_string((timePtr->tm_year) + 1900);
+    return dateString;
+}
+
+int idAutoIncrement(string dataFile) {
+    std::fstream file;
+    string dummy;
+    int count = 0;
+    file.open(dataFile, std::ios::in);
+    if (file.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        while (!file.eof()) {
+            getline(file, dummy);
+            count++;
+        }
+        file.close();
+    }
+    return count;
+}
+
+
+int main() {
+    std::vector<string> data;
+    addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
+    updateRowAtIndex(2, "1;trung2", "./data/members.dat");
+    cout << getCurrentDate() << "\n";
+    cout << idAutoIncrement("./data/members.dat") << "\n";
 }
 
 

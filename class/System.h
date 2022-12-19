@@ -29,7 +29,7 @@ class System{
     friend vector<vector<string> > extractByRow(string dataFile);
     friend vector<string> extractByColumnIndex(int index, string dataFile);
     friend string getCurrentDate();
-    friend int idAutoIncrement();
+    friend int idAutoIncrement(string dataFile);
     friend void searchByCredits();
     friend void searchById();
     friend void searchByDate();
