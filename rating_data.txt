@@ -1,6 +1,16 @@
-Occupier ID: h123456
-Score: 5
-Comment: nice house
-Occupier ID: p123456
-Score: 6
-Comment: good person
+Rating ID: H1
+    House ID: 123
+    Score: 5
+    Comment: nice
+Rating ID: P1
+    Occupier ID: 456
+    Score: 9
+    Comment: good
+Rating ID: H2
+    House ID: 789
+    Score: 4
+    Comment: ok
+Rating ID: H3
+    House ID: 159
+    Score: -5
+    Comment: bad
