@@ -6,18 +6,16 @@ using std::cout;
 class Rating
 {
 private:
-    int RatingId;
-    int Score;
-    string Comment;
-    string CurrentDate;
-    int TenantId;
-    int HouseId;
+    int ratingId;
+    int score;
+    string comment;
+    string currentDate;
+    int tenantId;
+    int houseId;
 public:
-    Rating(int RatingId = 0, int Score = 0, string Comment = "", string CurrentDate = "", int TenantId = 0, int HouseId = 0)
-    : RatingId(RatingId), Score(Score), Comment(Comment), CurrentDate(CurrentDate), TenantId(TenantId), HouseId(HouseId){}
-
-    void showInfo(){
-        cout << "Rating ID: " << RatingId << ", Score: " << Score << ", Comment: " << Comment << ", Current Date: " 
-        << CurrentDate << ", Tenant ID: " << TenantId << ", House ID: " << HouseId;
-    }
+    Rating(int ratingId = 0, int score = 0, string comment = "", string currentDate = "", int tenantId = 0, int houseId = 0)
+    : ratingId(ratingId), score(score), comment(comment), currentDate(currentDate), tenantId(tenantId), houseId(houseId){}
+    void rateHouse() {}
+    void rateOccupier() {}
+    void showInfo() {}
 };

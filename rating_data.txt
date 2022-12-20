@@ -1,0 +1,6 @@
+Occupier ID: h123456
+Score: 5
+Comment: nice house
+Occupier ID: p123456
+Score: 6
+Comment: good person
