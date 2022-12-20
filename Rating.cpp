@@ -1,6 +1,7 @@
 #include "Rating.h"
 #include <iostream>
 
-void Rating(){
-    std::cout << "Please rate from -10 to 10";
+int main() {
+    Rating mem1(111,222,"good","12/12/2012",333,444);
+    mem1.showInfo();
 }

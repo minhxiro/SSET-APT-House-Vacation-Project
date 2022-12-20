@@ -10,6 +10,6 @@ private:
     int TenantId;
     int OwnerId;
 public:
-    RatingTenant(int RatingId = 0, int Score = 0, string Comment = "", string CurrenDate = "", int TenantId = 0, int OwnerId = 0)
+    RatingTenant(int RatingId = 0, int Score = 0, string Comment = "", string CurrentDate = "", int TenantId = 0, int OwnerId = 0)
     : RatingId(RatingId), Score(Score), Comment(Comment), CurrentDate(CurrentDate), TenantId(TenantId), OwnerId(OwnerId){}
 };
