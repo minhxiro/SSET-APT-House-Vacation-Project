@@ -19,7 +19,9 @@ public:
 
     string trimString(string str);
 
-    int getIndex(vector<string> lst, string K);
+    vector<int> getIndex(vector<string> lst, string K);
+
+    static vector<string> splitStr(string str, char del);
 
     bool inputUsernameAuthentication(string username);
 
@@ -55,11 +57,7 @@ public:
 
     void sortByCategory(string type, string dataFile, int index);
 
-    void searchByCredits();
-
-    void searchById();
-
-    void searchByDate();
+    void searchByDate(int mode, string day, string month, int index, string dataFile);
 
 
 };

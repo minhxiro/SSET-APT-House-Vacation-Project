@@ -32,14 +32,26 @@ string System::trimString(string str) {
     return finalStr;
 }
 
-int System::getIndex(vector<string> lst, string K) {
+vector<int> System::getIndex(vector<string> lst, string K) {
+    vector<int> indices;
     for (int i = 0; i < lst.size(); i++) {
         if (lst[i] == K) {
-            cout << i << "\n";
-            return i;
+            indices.push_back(i);
         }
     }
-    return -1;
+    return indices;
+}
+
+vector<string> System::splitStr(string str, char del) {
+    vector<string> dataLst;
+    std::stringstream ss;
+    ss << str;
+    string cell;
+    while (!ss.eof()) {
+        std::getline(ss, cell, del);
+        dataLst.push_back(cell);
+    }
+    return dataLst;
 }
 
 
@@ -147,20 +159,14 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     string dataLine;
     std::vector<vector<string> > dataTable;
     std::vector<string> dataRowsArray;
-    string cell;
     file.open(dataFile, std::ios::in);
     if (file.fail()) {
         cout << "Cannot reach the database \n";
     } else {
         while (!file.eof()) {
-            std::stringstream ss;
             dataRowsArray = {};
             std::getline(file, dataLine);
-            ss << dataLine;
-            while (!ss.eof()) {
-                std::getline(ss, cell, ';');
-                dataRowsArray.push_back(cell);
-            }
+            dataRowsArray = splitStr(dataLine, ';');
             dataTable.push_back(dataRowsArray);
         }
         file.close();
@@ -173,7 +179,6 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
     string dataLine;
     std::vector<string> dataColumnArray;
     std::vector<string> dataRowsArray;
-    string cell;
     file.open(dataFile, std::ios::in);
     if (file.fail()) {
         cout << "Cannot reach the database \n";
@@ -182,11 +187,7 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
             std::stringstream ss;
             dataRowsArray = {};
             std::getline(file, dataLine);
-            ss << dataLine;
-            while (!ss.eof()) {
-                std::getline(ss, cell, ';');
-                dataRowsArray.push_back(cell);
-            }
+            dataRowsArray = splitStr(dataLine, ';');
             dataColumnArray.push_back(dataRowsArray[index]);
         }
         file.close();
@@ -303,16 +304,57 @@ void System::sortByCategory(string type, string dataFile, int index) {
     std::vector<vector<string> > data;
     type = trimString(type);
     transform(type.begin(), type.end(), type.begin(), ::tolower);
-    cout << "After  cleaning we have the type: " << type << "\n";
-    cout << "Your type match the following index: " << index << "\n";
-    if (index == -1) {
-        cout << "There are no category match your input type \n";
-    } else {
-        data = extractByRow(dataFile);
-        for (vector<string> dataStr: data) {
-            if (dataStr[index] == type) {
-                for (int j = 0; j < dataStr.size(); j++) {
-                    cout << dataStr[j] << "\t";
+
+    data = extractByRow(dataFile);
+    for (vector<string> dataStr: data) {
+        if (dataStr[index] == type) {
+            for (int j = 0; j < dataStr.size(); j++) {
+                cout << dataStr[j] << "\t";
+            }
+            cout << "\n";
+        }
+    }
+}
+
+void System::searchByDate(int mode, string day, string month, int index, string dataFile) {
+    //mode 1: search by day of the request (searchByDate(1,<the day>,0) let month = 0)
+    //mode 2: search by month of the request (searchByDate(2,0,<the month>) let day = 0)
+    vector<vector<string> > data = extractByRow(dataFile);
+    vector<int> indexLst;
+    if (mode == 1) {
+        vector<string> days;
+        //get the date column
+        for (string date: extractByColumnIndex(index, dataFile)) {
+            //split the date by / and get the day add to the day vector
+            days.push_back(splitStr(date, '/')[0]);
+        }
+        indexLst = getIndex(days, day);
+        if(indexLst.size() == 0){
+            cout << "Your input day cannot be found in the database \n";
+        }else{
+            for (int i: indexLst) {
+                for (int j = 0; j < data[i].size(); j++) {
+                    cout << data[i][j] << "\t";
+                }
+                cout << "\n";
+            }
+        }
+    }
+    if (mode == 2) {
+        vector<string> months;
+        //get the date column
+        for (string date: extractByColumnIndex(index, dataFile)) {
+            //split the date by / and get the day add to the day vector
+            months.push_back(splitStr(date, '/')[1]);
+        }
+        indexLst = getIndex(months, month);
+        if(indexLst.size() == 0){
+            cout << "Your input month cannot be found in the database \n";
+        }else{
+
+            for (int i: indexLst) {
+                for (int j = 0; j < data[i].size(); j++) {
+                    cout << data[i][j] << "\t";
                 }
                 cout << "\n";
             }
@@ -320,30 +362,25 @@ void System::sortByCategory(string type, string dataFile, int index) {
     }
 }
 
-
-void System::searchByCredits() {
-
-}
-
-void System::searchById() {
-
-}
-
-void System::searchByDate() {
-
-}
-
 int main() {
     string hehe = "Hehe";
     std::vector<string> data;
     System system1;
-    cout << hehe << "\n";
-    system1.addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
+    for (vector<string> strLst: system1.extractByRow("./data/members.dat")) {
+        for (string str: strLst) {
+            cout << str << "\t";
+        }
+        cout << "\n";
+    }
+    system1.addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet;12/1/2022", "./data/members.dat");
     system1.deleteRowData(1, "./data/members.dat");
     system1.sortAscending(2, "./data/rating.dat");
     system1.sortByCategory("CaT", "./data/rating.dat", 3);
     cout << system1.getCurrentDate() << "\n";
     cout << system1.idAutoIncrement("./data/members.dat") << "\n";
+    system1.searchByDate(1, "20", "0", 5, "./data/members.dat");
+    system1.searchByDate(2, "0", "3", 5, "./data/members.dat");
+
 }
 
 
