@@ -299,6 +299,8 @@ vector<vector<string> > System::sortAscending(int index, string dataFile) {
     return data;
 }
 
+
+//This function require the index of column that need to be compare to the type, a type (ex: Hue, Sg, Hn) and then cout all the row of the same type 
 void System::sortByCategory(string type, string dataFile, int index) {
     std::fstream file;
     std::vector<vector<string> > data;
