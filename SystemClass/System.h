@@ -19,6 +19,8 @@ public:
 
     string trimString(string str);
 
+    int getIndex(vector<string> lst, string K);
+
     bool inputUsernameAuthentication(string username);
 
     bool inputNameAuthentication(string &name);
@@ -51,7 +53,7 @@ public:
 
     vector<vector<string> >  sortAscending(int index, string dataFile);
 
-    void sortByCategory(string type);
+    void sortByCategory(string type, string dataFile, int index);
 
     void searchByCredits();
 

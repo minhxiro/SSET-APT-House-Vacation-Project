@@ -32,6 +32,16 @@ string System::trimString(string str) {
     return finalStr;
 }
 
+int System::getIndex(vector<string> lst, string K) {
+    for (int i = 0; i < lst.size(); i++) {
+        if (lst[i] == K) {
+            cout << i << "\n";
+            return i;
+        }
+    }
+    return -1;
+}
+
 
 bool System::inputUsernameAuthentication(string username) {
     //false: Username should only contain 8 to 15 character and no white spaces!!!
@@ -274,7 +284,7 @@ vector<vector<string> > System::sortAscending(int index, string dataFile) {
     //extract the data from the dataFile
     vector<vector<string> > data = extractByRow(dataFile);
     for (int i = 0; i < data.size(); i++) {
-        if(i == data.size() - 1){
+        if (i == data.size() - 1) {
             break;
         }
         for (int j = 1; j < data.size(); j++) {
@@ -288,8 +298,26 @@ vector<vector<string> > System::sortAscending(int index, string dataFile) {
     return data;
 }
 
-void System::sortByCategory(string region) {
-
+void System::sortByCategory(string type, string dataFile, int index) {
+    std::fstream file;
+    std::vector<vector<string> > data;
+    type = trimString(type);
+    transform(type.begin(), type.end(), type.begin(), ::tolower);
+    cout << "After  cleaning we have the type: " << type << "\n";
+    cout << "Your type match the following index: " << index << "\n";
+    if (index == -1) {
+        cout << "There are no category match your input type \n";
+    } else {
+        data = extractByRow(dataFile);
+        for (vector<string> dataStr: data) {
+            if (dataStr[index] == type) {
+                for (int j = 0; j < dataStr.size(); j++) {
+                    cout << dataStr[j] << "\t";
+                }
+                cout << "\n";
+            }
+        }
+    }
 }
 
 
@@ -306,11 +334,14 @@ void System::searchByDate() {
 }
 
 int main() {
+    string hehe = "Hehe";
     std::vector<string> data;
     System system1;
+    cout << hehe << "\n";
     system1.addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
     system1.deleteRowData(1, "./data/members.dat");
     system1.sortAscending(2, "./data/rating.dat");
+    system1.sortByCategory("CaT", "./data/rating.dat", 3);
     cout << system1.getCurrentDate() << "\n";
     cout << system1.idAutoIncrement("./data/members.dat") << "\n";
 }
