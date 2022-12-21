@@ -304,17 +304,22 @@ vector<vector<string> > System::sortAscending(int index, string dataFile) {
 void System::sortByCategory(string type, string dataFile, int index) {
     std::fstream file;
     std::vector<vector<string> > data;
+    int count = 0;
     type = trimString(type);
     transform(type.begin(), type.end(), type.begin(), ::tolower);
 
     data = extractByRow(dataFile);
     for (vector<string> dataStr: data) {
         if (dataStr[index] == type) {
+            count ++;
             for (int j = 0; j < dataStr.size(); j++) {
                 cout << dataStr[j] << "\t";
             }
             cout << "\n";
         }
+    }
+    if(count == 0){
+        cout << "Your input cannot be found in the database \n";
     }
 }
 
@@ -377,7 +382,7 @@ int main() {
     system1.addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet;12/1/2022", "./data/members.dat");
     system1.deleteRowData(1, "./data/members.dat");
     system1.sortAscending(2, "./data/rating.dat");
-    system1.sortByCategory("CaT", "./data/rating.dat", 3);
+    system1.sortByCategory(" CaT ", "./data/rating.dat", 3);
     cout << system1.getCurrentDate() << "\n";
     cout << system1.idAutoIncrement("./data/members.dat") << "\n";
     system1.searchByDate(1, "20", "0", 5, "./data/members.dat");
