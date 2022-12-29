@@ -1,7 +1,7 @@
 #ifndef _CLASS_
 
 
-#define CLASS
+#define _CLASS_
 
 #include <iostream>
 #include <string>
@@ -27,6 +27,7 @@ class RatingTenant;
 class User;
 
 // Declare User class
+
 class User {
 protected:
     string name;
@@ -35,9 +36,7 @@ protected:
     string phonenum;
 
 
-    bool isOwner() {
-
-    }
+    bool isOwner();
 public:
     User();
 
@@ -76,13 +75,13 @@ class Member : public User {
 private:
     int memberID;
     city location;
-    House memberHouse;
+    House* memberHouse;
     double rating_score;
     int credit;
 
-    vector <Rating *> ratingFromTenant;
-    vector <RatingTenant *> ratingFromOwner;
-    vector <Request *> allRequest;
+    vector <Rating> ratingFromTenant;
+    vector <RatingTenant> ratingFromOwner;
+    vector <Request> allRequest;
     vector <House *> houseList;
 public:
     friend class Admin;
@@ -101,6 +100,7 @@ public:
     Request requestHouse();
     Request cancelRequest();
     void rateHouse();
+    
     ~Member();
 };
 
@@ -129,6 +129,7 @@ private:
     int required_score;
     city location;
     friend class Admin;
+    friend class Member;
 };
 
 // Declare Rating
@@ -158,28 +159,60 @@ public:
     ~RatingTenant();
 };
 // Declare system
-class System{
-    friend string trimString(string str);
-    friend bool inputUsernameAuthentication(string username);
-    friend bool inputNameAuthentication(string &name);
-    friend bool inputPasswordAuthenticate(string &password);
-    friend bool inputPhoneAuthenticate(string &phoneNum);
-    friend bool inputNumAuthenticate(string &num);
-    friend bool inputRangeAuthenticate(string &range);
-    friend bool creditAuth(int credits);
-    friend bool scoreAuth(int scores);
-    friend void deleteRowData(int index, string dataFile);
-    friend void updateCellAtId(int id, string data, string dataFile);
-    friend void updateRowAtIndex(int index, string data, string dataFile);
-    friend  void addData(string data, string dataFile);
-    friend vector<vector<string> > extractByRow(string dataFile);
-    friend vector<string> extractByColumnIndex(int index, string dataFile);
-    friend string getCurrentDate();
-    friend int idAutoIncrement(string dataFile);
-    friend void searchByCredits();
-    friend void searchById();
-    friend void searchByDate();
+//
+// Created by Trung Ngo on 17/12/2022.
+//
 
 
+class System {
+public:
+//    bool isInteger(string num);
+    
+    string trimString(string str);
+
+    vector<int> getIndex(vector<string> lst, string K);
+
+    static vector<string> splitStr(string str, char del);
+
+    bool inputUsernameAuthentication(string username);
+
+    bool inputNameAuthentication(string &name);
+
+    bool inputPasswordAuthenticate(string &password);
+
+    bool inputPhoneAuthenticate(string &phoneNum);
+
+    bool inputNumAuthenticate(string &num);
+
+    bool inputRangeAuthenticate(string &range);
+
+    bool creditAuth(int credits);
+
+    bool scoreAuth(int scores);
+
+    void deleteRowData(int index, string dataFile);
+
+    void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
+
+    static void addData(string data, string dataFile);
+
+    vector<vector<string> > extractByRow(string dataFile);
+
+    static vector<string> extractByColumnIndex(int index, string dataFile);
+
+    string getCurrentDate();
+
+    int idAutoIncrement(string dataFile);
+
+    vector<vector<string> >  sortAscending(int index, string dataFile);
+
+    void sortByCategory(string type, string dataFile, int index);
+
+    void searchByDate(int mode, string day, string month, int index, string dataFile);
+
+    
 };
+
+
+
 #endif

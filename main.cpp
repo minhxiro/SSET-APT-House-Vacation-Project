@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "./class/Member.h"
+#include "./class/class.h"
 using std:: string;
 using std:: cin;
 using std:: cout;

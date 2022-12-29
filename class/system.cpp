@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
+#include <algorithm>
 #include "System.h"
 #include <regex>
 
@@ -10,8 +11,10 @@ using std::cout;
 using std::regex;
 
 
-    string  trimString(string str) {
-    string finalStr = "";
+
+
+ string System::trimString(string str) {
+    string finalStr;
     for (char ch: str) {
         if (ch == ' ') {
             continue;
@@ -22,8 +25,30 @@ using std::regex;
     return finalStr;
 }
 
+vector<int> System::getIndex(vector<string> lst, string K) {
+    vector<int> indices;
+    for (int i = 0; i < lst.size(); i++) {
+        if (lst[i] == K) {
+            indices.push_back(i);
+        }
+    }
+    return indices;
+}
 
-bool inputUsernameAuthentication(string username) {
+vector<string> System::splitStr(string str, char del) {
+    vector<string> dataLst;
+    std::stringstream ss;
+    ss << str;
+    string cell;
+    while (!ss.eof()) {
+        std::getline(ss, cell, del);
+        dataLst.push_back(cell);
+    }
+    return dataLst;
+}
+
+
+bool System::inputUsernameAuthentication(string username) {
     //false: Username should only contain 8 to 15 character and no white spaces!!!
     //true: continue
     regex reg("\\s");
@@ -38,7 +63,7 @@ bool inputUsernameAuthentication(string username) {
     }
 }
 
-bool inputNameAuthentication(string &name) {
+bool System::inputNameAuthentication(string &name) {
     //false: Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces
     //true: continue
     regex reg("^[a-zA-Z]*{8,20}$");
@@ -50,7 +75,7 @@ bool inputNameAuthentication(string &name) {
     }
 }
 
-bool inputPasswordAuthenticate(string &password) {
+bool System::inputPasswordAuthenticate(string &password) {
     //false: Minimum 8 and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character:
     //true: continue
     regex reg("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,10}$");
@@ -63,7 +88,7 @@ bool inputPasswordAuthenticate(string &password) {
 
 }
 
-bool inputPhoneAuthenticate(string &phoneNum) {
+bool System::inputPhoneAuthenticate(string &phoneNum) {
     //false: phone number must have 11 numbers and start with 0
     //true: continue
     regex reg("^(?=0)[0-9]{10}$");
@@ -76,7 +101,7 @@ bool inputPhoneAuthenticate(string &phoneNum) {
 }
 
 
-bool inputNumAuthenticate(string &num) {
+bool System::inputNumAuthenticate(string &num) {
     //false: The input must be a number
     //true: continue
     regex reg("^[0-9]$");
@@ -89,7 +114,7 @@ bool inputNumAuthenticate(string &num) {
 }
 
 
-bool inputRangeAuthenticate(string &range) {
+bool System::inputRangeAuthenticate(string &range) {
     //false: Range must be in this format number - number
     //true: continue
     regex reg("^[0-9]+[-][0-9]+$");
@@ -102,11 +127,15 @@ bool inputRangeAuthenticate(string &range) {
 }
 
 
-bool creditAuth(int credits);
+bool System::creditAuth(int credits) {
 
-bool scoreAuth(int scores);
+}
 
-void addData(string data, string dataFile) {
+bool System::scoreAuth(int scores) {
+
+}
+
+void System::addData(string data, string dataFile) {
     std::fstream file;
     file.open(dataFile, std::ios::app);
     if (file.fail()) {
@@ -118,25 +147,19 @@ void addData(string data, string dataFile) {
     }
 }
 
-vector<vector<string> > extractByRow(string dataFile) {
+vector<vector<string> > System::extractByRow(string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<vector<string> > dataTable;
     std::vector<string> dataRowsArray;
-    string cell;
     file.open(dataFile, std::ios::in);
     if (file.fail()) {
         cout << "Cannot reach the database \n";
     } else {
         while (!file.eof()) {
-            std::stringstream ss;
             dataRowsArray = {};
             std::getline(file, dataLine);
-            ss << dataLine;
-            while (!ss.eof()) {
-                std::getline(ss, cell, ';');
-                dataRowsArray.push_back(cell);
-            }
+            dataRowsArray = splitStr(dataLine, ';');
             dataTable.push_back(dataRowsArray);
         }
         file.close();
@@ -144,12 +167,11 @@ vector<vector<string> > extractByRow(string dataFile) {
     return dataTable;
 }
 
-vector<string> extractByColumnIndex(int index, string dataFile) {
+vector<string> System::extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<string> dataColumnArray;
     std::vector<string> dataRowsArray;
-    string cell;
     file.open(dataFile, std::ios::in);
     if (file.fail()) {
         cout << "Cannot reach the database \n";
@@ -158,11 +180,7 @@ vector<string> extractByColumnIndex(int index, string dataFile) {
             std::stringstream ss;
             dataRowsArray = {};
             std::getline(file, dataLine);
-            ss << dataLine;
-            while (!ss.eof()) {
-                std::getline(ss, cell, ';');
-                dataRowsArray.push_back(cell);
-            }
+            dataRowsArray = splitStr(dataLine, ';');
             dataColumnArray.push_back(dataRowsArray[index]);
         }
         file.close();
@@ -170,7 +188,7 @@ vector<string> extractByColumnIndex(int index, string dataFile) {
     return dataColumnArray;
 }
 
-void updateRowAtIndex(int index, string data, string dataFile) {
+void System::updateRowAtIndex(int index, string data, string dataFile, string newDataFile) {
     std::ifstream readFile;
     std::ofstream writeFile;
     int count = 0;
@@ -179,7 +197,7 @@ void updateRowAtIndex(int index, string data, string dataFile) {
     if (readFile.fail()) {
         cout << "Cannot reach the database \n";
     } else {
-        writeFile.open("./data/memberTemp.dat", std::ios::app);
+        writeFile.open(newDataFile, std::ios::app);
         while (!readFile.eof()) {
             getline(readFile, tempData);
             count++;
@@ -196,11 +214,41 @@ void updateRowAtIndex(int index, string data, string dataFile) {
         readFile.close();
         writeFile.close();
     }
-    remove("./data/members.dat");
-    rename("./data/memberTemp.dat", "./data/members.dat");
+    remove(dataFile.c_str());
+    rename(newDataFile.c_str(), dataFile.c_str());
 }
 
-string getCurrentDate() {
+void System::deleteRowData(int index, string dataFile) {
+    std::ifstream readFile;
+    std::ofstream writeFile;
+    int count = 0;
+    string tempData;
+    readFile.open(dataFile);
+    if (readFile.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        writeFile.open("./data/dataTemp.dat", std::ios::app);
+        while (!readFile.eof()) {
+            getline(readFile, tempData);
+            count++;
+            if (count == index) {
+                continue;
+            } else {
+                if ((count - 1) == 1) {
+                    writeFile << tempData;
+                } else {
+                    writeFile << "\n" + tempData;
+                }
+            }
+        }
+        readFile.close();
+        writeFile.close();
+    }
+    remove(dataFile.c_str());
+    rename("./data/dataTemp.dat", dataFile.c_str());
+}
+
+string System::getCurrentDate() {
     string dateString;
     time_t t = time(NULL);
     tm *timePtr = localtime(&t);
@@ -209,7 +257,7 @@ string getCurrentDate() {
     return dateString;
 }
 
-int idAutoIncrement(string dataFile) {
+int System::idAutoIncrement(string dataFile) {
     std::fstream file;
     string dummy;
     int count = 0;
@@ -226,12 +274,91 @@ int idAutoIncrement(string dataFile) {
     return count;
 }
 
+vector<vector<string> > System::sortAscending(int index, string dataFile) {
+    //extract the data from the dataFile
+    vector<vector<string> > data = extractByRow(dataFile);
+    for (int i = 0; i < data.size(); i++) {
+        if (i == data.size() - 1) {
+            break;
+        }
+        for (int j = 1; j < data.size(); j++) {
+            vector<string> dataString = {};
+            if (std::stof(data[i][index]) > std::stof(data[j][index])) {
+                std::iter_swap(data.begin() + i, data.begin() + j);
+            }
+        }
+    }
+    //return sorted vector
+    return data;
+}
 
-int main() {
-    std::vector<string> data;
-    addData("1;23;wgsdfag;wertqwetwqet;qwetqwetqwet", "./data/members.dat");
-    updateRowAtIndex(2, "1;trung2", "./data/members.dat");
-    cout << getCurrentDate() << "\n";
-    cout << idAutoIncrement("./data/members.dat") << "\n";
+
+//This function require the index of column that need to be compare to the type, a type (ex: Hue, Sg, Hn) and then cout all the row of the same type 
+void System::sortByCategory(string type, string dataFile, int index) {
+    std::fstream file;
+    std::vector<vector<string> > data;
+    int count = 0;
+    type = trimString(type);
+    transform(type.begin(), type.end(), type.begin(), ::tolower);
+
+    data = extractByRow(dataFile);
+    for (vector<string> dataStr: data) {
+        if (dataStr[index] == type) {
+            count ++;
+            for (int j = 0; j < dataStr.size(); j++) {
+                cout << dataStr[j] << "\t";
+            }
+            cout << "\n";
+        }
+    }
+    if(count == 0){
+        cout << "Your input cannot be found in the database \n";
+    }
+}
+
+void System::searchByDate(int mode, string day, string month, int index, string dataFile) {
+    //mode 1: search by day of the request (searchByDate(1,<the day>,0) let month = 0)
+    //mode 2: search by month of the request (searchByDate(2,0,<the month>) let day = 0)
+    vector<vector<string> > data = extractByRow(dataFile);
+    vector<int> indexLst;
+    if (mode == 1) {
+        vector<string> days;
+        //get the date column
+        for (string date: extractByColumnIndex(index, dataFile)) {
+            //split the date by / and get the day add to the day vector
+            days.push_back(splitStr(date, '/')[0]);
+        }
+        indexLst = getIndex(days, day);
+        if(indexLst.size() == 0){
+            cout << "Your input day cannot be found in the database \n";
+        }else{
+            for (int i: indexLst) {
+                for (int j = 0; j < data[i].size(); j++) {
+                    cout << data[i][j] << "\t";
+                }
+                cout << "\n";
+            }
+        }
+    }
+    if (mode == 2) {
+        vector<string> months;
+        //get the date column
+        for (string date: extractByColumnIndex(index, dataFile)) {
+            //split the date by / and get the day add to the day vector
+            months.push_back(splitStr(date, '/')[1]);
+        }
+        indexLst = getIndex(months, month);
+        if(indexLst.size() == 0){
+            cout << "Your input month cannot be found in the database \n";
+        }else{
+
+            for (int i: indexLst) {
+                for (int j = 0; j < data[i].size(); j++) {
+                    cout << data[i][j] << "\t";
+                }
+                cout << "\n";
+            }
+        }
+    }
 }
 
