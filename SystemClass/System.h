@@ -45,7 +45,7 @@ public:
 
     void addData(string data, string dataFile);
 
-    vector<vector<string> > extractByRow(string dataFile);
+    static vector<vector<string> > extractByRow(string dataFile);
 
     vector<string> extractByColumnIndex(int index, string dataFile);
 
@@ -53,7 +53,7 @@ public:
 
     int idAutoIncrement(string dataFile);
 
-    vector<vector<string> >  sortAscending(int index, string dataFile);
+    static vector<vector<string> >  sortAscending(int index, string dataFile);
 
     void sortByCategory(string type, string dataFile, int index);
 

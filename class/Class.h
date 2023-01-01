@@ -65,12 +65,14 @@ public:
 
     virtual void showAllHouse();
     void viewMemberDetail();
-    void viewAllReQuest(Request &userRequest);
-    void searchHouseByCredit();
-    void searchHouseById();
-    void searchHouseByDateRange();
+    void viewAllReQuest();
+    void searchHouseByCredit(string credit);
+    void viewHouseDetail(string id);
+    void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
     ~Admin() {}
+
+
 };
 
 //Declare member class
