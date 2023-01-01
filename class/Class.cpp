@@ -32,7 +32,7 @@ void Admin::showAllMember() {
             << std::setw(15)
             << "Full Name"
             << "\n";
-    vector<vector<string>> memberList = System::extractByRow(member_file);
+    vector<vector<string> > memberList = System::extractByRow(member_file);
     for(int i = 0;i<memberList.size();i++) {
         cout
                 << std::left
@@ -60,7 +60,7 @@ void Admin:: showAllHouse() {
             << std::setw(15)
             << "Status"
             << "\n";
-    vector<vector<string>> houseList = System::extractByRow(house_file);
+    vector<vector<string> > houseList = System::extractByRow(house_file);
     for(int i =0;i<houseList.size();i++){
         cout
                 << std::left
@@ -79,7 +79,7 @@ void Admin:: showAllHouse() {
     }
 }
 void Admin::viewMemberDetail() {
-    vector<vector<string>> memberList = System::extractByRow(member_file);
+    vector<vector<string> > memberList = System::extractByRow(member_file);
     cout << "\nAll members: " << "\n";
     cout
             << std::left
@@ -147,7 +147,7 @@ void Admin::viewHouseDetail(string id) {
             << "Status"
             << "\n";
 
-    vector<vector<string>> houseList = System::extractByRow(house_file);
+    vector<vector<string> > houseList = System::extractByRow(house_file);
     for(int i = 0; i<houseList.size(); i++) {
         if(id == houseList[i][0]){
             cout
@@ -243,7 +243,7 @@ void Admin::searchHouseByDateRange(string dateRange) {
             << "Status"
             << "\n";
 
-    vector<vector<string>> houseList = System::extractByRow(house_file);
+    vector<vector<string> > houseList = System::extractByRow(house_file);
     for(int i = 0; i<houseList.size(); i++) {
         if(dateRange == houseList[i][3]){
             cout
@@ -305,7 +305,7 @@ void Admin::searchHouseByCredit(string credit) {
             << "Status"
             << "\n";
 
-    vector<vector<string>> houseList = System::extractByRow(house_file);
+    vector<vector<string> > houseList = System::extractByRow(house_file);
     for (int i = 0; i < houseList.size(); i++) {
         if (credit == houseList[i][4]) {
             cout
@@ -338,7 +338,7 @@ void Admin::searchHouseByCredit(string credit) {
     }
 }
 void Admin::sortByMemberScore() {
-    vector<vector<string>> sortList = System::sortAscending(4,member_file);
+    vector<vector<string> > sortList = System::sortAscending(4,member_file);
     cout << "\nAll members after sorted will be displayed: " << "\n";
     cout
             << std::left
@@ -391,5 +391,8 @@ void Admin::sortByMemberScore() {
 // System
 
 // User
-
+int main() {
+    Admin admin1;
+    admin1.showAllMember();
+}
 
