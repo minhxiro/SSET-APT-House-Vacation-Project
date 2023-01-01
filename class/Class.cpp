@@ -391,8 +391,5 @@ void Admin::sortByMemberScore() {
 // System
 
 // User
-int main() {
-    Admin admin1;
-    admin1.showAllMember();
-}
+
 
