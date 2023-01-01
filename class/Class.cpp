@@ -180,7 +180,7 @@ void Admin::viewHouseDetail(string id) {
     }
 }
 void Admin::viewAllReQuest() {
-    vector<vector<string>> requestList = System::extractByRow(request_file);
+    vector<vector<string> > requestList = System::extractByRow(request_file);
     cout << "\nAll requests will be displayed here: " << "\n";
     cout
             << std::left

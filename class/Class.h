@@ -80,7 +80,7 @@ class Member : public User {
 private:
     int memberID;
     city location;
-    House memberHouse;
+
     double rating_score;
     int credit;
 
