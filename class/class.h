@@ -90,7 +90,7 @@ public:
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
-    void reviewAllRequest(Request &userRequest);
+    void reviewAllRequest();
     Request acceptReQuest();
     Request declineRequest();
     RatingTenant rateTentant();
@@ -113,6 +113,7 @@ private:
     requestStatus status;
 public:
     Request();
+    friend class Member;
     ~Request();
 };
 // Declare house class
@@ -127,6 +128,7 @@ private:
     string description;
     int consuming_point;
     int required_score;
+    Rating *rate;
     city location;
     friend class Admin;
     friend class Member;
@@ -141,6 +143,8 @@ private:
     string currentDate;
     int tenantID;
     int houseID;
+    friend class House;
+    friend class Member;
 public:
     Rating();
     ~Rating();
@@ -190,13 +194,13 @@ public:
 
     bool scoreAuth(int scores);
 
-    void deleteRowData(int index, string dataFile);
+    static void deleteRowData(int index, string dataFile);
 
     void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
 
     static void addData(string data, string dataFile);
 
-    vector<vector<string> > extractByRow(string dataFile);
+    static vector<vector<string> > extractByRow(string dataFile);
 
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
