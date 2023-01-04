@@ -4,11 +4,12 @@
 #include <iomanip>
 #include <fstream>
 #include "Class.h"
-using std:: string;
-using std:: cin;
-using std:: cout;
-using std:: vector;
-using std:: fstream;
+
+using std::string;
+using std::cin;
+using std::cout;
+using std::vector;
+using std::fstream;
 
 // Data File Path
 const string member_file = "members.dat";
@@ -17,7 +18,43 @@ const string rating_file = "rating.dat";
 const string ratingTenant_file = "ratingTenant.dat";
 const string request_file = "request.dat";
 // Member
+int Member::acceptReQuest(int acceptID) {
+    vector<vector<string> > allRequest = System::extractByRow(request_file);
+    int id = this->house.houseID;
+    if(allRequest.size() == 0){
+        std::cerr << "There are no requests to accept" << "\n";
+        return -1;
+    }
+    for(int i = 0; i<allRequest.size();i++){
+        //if the requestID is not  equal to accepted requestID, the system will delete the request from data file
+        if(std::stoi(allRequest[i][0]) != acceptID && std::stoi(allRequest[i][1]) == id){
+            allRequest.erase(allRequest.begin()+i);
+            System::deleteRowData(i,request_file);
+            return 0;
+        }
 
+    }
+    cout << "Request " << acceptID << " have been accepted" << "\n";
+
+}
+int Member::declineRequest(int declineID) {
+    vector<vector<string> > allRequest = System::extractByRow(request_file);
+    int id = this->house.houseID;
+    if(allRequest.size() == 1){
+        std::cerr << "The request have been accepted, can not be declined" << "\n";
+        return -1;
+    }
+    else {
+        for(int i = 0;i<allRequest.size();i++){
+            if(std::stoi(allRequest[i][0]) == declineID && std::stoi(allRequest[i][1]) == id){
+                allRequest.erase(allRequest.begin()+i);
+                System::deleteRowData(i,request_file);
+                return 0;
+            }
+        }
+    }
+
+}
 
 // House
 
@@ -26,17 +63,17 @@ void Admin::showAllMember() {
     cout << "All the member of the system: " << "\n";
     cout
             << std::left
-            <<std::setw(8)
+            << std::setw(8)
             << "MemberID"
             << std::left
             << std::setw(15)
             << "Full Name"
             << "\n";
     vector<vector<string> > memberList = System::extractByRow(member_file);
-    for(int i = 0;i<memberList.size();i++) {
+    for (int i = 0; i < memberList.size(); i++) {
         cout
                 << std::left
-                <<std::setw(8)
+                << std::setw(8)
                 << memberList[i][0]
                 << std::left
                 << std::setw(15)
@@ -44,11 +81,12 @@ void Admin::showAllMember() {
                 << "\n";
     }
 }
-void Admin:: showAllHouse() {
+
+void Admin::showAllHouse() {
     cout << "All house of the system: " << "\n";
     cout
             << std::left
-            <<std::setw(8)
+            << std::setw(8)
             << "HouseID"
             << std::left
             << std::setw(15)
@@ -61,10 +99,10 @@ void Admin:: showAllHouse() {
             << "Status"
             << "\n";
     vector<vector<string> > houseList = System::extractByRow(house_file);
-    for(int i =0;i<houseList.size();i++){
+    for (int i = 0; i < houseList.size(); i++) {
         cout
                 << std::left
-                <<std::setw(8)
+                << std::setw(8)
                 << houseList[i][0]
                 << std::left
                 << std::setw(15)
@@ -78,6 +116,7 @@ void Admin:: showAllHouse() {
                 << "\n";
     }
 }
+
 void Admin::viewMemberDetail() {
     vector<vector<string> > memberList = System::extractByRow(member_file);
     cout << "\nAll members: " << "\n";
@@ -98,7 +137,7 @@ void Admin::viewMemberDetail() {
             << std::setw(10)
             << "Rating Score"
             << std::endl;
-    for (int i = 0;i<memberList.size();i++) {
+    for (int i = 0; i < memberList.size(); i++) {
         cout
                 << std::left
                 << std::setw(15)
@@ -118,7 +157,8 @@ void Admin::viewMemberDetail() {
                 << std::endl;
     }
 }
-void Admin::viewHouseDetail(string id) {
+
+void Admin::viewHouseDetail(int id) {
     cout << "\nHouse with this ID will be displayed " << "\n";
     cout
             << std::left
@@ -148,8 +188,8 @@ void Admin::viewHouseDetail(string id) {
             << "\n";
 
     vector<vector<string> > houseList = System::extractByRow(house_file);
-    for(int i = 0; i<houseList.size(); i++) {
-        if(id == houseList[i][0]){
+    for (int i = 0; i < houseList.size(); i++) {
+        if (id == std::stoi(houseList[i][0])) {
             cout
                     << std::left
                     << std::setw(10)
@@ -179,6 +219,7 @@ void Admin::viewHouseDetail(string id) {
         }
     }
 }
+
 void Admin::viewAllReQuest() {
     vector<vector<string> > requestList = System::extractByRow(request_file);
     cout << "\nAll requests will be displayed here: " << "\n";
@@ -196,7 +237,7 @@ void Admin::viewAllReQuest() {
             << std::setw(10)
             << "status"
             << "\n";
-    for(int i = 0;i<requestList.size();i++){
+    for (int i = 0; i < requestList.size(); i++) {
         cout
                 << std::left
                 << std::setw(10)
@@ -214,6 +255,7 @@ void Admin::viewAllReQuest() {
     }
 
 }
+
 void Admin::searchHouseByDateRange(string dateRange) {
     cout << "\nAll houses with this date range will be displayed: " << "\n";
     cout
@@ -244,8 +286,8 @@ void Admin::searchHouseByDateRange(string dateRange) {
             << "\n";
 
     vector<vector<string> > houseList = System::extractByRow(house_file);
-    for(int i = 0; i<houseList.size(); i++) {
-        if(dateRange == houseList[i][3]){
+    for (int i = 0; i < houseList.size(); i++) {
+        if (dateRange == houseList[i][3]) {
             cout
                     << std::left
                     << std::setw(10)
@@ -276,7 +318,8 @@ void Admin::searchHouseByDateRange(string dateRange) {
     }
 
 }
-void Admin::searchHouseByCredit(string credit) {
+
+void Admin::searchHouseByCredit(int credit) {
     cout << "\nAll houses with this credit will be displayed: " << "\n";
     cout
             << std::left
@@ -307,7 +350,7 @@ void Admin::searchHouseByCredit(string credit) {
 
     vector<vector<string> > houseList = System::extractByRow(house_file);
     for (int i = 0; i < houseList.size(); i++) {
-        if (credit == houseList[i][4]) {
+        if (credit == std::stoi(houseList[i][4])) {
             cout
                     << std::left
                     << std::setw(10)
@@ -337,8 +380,9 @@ void Admin::searchHouseByCredit(string credit) {
         }
     }
 }
+
 void Admin::sortByMemberScore() {
-    vector<vector<string> > sortList = System::sortAscending(4,member_file);
+    vector<vector<string> > sortList = System::sortAscending(4, member_file);
     cout << "\nAll members after sorted will be displayed: " << "\n";
     cout
             << std::left
@@ -357,7 +401,7 @@ void Admin::sortByMemberScore() {
             << std::setw(10)
             << "Rating Score"
             << std::endl;
-    for (int i = 0;i<sortList.size();i++) {
+    for (int i = 0; i < sortList.size(); i++) {
         cout
                 << std::left
                 << std::setw(15)

@@ -1,7 +1,7 @@
 #ifndef _CLASS_
 
 
-#define CLASS
+
 
 #include <iostream>
 #include <string>
@@ -59,63 +59,16 @@ private:
 public:
     Admin();
     void showAllMember();
-    void viewHouseDetail(int id){
-
-    };
-
     virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
-    void searchHouseByCredit(string credit);
-    void viewHouseDetail(string id);
+    void searchHouseByCredit(int credit);
+    void viewHouseDetail(int id);
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
-    ~Admin() {}
+    ~Admin();
 
 
-};
-
-//Declare member class
-class Member : public User {
-private:
-    int memberID;
-    city location;
-
-    double rating_score;
-    int credit;
-
-    vector <Rating *> ratingFromTenant;
-    vector <RatingTenant *> ratingFromOwner;
-    vector <Request *> allRequest;
-    vector <House *> houseList;
-public:
-    friend class Admin;
-    Member();
-    void showAllHouse();
-    void searchHouseByRegion();
-    void reviewAllRequest(Request &userRequest);
-    Request acceptReQuest();
-    Request declineRequest();
-    RatingTenant rateTentant();
-    void deleteHouseList();
-    void addHouseList();
-    void viewAllHouse();
-    Request requestHouse();
-    Request cancelRequest();
-    void rateHouse();
-    ~Member();
-};
-
-// Declare Request class
-class Request {
-private:
-    int request;
-    int houseId;
-    int tenantId;
-    requestStatus status;
-public:
-    Request();
-    ~Request();
 };
 // Declare house class
 class House {
@@ -130,7 +83,51 @@ private:
     int consuming_point;
     int required_score;
     city location;
+    friend class Member;
 };
+
+//Declare member class
+class Member : public User {
+private:
+    int memberID;
+    city location;
+    double rating_score;
+    int credit;
+    vector <Rating *> ratingFromTenant;
+    vector <RatingTenant *> ratingFromOwner;
+    vector <Request *> allRequest;
+    vector <House *> houseList; //all the house the member have rented
+    House house;
+public:
+    friend class Admin;
+    Member();
+    void showAllHouse();
+    void searchHouseByRegion();
+    void reviewAllRequest(Request &userRequest);
+    int acceptReQuest(int acceptID);
+    int declineRequest(int declineID);
+    RatingTenant rateTentant();
+    void deleteHouseList();
+    void addHouseList();
+    void viewAllHouse();
+    Request requestHouse();
+    Request cancelRequest();
+    void rateHouse();
+    ~Member();
+};
+
+// Declare Request class
+class Request {
+private:
+    int requestID;
+    int houseId;
+    int tenantId;
+    requestStatus status;
+public:
+    Request();
+    ~Request();
+};
+
 
 // Declare Rating
 class Rating {

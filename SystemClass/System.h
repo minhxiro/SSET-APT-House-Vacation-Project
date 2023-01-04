@@ -39,7 +39,7 @@ public:
 
     bool scoreAuth(int scores);
 
-    void deleteRowData(int index, string dataFile);
+    static void deleteRowData(int index, string dataFile);
 
     void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
 
