@@ -3,23 +3,15 @@
 #include <fstream>
 #include <map>
 #include <string>
-
-int ratingId = 1;
-
-struct House {
-    int score;
-    std::string comment;
-};
+#include <vector>
 
 class Member {
 private:
-    std::map<std::string, House> occupiedHouses;
+    std::string houseId;
+    int score;
+    std::vector<std::string> comment;
 public:
     void rateHouse() {
-        std::string houseId;
-        int score;
-        std::string comment;
-
         std::cout << "Enter the ID of the house you would like to rate: ";
         std::cin >> houseId;
 
@@ -33,45 +25,41 @@ public:
             }
         }
 
-        std::cout << "Enter your comment for the house: ";
-        std::cin.ignore(); // ignore the newline character left in the input buffer
-        std::getline(std::cin, comment);
+        std::cout << "Enter your comment for the house (enter 'submit' to finish): ";
+        while (true) {
+            std::string line;
+            std::getline(std::cin, line);
+            if (line == "submit") {
+                break;
+            }
+            comment.push_back(line);
+        }
 
-        occupiedHouses[houseId] = {score, comment};
-
-        std::ofstream outFile("rating_data.txt", std::ios_base::app);
-        outFile << "Rating ID: H" << ratingId << std::endl; 
-        outFile << "    House ID: " << houseId << std::endl;
-        outFile << "    Score: " << score << std::endl;
-        outFile << "    Comment: " << comment << std::endl;
-        ratingId++;
+        std::ofstream outFile("rating_data.dat", std::ios_base::app);
+        outFile << "House ID: " << houseId << std::endl;
+        outFile << "Score: " << score << std::endl;
+        outFile << "Comment: ";
+        for (const std::string& line : comment) {
+            outFile << "    " << line << std::endl;
+        }
 }
 
-    void showInfo() const {
-        std::cout << "Occupied houses:" << std::endl;   
-        for (const auto& it : occupiedHouses) {
-            std::cout << "   House ID: " << it.first << std::endl;
-            std::cout << "   Score: " << it.second.score << std::endl;
-            std::cout << "   Comment: " << it.second.comment << std::endl;
+    void showInfo() {
+        std::ifstream inFile("rating_data.dat");
+        std::string line;
+        while (std::getline(inFile, line)) {
+            std::cout << line << std::endl;
         }
     }
 };
 
-struct Occupier {
-    int score;
-    std::string comment;
-};
-
 class HouseOwner {
 private:
-    std::map<std::string, Occupier> occupiers;
+    std::string occupierId;
+    int score;
+    std::vector<std::string> comment;
 public:
     void rateOccupier() {
-        static int ratingId = 1;
-        std::string occupierId;
-        int score;
-        std::string comment;
-
         std::cout << "Enter the ID of the occupier you would like to rate: ";
         std::cin >> occupierId;
 
@@ -85,26 +73,30 @@ public:
             }
         }
 
-        std::cout << "Enter your comment for the occupier: ";
-        std::cin.ignore(); // ignore the newline character left in the input buffer
-        std::getline(std::cin, comment);
+        std::cout << "Enter your comment for the occupier (enter 'submit' to finish): ";
+        while (true) {
+            std::string line;
+            std::getline(std::cin, line);
+            if (line == "submit") {
+                break;
+            }
+            comment.push_back(line);
+        }
 
-        occupiers[occupierId] = {score, comment};
-
-        std::ofstream outFile("rating_data.txt", std::ios_base::app);
-        outFile << "Rating ID: P" << ratingId << std::endl; 
-        outFile << "    Occupier ID: " << occupierId << std::endl;
-        outFile << "    Score: " << score << std::endl;
-        outFile << "    Comment: " << comment << std::endl;
-        ratingId++;
+        std::ofstream outFile("rating_data.dat", std::ios_base::app);
+        outFile << "Occupier ID: " << occupierId << std::endl;
+        outFile << "Score: " << score << std::endl;
+        outFile << "Comment: ";
+        for (const std::string& line : comment) {
+            outFile << "    " << line << std::endl;
+        }
 }
 
-    void showInfo() const {
-        std::cout << "Occupiers:" << std::endl;
-        for (const auto& it : occupiers) {
-            std::cout << "   Occupier ID: " << it.first << std::endl;
-            std::cout << "   Score: " << it.second.score << std::endl;
-            std::cout << "   Comment: " << it.second.comment << std::endl;
+    void showInfo() {
+        std::ifstream inFile("rating_data.dat");
+        std::string line;
+        while (std::getline(inFile, line)) {
+            std::cout << line << std::endl;
         }
     }
 };
@@ -117,9 +109,8 @@ HouseOwner house;
         std::cout << "\nMenu:" << std::endl;
         std::cout << "1. Rate a house" << std::endl;
         std::cout << "2. Rate a occupier" << std::endl;
-        std::cout << "3. Show house rating information" << std::endl;
-        std::cout << "4. Show occupier rating information" << std::endl;
-        std::cout << "5. Exit" << std::endl;
+        std::cout << "3. Show rating information" << std::endl;
+        std::cout << "4. Exit" << std::endl;
         std::cout << "Enter your selection: ";
 
         int selection;
@@ -132,8 +123,6 @@ HouseOwner house;
         } else if (selection == 3) {
             member.showInfo();
         } else if (selection == 4) {
-            house.showInfo();
-        } else if (selection == 5) {
             exit(0);
         } else {
             std::cout << "invalid\n";
