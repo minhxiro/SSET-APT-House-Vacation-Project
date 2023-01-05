@@ -62,10 +62,10 @@ public:
 
     virtual void showAllHouse();
     void viewMemberDetail();
-    void viewAllReQuest(Request &userRequest);
-    void searchHouseByCredit();
+    void viewAllReQuest();
+    void searchHouseByCredit(int credit);
     void searchHouseById();
-    void searchHouseByDateRange();
+    void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
     ~Admin();
 };
@@ -91,8 +91,8 @@ public:
     void showAllHouse();
     void searchHouseByRegion();
     void reviewAllRequest();
-    Request acceptReQuest();
-    Request declineRequest();
+    int acceptReQuest(int declineID);
+    int declineRequest(int declineID);
     RatingTenant rateTentant();
     void deleteHouseList();
     void addHouseList();
@@ -208,7 +208,7 @@ public:
 
     int idAutoIncrement(string dataFile);
 
-    vector<vector<string> >  sortAscending(int index, string dataFile);
+    static vector<vector<string> >  sortAscending(int index, string dataFile);
 
     void sortByCategory(string type, string dataFile, int index);
 
