@@ -1,7 +1,16 @@
 #include <iostream>
+#include <fstream>
+#include <map>
 #include <string>
+#include <vector>
 using std::string;
 using std::cout;
+using std::cin;
+using std::vector;
+using std::ofstream;
+using std::ifstream;
+using std::ios_base;
+using std::endl;
 
 class Rating
 {

@@ -1,102 +1,97 @@
 #include "Rating.h"
-#include <iostream>
-#include <fstream>
-#include <map>
-#include <string>
-#include <vector>
 
 class Member {
 private:
-    std::string houseId;
+    string houseId;
     int score;
-    std::vector<std::string> comment;
+    vector<string> comment;
 public:
     void rateHouse() {
-        std::cout << "Enter the ID of the house you would like to rate: ";
-        std::cin >> houseId;
+        cout << "Enter the ID of the house you would like to rate: ";
+        cin >> houseId;
 
         while (true) {
-            std::cout << "Enter your score for the house (-10 to 10): ";
-            std::cin >> score;
+            cout << "Enter your score for the house (-10 to 10): ";
+            cin >> score;
             if (score >= -10 && score <= 10) {
                 break;
             } else {
-                cout <<  "Invalid score. Please enter a score between -10 and 10." << std::endl;
+                cout <<  "Invalid score. Please enter a score between -10 and 10." << endl;
             }
         }
 
-        std::cout << "Enter your comment for the house (enter 'submit' to finish): ";
+        cout << "Enter your comment for the house (enter 'submit' to finish): ";
         while (true) {
-            std::string line;
-            std::getline(std::cin, line);
+            string line;
+            getline(cin, line);
             if (line == "submit") {
                 break;
             }
             comment.push_back(line);
         }
 
-        std::ofstream outFile("rating_data.dat", std::ios_base::app);
-        outFile << "House ID: " << houseId << std::endl;
-        outFile << "Score: " << score << std::endl;
+        ofstream outFile("rating_data.dat", ios_base::app);
+        outFile << "House ID: " << houseId << endl;
+        outFile << "Score: " << score << endl;
         outFile << "Comment: ";
-        for (const std::string& line : comment) {
-            outFile << "    " << line << std::endl;
+        for (const string& line : comment) {
+            outFile << "    " << line << endl;
         }
-}
+    }
 
     void showInfo() {
-        std::ifstream inFile("rating_data.dat");
-        std::string line;
-        while (std::getline(inFile, line)) {
-            std::cout << line << std::endl;
+        ifstream inFile("rating_data.dat");
+        string line;
+        while (getline(inFile, line)) {
+            cout << line << endl;
         }
     }
 };
 
 class HouseOwner {
 private:
-    std::string occupierId;
+    string occupierId;
     int score;
-    std::vector<std::string> comment;
+    vector<string> comment;
 public:
     void rateOccupier() {
-        std::cout << "Enter the ID of the occupier you would like to rate: ";
-        std::cin >> occupierId;
+        cout << "Enter the ID of the occupier you would like to rate: ";
+        cin >> occupierId;
 
         while (true) {
-            std::cout << "Enter your score for the occupier (-10 to 10): ";
-            std::cin >> score;
+            cout << "Enter your score for the occupier (-10 to 10): ";
+            cin >> score;
             if (score >= -10 && score <= 10) {
                 break;
             } else {
-                cout <<  "Invalid score. Please enter a score between -10 and 10." << std::endl;
+                cout <<  "Invalid score. Please enter a score between -10 and 10." << endl;
             }
         }
 
-        std::cout << "Enter your comment for the occupier (enter 'submit' to finish): ";
+        cout << "Enter your comment for the occupier (enter 'submit' to finish): ";
         while (true) {
-            std::string line;
-            std::getline(std::cin, line);
+            string line;
+            getline(cin, line);
             if (line == "submit") {
                 break;
             }
             comment.push_back(line);
         }
 
-        std::ofstream outFile("rating_data.dat", std::ios_base::app);
-        outFile << "Occupier ID: " << occupierId << std::endl;
-        outFile << "Score: " << score << std::endl;
+        ofstream outFile("rating_data.dat", ios_base::app);
+        outFile << "Occupier ID: " << occupierId << endl;
+        outFile << "Score: " << score << endl;
         outFile << "Comment: ";
-        for (const std::string& line : comment) {
-            outFile << "    " << line << std::endl;
+        for (const string& line : comment) {
+            outFile << "    " << line << endl;
         }
-}
+    }
 
     void showInfo() {
-        std::ifstream inFile("rating_data.dat");
-        std::string line;
-        while (std::getline(inFile, line)) {
-            std::cout << line << std::endl;
+        ifstream inFile("rating_data.dat");
+        string line;
+        while (getline(inFile, line)) {
+            cout << line << endl;
         }
     }
 };
@@ -106,15 +101,15 @@ Member member;
 HouseOwner house;
 
     while (true) {
-        std::cout << "\nMenu:" << std::endl;
-        std::cout << "1. Rate a house" << std::endl;
-        std::cout << "2. Rate a occupier" << std::endl;
-        std::cout << "3. Show rating information" << std::endl;
-        std::cout << "4. Exit" << std::endl;
-        std::cout << "Enter your selection: ";
+        cout << "\nMenu:" << endl;
+        cout << "1. Rate a house" << endl;
+        cout << "2. Rate a occupier" << endl;
+        cout << "3. Show rating information" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your selection: ";
 
         int selection;
-        std::cin >> selection;
+        cin >> selection;
 
         if (selection == 1) {
             member.rateHouse();
@@ -125,7 +120,7 @@ HouseOwner house;
         } else if (selection == 4) {
             exit(0);
         } else {
-            std::cout << "invalid\n";
+            cout << "invalid\n";
         }
     }
 return 0;
