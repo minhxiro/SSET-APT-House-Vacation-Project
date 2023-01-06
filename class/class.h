@@ -100,7 +100,7 @@ public:
     Request requestHouse();
     Request cancelRequest();
     void rateHouse();
-    
+    friend class System;
     ~Member();
 };
 
@@ -214,7 +214,7 @@ public:
 
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
-    
+    void showMenuOption(User &client, Member &obj);
 };
 
 
