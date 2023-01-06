@@ -34,7 +34,7 @@ protected:
     string full_name;
     string password;
     string phonenum;
-
+    int otp;
 
     bool isOwner();
 public:
@@ -47,7 +47,7 @@ public:
     void showAccountInfo();
     void checkLogin();
     ~User();
-
+    
 };
 
 // Declare Admin class
@@ -215,6 +215,8 @@ public:
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
     void showMenuOption(User &client, Member &obj);
+
+    static int sendOTP();
 };
 
 

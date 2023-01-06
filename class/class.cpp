@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <fstream>
 #include <map>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 #include "class.h"
 #include <regex>
 
@@ -234,12 +237,13 @@ void System :: showMenuOption(User &client, Member &obj) {
         int memberChoice;
         client.login();
         client.checkLogin();
+        client.enterOtpCode();
         cout << "This is your menu:\n0.Exit\n1.View Information\n";
         cout << "Enter your choice: ";
         cin >> memberChoice;
         switch (memberChoice) {
             case 0:
-                cout << "Exit\n";
+                this->showMenuOption(client, obj);
                 break;
             case 1:
                 obj.showAccountInfo();
@@ -476,7 +480,11 @@ void System::searchByDate(int mode, string day, string month, int index, string 
     }
 }
 
-
+int System::sendOTP() {
+    srand(time(NULL));
+	int res = rand();
+	return res;
+}
 
 
 // Member
@@ -1094,4 +1102,23 @@ void User:: registre() {
     cout << "Enter your full name: ";
     getline(cin, this->full_name);
 
+}
+
+void User::enterOtpCode() {
+    // Get the otp from system:
+    int code;
+    this->otp = System::sendOTP();
+    cout << "Your OTP Code is: " << this->otp;
+    cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
+    cin >> code;
+    while(code != this->otp) {
+         this->otp = System::sendOTP();
+        cout << "Your OTP Code is: " << this->otp;
+        cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
+        cin >> code;
+    }
+    if(code == this->otp) {
+        cout << "\nYou have logined as Member: \n";
+    }
+    
 }
