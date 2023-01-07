@@ -1,3 +1,4 @@
+
 #ifndef _SYSTEM_CLASS_
 
 
@@ -6,15 +7,24 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "./class/class.h"
+#include <iomanip>
+#include <algorithm>
+#include <fstream>
+#include <map>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <regex>
+
 using std:: string;
 using std:: cin;
 using std:: cout;
 using std :: vector;
+using std::regex;
+
 class System {
 public:
 //    bool isInteger(string num);
-    
     string trimString(string str);
 
     vector<int> getIndex(vector<string> lst, string K);
@@ -57,8 +67,9 @@ public:
 
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
-    void showMenuOption(User &client, Member &obj);
+    // void showMenuOption(User &client, Member &obj);
 
     static int sendOTP();
 };
 #endif
+

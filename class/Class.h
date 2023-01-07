@@ -1,12 +1,14 @@
 #ifndef _CLASS_
 
 
+
 #define _CLASS_
+
 
 #include <iostream>
 #include <string>
 #include <vector>
-#include "./SystemClass/System.h"
+#include "../SystemClass/System.h"
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -28,12 +30,15 @@ class User;
 
 // Declare User class
 
+
+
 class User {
 protected:
     string name;
     string full_name;
     string password;
     string phonenum;
+
     int otp;
 
     bool isOwner();
@@ -41,13 +46,16 @@ public:
     
 
 
+
     void login();
     void enterOtpCode();
     void registre();
     void showAccountInfo();
+
     void checkLogin();
     
     
+
 };
 
 // Declare Admin class
@@ -56,14 +64,17 @@ private:
     vector <Member *> members;
     vector <House *> houseList;
 public:
+
     
     void showAllMember();
     void viewHouseDetail(int id);
+
 
     virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
     void searchHouseByCredit(int credit);
+
     void searchHouseById();
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
@@ -115,6 +126,8 @@ public:
     
     friend class Member;
     
+
+
 };
 // Declare house class
 class House {
@@ -134,6 +147,7 @@ private:
     friend class Member;
 };
 
+
 // Declare Rating
 class Rating {
 private:
@@ -143,10 +157,12 @@ private:
     string currentDate;
     int tenantID;
     int houseID;
+
     friend class House;
     friend class Member;
 public:
     
+
 };
 // Declare Rating TEnant
 class RatingTenant {
@@ -158,6 +174,7 @@ private:
     int tenantID;
     int ownerID;
 public:
+
     
 };
 // Declare system
@@ -171,3 +188,4 @@ public:
 
 
 #endif
+

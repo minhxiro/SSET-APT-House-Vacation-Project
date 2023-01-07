@@ -9,6 +9,7 @@
 #include <ctime>
 #include <iostream>
 #include "Class.h"
+
 #include <regex>
 
 using std:: string;
@@ -19,6 +20,7 @@ using std:: fstream;
 using std::regex;
 
 
+
 // Data File Path
 const string DATA_PATH = "data/";
 const string member_file = "members.dat";
@@ -26,6 +28,7 @@ const string house_file = "house.dat";
 const string rating_file = "rating.dat";
 const string ratingTenant_file = "ratingTenant.dat";
 const string request_file = "request.dat";
+
 
 string getFilePath(const string& fileName) {
     return DATA_PATH + fileName;
@@ -38,42 +41,51 @@ string getFilePath(const string& fileName) {
 // Member
 
 void Member::acceptReQuest(int acceptID) {
-    vector<vector<string> > allRequest = System::extractByRow(request_file);
+    vector<vector<string> > allRequest = System::extractByRow(getFilePath(request_file));
     int id = this->memberHouse->houseID;
     if(allRequest.size() == 0){
         std::cerr << "There are no requests to accept" << "\n";
         
+
     }
     for(int i = 0; i<allRequest.size();i++){
         //if the requestID is not  equal to accepted requestID, the system will delete the request from data file
         if(std::stoi(allRequest[i][0]) != acceptID && std::stoi(allRequest[i][1]) == id){
             allRequest.erase(allRequest.begin()+i);
-            System::deleteRowData(i,request_file);
+
+            System::deleteRowData(i, getFilePath(request_file));
             
+
         }
 
     }
     cout << "Request " << acceptID << " have been accepted" << "\n";
 
 }
+
 void Member::declineRequest(int declineID) {
     vector<vector<string> > allRequest = System::extractByRow(request_file);
     int id = this->memberHouse->houseID;
     if(allRequest.size() == 1){
         std::cerr << "The request have been accepted, can not be declined" << "\n";
         
+
+
     }
     else {
         for(int i = 0;i<allRequest.size();i++){
             if(std::stoi(allRequest[i][0]) == declineID && std::stoi(allRequest[i][1]) == id){
                 allRequest.erase(allRequest.begin()+i);
-                System::deleteRowData(i,request_file);
+
+                System::deleteRowData(i, getFilePath(request_file));
                 
+
             }
         }
     }
 
 }
+
 void Member::showAllHouse() {
     cout << "List of available houses is being showed below:\n";
     vector <string> listofHouse;
@@ -219,6 +231,7 @@ void Member :: deleteHouseList() {
     System :: deleteRowData(index, house_file);
 }
 
+
 // House
 
 // Admin
@@ -261,7 +274,9 @@ void Admin::showAllHouse() {
             << std::setw(15)
             << "Status"
             << "\n";
-    vector<vector<string> > houseList = System::extractByRow(house_file);
+
+    vector<vector<string> > houseList = System::extractByRow(getFilePath(house_file));
+
     for (int i = 0; i < houseList.size(); i++) {
         cout
                 << std::left
@@ -281,7 +296,9 @@ void Admin::showAllHouse() {
 }
 
 void Admin::viewMemberDetail() {
-    vector<vector<string> > memberList = System::extractByRow(member_file);
+
+    vector<vector<string> > memberList = System::extractByRow(getFilePath(member_file));
+
     cout << "\nAll members: " << "\n";
     cout
             << std::left
@@ -350,7 +367,9 @@ void Admin::viewHouseDetail(int id) {
             << "Status"
             << "\n";
 
-    vector<vector<string> > houseList = System::extractByRow(house_file);
+
+    vector<vector<string> > houseList = System::extractByRow(getFilePath(house_file));
+
     for (int i = 0; i < houseList.size(); i++) {
         if (id == std::stoi(houseList[i][0])) {
             cout
@@ -384,7 +403,9 @@ void Admin::viewHouseDetail(int id) {
 }
 
 void Admin::viewAllReQuest() {
-    vector<vector<string> > requestList = System::extractByRow(request_file);
+
+    vector<vector<string> > requestList = System::extractByRow(getFilePath(request_file));
+
     cout << "\nAll requests will be displayed here: " << "\n";
     cout
             << std::left
@@ -448,7 +469,10 @@ void Admin::searchHouseByDateRange(string dateRange) {
             << "Status"
             << "\n";
 
-    vector<vector<string> > houseList = System::extractByRow(house_file);
+
+
+    vector<vector<string> > houseList = System::extractByRow(getFilePath(house_file));
+
     for (int i = 0; i < houseList.size(); i++) {
         if (dateRange == houseList[i][3]) {
             cout
@@ -511,7 +535,10 @@ void Admin::searchHouseByCredit(int credit) {
             << "Status"
             << "\n";
 
-    vector<vector<string> > houseList = System::extractByRow(house_file);
+
+
+    vector<vector<string> > houseList = System::extractByRow(getFilePath(house_file));
+
     for (int i = 0; i < houseList.size(); i++) {
         if (credit == std::stoi(houseList[i][4])) {
             cout
@@ -545,7 +572,9 @@ void Admin::searchHouseByCredit(int credit) {
 }
 
 void Admin::sortByMemberScore() {
-    vector<vector<string> > sortList = System::sortAscending(4, member_file);
+
+    vector<vector<string> > sortList = System::sortAscending(4, getFilePath(member_file));
+
     cout << "\nAll members after sorted will be displayed: " << "\n";
     cout
             << std::left
@@ -585,6 +614,8 @@ void Admin::sortByMemberScore() {
     }
 
 }
+
+
 //Request
 
 // HouseList
@@ -669,3 +700,4 @@ void User::enterOtpCode() {
     }
     
 }
+

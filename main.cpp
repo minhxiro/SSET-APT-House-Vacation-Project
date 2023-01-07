@@ -2,7 +2,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "./class/class.h"
+#include "./class/Class.h"
+
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -10,6 +11,6 @@ using std:: vector;
 using std:: fstream;
 
 int main() {
-    Member minh;
-    minh.registre();
+    Admin admin;
+    admin.showAllHouse();
 }

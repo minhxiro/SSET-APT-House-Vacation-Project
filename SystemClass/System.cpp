@@ -1,22 +1,11 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <iomanip>
-#include <algorithm>
-#include <fstream>
-#include <map>
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
+
 #include "System.h"
-#include <regex>
 
 using std:: string;
 using std:: cin;
 using std:: cout;
-using std:: vector;
-using std:: fstream;
-using std :: regex;
+using std :: vector;
+using std::regex;
 
 // System
 const string DATA_PATH = "data/";
@@ -25,7 +14,6 @@ const string house_file = "house.dat";
 const string rating_file = "rating.dat";
 const string ratingTenant_file = "ratingTenant.dat";
 const string request_file = "request.dat";
-
 //bool System::isInteger(string num) {
 //    for (char ch: num) {
 //        if (ch == '.') {
@@ -35,7 +23,8 @@ const string request_file = "request.dat";
 //    return true;
 //}
 
-    string System ::trimString(string str) {
+
+string System::trimString(string str) {
     string finalStr;
     for (char ch: str) {
         if (ch == ' ') {
@@ -148,9 +137,6 @@ bool System::inputRangeAuthenticate(string &range) {
     }
 }
 
-
-
-
 void System::addData(string data, string dataFile) {
     std::fstream file;
     file.open(dataFile, std::ios::app);
@@ -183,7 +169,8 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     return dataTable;
 }
 
- vector<string> System::extractByColumnIndex(int index, string dataFile) {
+
+vector<string> System::extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<string> dataColumnArray;
@@ -204,93 +191,93 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     return dataColumnArray;
 }
 
-void System :: showMenuOption(User &client, Member &obj) {
-    int choice;
-    string username;
-    cout << "EEET2482/COSC2082 ASSIGNMENT\nVACATION HOUSE EXCHANGE APPLICATION\n";
-    cout << "Instructors: Mr. Linh Tran & Phong Ngo\nGroup: Group Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\n";
-    cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:";
-    cin >> choice;
-    while(choice != 1 && choice != 2 && choice != 3) {
-        cout << "Invalid Input,\nEnter your choice: ";
-        cin >> choice;
-    }
-    if(choice == 1) {
-        client.registre();
-    }
-    else if(choice == 2) {
-        int memberChoice;
-        client.login();
-        client.checkLogin();
-        client.enterOtpCode();
-        cout << "This is your menu:\n0.Exit\n1.View Information\n";
-        cout << "Enter your choice: ";
-        cin >> memberChoice;
+// void System :: showMenuOption(User &client, Member &obj) {
+//     int choice;
+//     string username;
+//     cout << "EEET2482/COSC2082 ASSIGNMENT\nVACATION HOUSE EXCHANGE APPLICATION\n";
+//     cout << "Instructors: Mr. Linh Tran & Phong Ngo\nGroup: Group Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\n";
+//     cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:";
+//     cin >> choice;
+//     while(choice != 1 && choice != 2 && choice != 3) {
+//         cout << "Invalid Input,\nEnter your choice: ";
+//         cin >> choice;
+//     }
+//     if(choice == 1) {
+//         client.registre();
+//     }
+//     else if(choice == 2) {
+//         int memberChoice;
+//         client.login();
+//         client.checkLogin();
+//         client.enterOtpCode();
+//         cout << "This is your menu:\n0.Exit\n1.View Information\n";
+//         cout << "Enter your choice: ";
+//         cin >> memberChoice;
         
-        switch (memberChoice) {
-            case 0:
-                this->showMenuOption(client, obj);
-                break;
-            case 1:
-                obj.showAccountInfo();
-                break;
-            default:
-                while(memberChoice != 0 && memberChoice != 1) {
-                    cout << "You must enter invalid option: \n";
-                    cout << "Enter your choice: ";
-                    cin >> memberChoice;
-                }
-        }
-    }
-    else if(choice == 3) {
-        Admin ad;
-        int credit;
-        string dateRange;
-        cout << "You have logined as Admin, select your action:\n1.Show All Member\n2.View House Detail\n3.Show all house"
-             <<"\n4.View Member Detail\n5.View All Request\n6.Search house by credit\n7.Search house by ID"
-             << "\n8.Search House By Date Range\n9.Sort By Member Score\n";
-        int adminChoice;
-        cout << "Enter your option: ";
-        cin >> adminChoice;
-        switch(adminChoice) {
-            case 1:
-                ad.showAllMember();
-                break;
-            case 2:
-                ad.viewHouseDetail(obj.memberID);
-                break;
-            case 3:
-                ad.showAllHouse();
-                break;
-            case 4:
-                ad.viewMemberDetail();
-                break;
-            case 5:
-                ad.viewAllReQuest();
-                break;
-            case 6:
-                cout << "Enter credit: ";
-                cin >> credit;
-                ad.searchHouseByCredit(credit);
-                break;
-            case 7:
+//         switch (memberChoice) {
+//             case 0:
+//                 this->showMenuOption(client, obj);
+//                 break;
+//             case 1:
+//                 obj.showAccountInfo();
+//                 break;
+//             default:
+//                 while(memberChoice != 0 && memberChoice != 1) {
+//                     cout << "You must enter invalid option: \n";
+//                     cout << "Enter your choice: ";
+//                     cin >> memberChoice;
+//                 }
+//         }
+//     }
+//     else if(choice == 3) {
+//         Admin ad;
+//         int credit;
+//         string dateRange;
+//         cout << "You have logined as Admin, select your action:\n1.Show All Member\n2.View House Detail\n3.Show all house"
+//              <<"\n4.View Member Detail\n5.View All Request\n6.Search house by credit\n7.Search house by ID"
+//              << "\n8.Search House By Date Range\n9.Sort By Member Score\n";
+//         int adminChoice;
+//         cout << "Enter your option: ";
+//         cin >> adminChoice;
+//         switch(adminChoice) {
+//             case 1:
+//                 ad.showAllMember();
+//                 break;
+//             case 2:
+//                 ad.viewHouseDetail(obj.memberID);
+//                 break;
+//             case 3:
+//                 ad.showAllHouse();
+//                 break;
+//             case 4:
+//                 ad.viewMemberDetail();
+//                 break;
+//             case 5:
+//                 ad.viewAllReQuest();
+//                 break;
+//             case 6:
+//                 cout << "Enter credit: ";
+//                 cin >> credit;
+//                 ad.searchHouseByCredit(credit);
+//                 break;
+//             case 7:
                 
-                break;
-            case 8:
-                cout << "Enter date range: ";
-                getline(cin, dateRange);
-                ad.searchHouseByDateRange(dateRange);
-                break;
-            case 9:
-                ad.sortByMemberScore();
-                break;
-            default:
-                cout << "Invalid input\n";
-                break;
-        }
-    }
+//                 break;
+//             case 8:
+//                 cout << "Enter date range: ";
+//                 getline(cin, dateRange);
+//                 ad.searchHouseByDateRange(dateRange);
+//                 break;
+//             case 9:
+//                 ad.sortByMemberScore();
+//                 break;
+//             default:
+//                 cout << "Invalid input\n";
+//                 break;
+//         }
+//     }
     
-}
+// }
 
 void System::updateRowAtIndex(int index, string data, string dataFile, string newDataFile) {
     std::ifstream readFile;
@@ -471,3 +458,5 @@ int System::sendOTP() {
 	int res = rand();
 	return res;
 }
+
+
