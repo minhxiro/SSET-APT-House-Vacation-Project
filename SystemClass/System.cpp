@@ -77,7 +77,7 @@ bool System::inputUsernameAuthentication(string username) {
 bool System::inputNameAuthentication(string &name) {
     //false: Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces
     //true: continue
-    regex reg("^[a-zA-Z]*{8,20}$");
+    regex reg("^[a-zA-Z]{8,20}$");
     name = trimString(name);
     if (std::regex_match(name, reg)) {
         return true;
@@ -159,7 +159,6 @@ vector<vector<string> > System::extractByRow(string dataFile) {
         cout << "Cannot reach the database \n";
     } else {
         while (!file.eof()) {
-            dataRowsArray = {};
             std::getline(file, dataLine);
             dataRowsArray = splitStr(dataLine, ';');
             dataTable.push_back(dataRowsArray);
@@ -181,7 +180,6 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
     } else {
         while (!file.eof()) {
             std::stringstream ss;
-            dataRowsArray = {};
             std::getline(file, dataLine);
             dataRowsArray = splitStr(dataLine, ';');
             dataColumnArray.push_back(dataRowsArray[index]);
@@ -373,7 +371,7 @@ vector<vector<string> > System::sortAscending(int index, string dataFile) {
             break;
         }
         for (int j = 1; j < data.size(); j++) {
-            vector<string> dataString = {};
+            vector<string> dataString;
             if (std::stof(data[i][index]) > std::stof(data[j][index])) {
                 std::iter_swap(data.begin() + i, data.begin() + j);
             }
