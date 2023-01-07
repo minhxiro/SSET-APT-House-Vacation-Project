@@ -25,4 +25,5 @@ public:
     void rateHouse() {}
     void rateOccupier() {}
     void showInfo() {}
+    double calculateAverageScore() {}
 };
