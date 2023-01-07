@@ -60,13 +60,6 @@ void Member::showAllHouse() {
     }
 }
 
-void Member::showAccountInfo() {
-    cout << "Your full name is: " << this->full_name << "\n";
-    cout << "Your phone number is: " << this->phonenum << "\n";
-    cout << "Your ID is: " << this->memberID << "\n";
-    cout << "Your credit is: " << this->credit << "\n";
-    cout << "Your rating score is: " << this->rating_score << "\n";
-}
 
 void Member::requestHouse() {
     int n;
@@ -148,8 +141,8 @@ void Member::addHouseList() {
     cin >> this->memberHouse->dateRange;
     System::addData(this->memberHouse->dateRange, houseFile);
     cout << "Enter house owner: ";
-    getline(cin, this->full_name);
-    System::addData(this->full_name, houseFile);
+    getline(cin, this->fullName);
+    System::addData(this->fullName, houseFile);
 }
 
 void Member::reviewAllRequest() {
@@ -582,8 +575,10 @@ void User::login() {
     cin >> this->password;
 }
 
-void User::checkLogin() {
+int User::checkLogin() {
     // Read data of member:
+    int code = 0;
+    int j = 0;
     string *informationData = new string[1000];
     fstream file;
     file.open(memberFile, std::ios::in);
@@ -599,16 +594,50 @@ void User::checkLogin() {
     file.close();
     // Check password
     for (int i = 0; i < index; i++) {
+        j++;
         if ((informationData[i].find(this->name) != std::string::npos) &&
             (informationData[i].find(this->password) != std::string::npos)) {
             cout << "You have logined as " << this->name << "\n";
-        } else cout << "Wrong username or password\n";
+            code++;
+            break;
+        }
     }
+    if(code == 0) {
+        cout << "Wrong username or pass";
+    }
+    return j;
 }
 
-void User::showAccountInfo() {
-    cout << "Your full name is: " << this->full_name << "\n";
+void User::showAccountInfo(int j) {
+    vector <string> tmp;
+    string *informationData = new string[1000];
+    fstream file;
+    file.open(memberFile, std::ios::in);
+    if (!file) {
+        std::cerr << "Fail to open file\n";
+    }
+    int index = 0;
+    while (!file.eof()) {
+        file >> informationData[index];
+        index++;
+    }
+
+    file.close();
+    for(int i = 0; i < index; i++) {
+        if(i == j) {
+          tmp = System::splitStr(informationData[i], ';');
+        }
+    }
+    this->fullName = tmp[1];
+    this->phonenum = tmp[2];
+    this->memberID = std::stoi(tmp[0]);
+    this->credit = std::stoi(tmp[5]);
+    this->ratingScore = std::stoi(tmp[7]);
+    cout << "Your full name is: " << this->fullName << "\n";
     cout << "Your phone number is: " << this->phonenum << "\n";
+    cout << "Your ID is: " << this->memberID << "\n";
+    cout << "Your credit is: " << this->credit << "\n";
+    cout << "Your rating score is: " << this->ratingScore << "\n";
 }
 
 
@@ -632,12 +661,12 @@ void User::registre() {
     }
 
     cout << "Enter your full name: ";
-    getline(cin, this->full_name);
-    while (!System::inputNameAuthentication(this->full_name)) {
+    getline(cin, this->fullName);
+    while (!System::inputNameAuthentication(this->fullName)) {
         cout << "Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces"
              << "\n";
         cout << "Please enter again: ";
-        getline(cin, this->full_name);
+        getline(cin, this->fullName);
     }
     cout << "Enter your phone number: ";
     getline(cin, this->phonenum);
@@ -671,7 +700,7 @@ void User::registre() {
             break;
     }
 
-    data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->full_name + ";" +
+    data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->fullName + ";" +
            this->phonenum + ";" + this->name + ";" + this->password + ";" + "500" + ";" + cityLocation + ";" + "0";
     System::addData(data, memberFile);
 

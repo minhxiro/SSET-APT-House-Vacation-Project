@@ -13,5 +13,7 @@ using std:: fstream;
 int main() {
     User user;
 //    user.registre();
-    user.showAccountInfo();
+    user.login();
+    int num = user.checkLogin();
+    user.showAccountInfo(num);
 }

@@ -31,8 +31,11 @@ class User;
 
 class User {
 protected:
+    double ratingScore;
+    int credit;
+    int memberID;
     string name;
-    string full_name;
+    string fullName;
     string password;
     string phonenum;
     int otp;
@@ -45,8 +48,8 @@ public:
     void login();
     void enterOtpCode();
     void registre();
-    void showAccountInfo();
-    void checkLogin();
+    void showAccountInfo(int j);
+    int checkLogin();
     
     
 
@@ -75,11 +78,10 @@ public:
 //Declare member class
 class Member : public User {
 private:
-    int memberID;
+    
     string location;
     House* memberHouse;
-    double rating_score;
-    int credit;
+    
 
     vector <Rating> ratingFromTenant;
     vector <RatingTenant> ratingFromOwner;
