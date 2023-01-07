@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include "class.h"
+#include "Class.h"
 #include <regex>
 
 using std:: string;
@@ -481,7 +481,7 @@ void System::searchByDate(int mode, string day, string month, int index, string 
 }
 
 int System::sendOTP() {
-    srand(time(NULL));
+    srand(time(NULL)); // User ran to get random number as OTP code
 	int res = rand();
 	return res;
 }
@@ -594,7 +594,7 @@ Request Member :: cancelRequest() {
     int houseID;
     int index = 0;
     int i = 0;
-    vector <string> list_of_request = System::extractByColumnIndex(1, request_file);
+    vector <string> list_of_request = System::extractByColumnIndex(0, request_file);
     cout << "List of house you have requested: \n";
     for(Request &obj : this->allRequest) {
         cout << obj.houseId << " ";
@@ -664,7 +664,7 @@ void Member :: reviewAllRequest() {
 void Member :: deleteHouseList() {
     int index = 0;
     
-    vector <string> housid = System :: extractByColumnIndex(1, house_file);
+    vector <string> housid = System :: extractByColumnIndex(0, house_file);
     for(string &obj : housid) {
         if(this->memberHouse->houseID == std :: stoi(obj)) {
             index++;
@@ -1111,6 +1111,7 @@ void User::enterOtpCode() {
     cout << "Your OTP Code is: " << this->otp;
     cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
     cin >> code;
+    // Check OTP code
     while(code != this->otp) {
          this->otp = System::sendOTP();
         cout << "Your OTP Code is: " << this->otp;
