@@ -11,11 +11,11 @@ using std:: cin;
 using std:: cout;
 using std:: vector;
 
-enum city {HUE, HANOI, SAIGON}; //enum for cities
-
-enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
-
-enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
+//enum city {HUE, HANOI, SAIGON}; //enum for cities
+//
+//enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
+//
+//enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
 // Prototyping classes
 class House;
 class Admin;
@@ -76,7 +76,7 @@ public:
 class Member : public User {
 private:
     int memberID;
-    city location;
+    string location;
     House* memberHouse;
     double rating_score;
     int credit;
@@ -87,7 +87,6 @@ private:
     vector <House *> houseList;
 public:
     friend class Admin;
-    city getLocation();
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
@@ -111,7 +110,7 @@ private:
     int request;
     int houseId;
     int tenantId;
-    requestStatus status;
+    string status;
 public:
     
     friend class Member;
@@ -127,12 +126,12 @@ private:
     string currentDate;
     int houseID;
     string dateRange;
-    houseStatus stat;
+    string stat;
     string description;
     int consuming_point;
     int required_score;
     Rating *rate;
-    city location;
+    string location;
     friend class Admin;
     friend class Member;
 };

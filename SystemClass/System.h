@@ -49,10 +49,6 @@ public:
 
     bool inputRangeAuthenticate(string &range);
 
-    bool creditAuth(int credits);
-
-    bool scoreAuth(int scores);
-
     static void deleteRowData(int index, string dataFile);
 
     void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
@@ -72,6 +68,8 @@ public:
     void sortByCategory(string type, string dataFile, int index);
 
     void searchByDate(int mode, string day, string month, int index, string dataFile);
+
+    static bool verifyLogin(string username, string password);
 
     // void showMenuOption(User &client, Member &obj);
 

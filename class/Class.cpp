@@ -8,19 +8,12 @@ using std::fstream;
 using std::regex;
 
 
-city Member::getLocation() {
-    return this->location;
-}
-
-// Member
 
 void Member::acceptReQuest(int acceptID) {
     vector<vector<string> > allRequest = System::extractByRow(requestFile);
     int id = this->memberHouse->houseID;
     if (allRequest.size() == 0) {
         std::cerr << "There are no requests to accept" << "\n";
-
-
     }
     for (int i = 0; i < allRequest.size(); i++) {
         //if the requestID is not  equal to accepted requestID, the system will delete the request from data file
@@ -28,8 +21,6 @@ void Member::acceptReQuest(int acceptID) {
             allRequest.erase(allRequest.begin() + i);
 
             System::deleteRowData(i, requestFile);
-
-
         }
 
     }
@@ -589,8 +580,6 @@ void User::login() {
     cin >> this->name;
     cout << "Enter password: ";
     cin >> this->password;
-
-
 }
 
 void User::checkLogin() {
@@ -634,7 +623,7 @@ void User::registre() {
     }
     cout << "Enter your password: ";
     getline(cin, this->password);
-    while (System::inputPasswordAuthenticate(this->password) != true) {
+    while (!System::inputPasswordAuthenticate(this->password)) {
         cout
                 << "Minimum 8 and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
                 << "\n";
@@ -644,7 +633,7 @@ void User::registre() {
 
     cout << "Enter your full name: ";
     getline(cin, this->full_name);
-    while (System::inputNameAuthentication(this->full_name) != true) {
+    while (!System::inputNameAuthentication(this->full_name)) {
         cout << "Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces"
              << "\n";
         cout << "Please enter again: ";
@@ -652,7 +641,7 @@ void User::registre() {
     }
     cout << "Enter your phone number: ";
     getline(cin, this->phonenum);
-    while (System::inputPhoneAuthenticate(this->phonenum) != true) {
+    while (!System::inputPhoneAuthenticate(this->phonenum)) {
         cout << "phone number must have 11 numbers and start with 0" << "\n";
         cout << "Please enter again: ";
         getline(cin, this->phonenum);
@@ -680,8 +669,8 @@ void User::registre() {
         case 3:
             cityLocation = "SAIGON";
             break;
-
     }
+
     data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->full_name + ";" +
            this->phonenum + ";" + this->name + ";" + this->password + ";" + "500" + ";" + cityLocation + ";" + "0";
     System::addData(data, memberFile);
@@ -706,6 +695,5 @@ void User::enterOtpCode() {
     if (code == this->otp) {
         cout << "\nYou have logined as Member: \n";
     }
-
 }
 
