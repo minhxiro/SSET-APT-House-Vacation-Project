@@ -80,22 +80,20 @@ private:
     House* memberHouse;
     double rating_score;
     int credit;
-
     vector <Rating> ratingFromTenant;
     vector <RatingTenant> ratingFromOwner;
     vector <Request> allRequest;
-    vector <House *> houseList;
 public:
     friend class Admin;
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
     void reviewAllRequest();
-    void acceptReQuest(int declineID);
-    void declineRequest(int declineID);
+    void acceptReQuest(string acceptID);
+    void declineRequest(string declineID);
     RatingTenant rateTentant();
     void deleteHouseList();
-    void addHouseList();
+    void addHouse();
     void viewAllHouse();
     void requestHouse();
     void cancelRequest();
@@ -121,7 +119,7 @@ public:
 // Declare house class
 class House {
 private:
-    User owner;
+    Member* owner;
     int ownerID;
     string currentDate;
     int houseID;

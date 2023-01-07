@@ -11,7 +11,5 @@ using std:: vector;
 using std:: fstream;
 
 int main() {
-    User user;
-//    user.registre();
-    user.showAccountInfo();
+
 }
