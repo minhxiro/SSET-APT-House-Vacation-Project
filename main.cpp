@@ -11,6 +11,7 @@ using std:: vector;
 using std:: fstream;
 
 int main() {
-    Admin admin;
-    admin.showAllHouse();
+    User user;
+//    user.registre();
+    user.showAccountInfo();
 }

@@ -10,4 +10,4 @@ add_executable(SSET_APT_House_Vacation_Project
         class/Class.cpp
         SystemClass/System.cpp
         SystemClass/System.h
-        "House Vacation main.cpp")
+        "main.cpp")

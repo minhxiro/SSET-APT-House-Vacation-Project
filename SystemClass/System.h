@@ -7,13 +7,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 #include <iomanip>
 #include <algorithm>
 #include <fstream>
 #include <map>
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 #include <regex>
 
 using std:: string;
@@ -25,21 +25,21 @@ using std::regex;
 class System {
 public:
 //    bool isInteger(string num);
-    string trimString(string str);
+    static string trimString(string str);
 
     vector<int> getIndex(vector<string> lst, string K);
 
     static vector<string> splitStr(string str, char del);
 
-    bool inputUsernameAuthentication(string username);
+    static bool inputUsernameAuthentication(string username);
 
-    bool inputNameAuthentication(string &name);
+    static bool inputNameAuthentication(string &name);
 
-    bool inputPasswordAuthenticate(string &password);
+    static bool inputPasswordAuthenticate(string &password);
 
-    bool inputPhoneAuthenticate(string &phoneNum);
+    static bool inputPhoneAuthenticate(string &phoneNum);
 
-    bool inputNumAuthenticate(string &num);
+    static bool inputNumAuthenticate(string &num);
 
     bool inputRangeAuthenticate(string &range);
 
@@ -59,7 +59,7 @@ public:
 
     string getCurrentDate();
 
-    int idAutoIncrement(string dataFile);
+    static int idAutoIncrement(string dataFile);
 
     static vector<vector<string> >  sortAscending(int index, string dataFile);
 

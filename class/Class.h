@@ -18,7 +18,7 @@ enum city {HUE, HANOI, SAIGON}; //enum for cities
 
 enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
 
-enum houseStatus {AVAILABLE, UNVAILABLE}; // enum for house status
+enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
 // Prototyping classes
 class House;
 class Admin;
@@ -96,8 +96,7 @@ private:
     vector <House *> houseList;
 public:
     friend class Admin;
-    
-    virtual void registre();
+    city getLocation();
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
