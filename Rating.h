@@ -18,13 +18,13 @@ private:
     int score;
     string comment;
     string currentDate;
-    int houseID;
+    string houseID;
 public:
-    Rating(int score = 0, string comment = "", int houseID = 0)
+    Rating(int score = 0, string comment = "", string houseID = "")
     : score(score), comment(comment), houseID(houseID){}
     void rateHouse();
     void showInfo();
-    double calculateAverageScore();
+    double calculateAverageScoreForHouse(string houseID);
 };
 // Declare Rating TEnant
 class RatingTenant {
@@ -32,11 +32,11 @@ private:
     int score;
     string comment;
     string currentDate;
-    int  occupierID;
+    string occupierID;
 public:
-    RatingTenant(int score = 0, string comment = "", int  occupierID = 0)
-    : score(score), comment(comment), occupierID( occupierID){} 
+    RatingTenant(int score = 0, string comment = "", string occupierID = "")
+    : score(score), comment(comment), occupierID(occupierID){} 
     void rateOccupier(); 
     void showInfo(); 
-    double calculateAverageScore();
+    double calculateAverageScoreForMember(string occupierID);
 };
