@@ -11,5 +11,5 @@ using std:: fstream;
 
 int main() {
     Member minh;
-    minh.showAccountInfo();
+    minh.registre();
 }
