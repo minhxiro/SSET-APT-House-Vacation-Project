@@ -57,10 +57,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project
+CMAKE_SOURCE_DIR = /Users/vonguyenkien/Workspaces/testing/SSET-APT-House-Vacation-Project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vonguyenkien/Workspaces/testing/SSET-APT-House-Vacation-Project/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vonguyenkien/Workspaces/testing/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles /Users/vonguyenkien/Workspaces/testing/SSET-APT-House-Vacation-Project/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vonguyenkien/Workspaces/sed_asm2/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vonguyenkien/Workspaces/testing/SSET-APT-House-Vacation-Project/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,30 +128,6 @@ SSET_APT_House_Vacation_Project: cmake_check_build_system
 SSET_APT_House_Vacation_Project/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/build
 .PHONY : SSET_APT_House_Vacation_Project/fast
-
-House_Vacation_main.o: House_Vacation_main.cpp.o
-.PHONY : House_Vacation_main.o
-
-# target to build an object file
-House_Vacation_main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.o
-.PHONY : House_Vacation_main.cpp.o
-
-House_Vacation_main.i: House_Vacation_main.cpp.i
-.PHONY : House_Vacation_main.i
-
-# target to preprocess a source file
-House_Vacation_main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.i
-.PHONY : House_Vacation_main.cpp.i
-
-House_Vacation_main.s: House_Vacation_main.cpp.s
-.PHONY : House_Vacation_main.s
-
-# target to generate assembly for a file
-House_Vacation_main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/House_Vacation_main.cpp.s
-.PHONY : House_Vacation_main.cpp.s
 
 SystemClass/System.o: SystemClass/System.cpp.o
 .PHONY : SystemClass/System.o
@@ -201,6 +177,30 @@ class/Class.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/class/Class.cpp.s
 .PHONY : class/Class.cpp.s
 
+main.o: main.cpp.o
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SSET_APT_House_Vacation_Project.dir/build.make CMakeFiles/SSET_APT_House_Vacation_Project.dir/main.cpp.s
+.PHONY : main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -210,15 +210,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SSET_APT_House_Vacation_Project"
-	@echo "... House_Vacation_main.o"
-	@echo "... House_Vacation_main.i"
-	@echo "... House_Vacation_main.s"
 	@echo "... SystemClass/System.o"
 	@echo "... SystemClass/System.i"
 	@echo "... SystemClass/System.s"
 	@echo "... class/Class.o"
 	@echo "... class/Class.i"
 	@echo "... class/Class.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

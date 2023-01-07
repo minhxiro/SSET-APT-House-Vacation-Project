@@ -5,10 +5,9 @@
 #define _CLASS_
 
 
-#include <iostream>
-#include <string>
-#include <vector>
-// #include "../SystemClass/System.h"
+
+#include "../SystemClass/System.h"
+
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -18,7 +17,7 @@ enum city {HUE, HANOI, SAIGON}; //enum for cities
 
 enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
 
-enum houseStatus {AVAILABLE, UNVAILABLE}; // enum for house status
+enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
 // Prototyping classes
 class House;
 class Admin;
@@ -38,9 +37,7 @@ protected:
     string full_name;
     string password;
     string phonenum;
-
     int otp;
-
     bool isOwner();
 public:
     
@@ -51,7 +48,6 @@ public:
     void enterOtpCode();
     void registre();
     void showAccountInfo();
-
     void checkLogin();
     
     
@@ -68,13 +64,10 @@ public:
     
     void showAllMember();
     void viewHouseDetail(int id);
-
-
     virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
     void searchHouseByCredit(int credit);
-
     void searchHouseById();
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
@@ -96,8 +89,7 @@ private:
     vector <House *> houseList;
 public:
     friend class Admin;
-    
-    virtual void registre();
+    city getLocation();
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
