@@ -67,8 +67,9 @@ public:
 
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
-    // void showMenuOption(User &client, Member &obj);
+    
 
+    
     static int sendOTP();
 };
 #endif
