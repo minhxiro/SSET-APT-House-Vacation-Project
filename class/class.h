@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include "./SystemClass/System.h"
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -38,7 +38,7 @@ protected:
 
     bool isOwner();
 public:
-    User();
+    
 
 
     void login();
@@ -46,7 +46,7 @@ public:
     void registre();
     void showAccountInfo();
     void checkLogin();
-    ~User();
+    
     
 };
 
@@ -56,7 +56,7 @@ private:
     vector <Member *> members;
     vector <House *> houseList;
 public:
-    Admin();
+    
     void showAllMember();
     void viewHouseDetail(int id);
 
@@ -67,7 +67,7 @@ public:
     void searchHouseById();
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
-    ~Admin();
+    
 };
 
 //Declare member class
@@ -85,23 +85,23 @@ private:
     vector <House *> houseList;
 public:
     friend class Admin;
-    Member();
+    
     virtual void registre();
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
     void reviewAllRequest();
-    int acceptReQuest(int declineID);
-    int declineRequest(int declineID);
+    void acceptReQuest(int declineID);
+    void declineRequest(int declineID);
     RatingTenant rateTentant();
     void deleteHouseList();
     void addHouseList();
     void viewAllHouse();
-    Request requestHouse();
-    Request cancelRequest();
+    void requestHouse();
+    void cancelRequest();
     void rateHouse();
     friend class System;
-    ~Member();
+    
 };
 
 // Declare Request class
@@ -112,9 +112,9 @@ private:
     int tenantId;
     requestStatus status;
 public:
-    Request();
+    
     friend class Member;
-    ~Request();
+    
 };
 // Declare house class
 class House {
@@ -146,8 +146,7 @@ private:
     friend class House;
     friend class Member;
 public:
-    Rating();
-    ~Rating();
+    
 };
 // Declare Rating TEnant
 class RatingTenant {
@@ -159,8 +158,7 @@ private:
     int tenantID;
     int ownerID;
 public:
-    RatingTenant();
-    ~RatingTenant();
+    
 };
 // Declare system
 //
@@ -168,56 +166,7 @@ public:
 //
 
 
-class System {
-public:
-//    bool isInteger(string num);
-    
-    string trimString(string str);
 
-    vector<int> getIndex(vector<string> lst, string K);
-
-    static vector<string> splitStr(string str, char del);
-
-    bool inputUsernameAuthentication(string username);
-
-    bool inputNameAuthentication(string &name);
-
-    bool inputPasswordAuthenticate(string &password);
-
-    bool inputPhoneAuthenticate(string &phoneNum);
-
-    bool inputNumAuthenticate(string &num);
-
-    bool inputRangeAuthenticate(string &range);
-
-    bool creditAuth(int credits);
-
-    bool scoreAuth(int scores);
-
-    static void deleteRowData(int index, string dataFile);
-
-    void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
-
-    static void addData(string data, string dataFile);
-
-    static vector<vector<string> > extractByRow(string dataFile);
-
-    static vector<string> extractByColumnIndex(int index, string dataFile);
-
-    string getCurrentDate();
-
-    int idAutoIncrement(string dataFile);
-
-    static vector<vector<string> >  sortAscending(int index, string dataFile);
-
-    void sortByCategory(string type, string dataFile, int index);
-
-    void searchByDate(int mode, string day, string month, int index, string dataFile);
-
-    void showMenuOption(User &client, Member &obj);
-
-    static int sendOTP();
-};
 
 
 
