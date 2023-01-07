@@ -12,18 +12,31 @@ using std::ifstream;
 using std::ios_base;
 using std::endl;
 
-class Rating
-{
+// Declare Rating
+class Rating {
 private:
     int score;
     string comment;
-    int occupierId;
-    int houseId;
+    string currentDate;
+    int houseID;
 public:
-    Rating(int score = 0, string comment = "", int occupierId = 0, int houseId = 0)
-    : score(score), comment(comment), occupierId(occupierId), houseId(houseId){}
-    void rateHouse() {}
-    void rateOccupier() {}
-    void showInfo() {}
-    double calculateAverageScore() {}
+    Rating(int score = 0, string comment = "", int houseID = 0)
+    : score(score), comment(comment), houseID(houseID){}
+    void rateHouse();
+    void showInfo();
+    double calculateAverageScore();
+};
+// Declare Rating TEnant
+class RatingTenant {
+private:
+    int score;
+    string comment;
+    string currentDate;
+    int  occupierID;
+public:
+    RatingTenant(int score = 0, string comment = "", int  occupierID = 0)
+    : score(score), comment(comment), occupierID( occupierID){} 
+    void rateOccupier(); 
+    void showInfo(); 
+    double calculateAverageScore();
 };

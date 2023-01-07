@@ -1,39 +1,34 @@
 #include "Rating.h"
 
-class Member {
-private:
-    int score;
-    string comment;
-public:
-    void rateHouse() {
-        while (true) {
-            cout << "Enter your score for the house (-10 to 10): ";
-            cin >> score;
-            if (score >= -10 && score <= 10) {
-                break;
-            } else {
-                cout <<  "Invalid score. Please enter a score between -10 and 10." << endl;
-            }
-        }
-
-        cout << "Enter your comment for the house: ";
-        cin.ignore(); 
-        getline(cin, comment);
-
-        ofstream outFile("rating.dat", ios_base::app);
-        outFile << "House score: " << score << "; ";
-        outFile << "Comment: " << comment << endl;
-    }
-
-    void showInfo() {
-        ifstream inFile("rating.dat");
-        string line;
-        while (getline(inFile, line)) {
-            cout << line << endl;
+void Rating::rateHouse() {
+    while (true) {
+        cout << "Enter your score for the house (-10 to 10): ";
+        cin >> score;
+        if (score >= -10 && score <= 10) {
+            break;
+        } else {
+            cout <<  "Invalid score. Please enter a score between -10 and 10." << endl;
         }
     }
 
-    double calculateAverageScore() {
+    cout << "Enter your comment for the house: ";
+    cin.ignore(); 
+    getline(cin, comment);
+
+    ofstream outFile("rating.dat", ios_base::app);
+    outFile << "House score: " << score << "; ";
+    outFile << "Comment: " << comment << endl;
+}
+
+void Rating::showInfo() {
+    ifstream inFile("rating.dat");
+    string line;
+    while (getline(inFile, line)) {
+        cout << line << endl;
+    }
+}
+
+double Rating::calculateAverageScore() {
     ifstream inFile("rating.dat");
     string line;
     int totalScore = 0;
@@ -47,43 +42,37 @@ public:
         }
     }
     return static_cast<double>(totalScore) / numScores;
-    }
-};
+}
 
-class HouseOwner {
-private:
-    int score;
-    string comment;
-public:
-    void rateOccupier() {
-        while (true) {
-            cout << "Enter your score for the occupier (-10 to 10): ";
-            cin >> score;
-            if (score >= -10 && score <= 10) {
-                break;
-            } else {
-                cout <<  "Invalid score. Please enter a score between -10 and 10." << endl;
-            }
-        }
-
-        cout << "Enter your comment for the occupier: ";
-        cin.ignore(); 
-        getline(cin, comment);
-
-        ofstream outFile("rating.dat", ios_base::app);
-        outFile << "Member score: " << score << "; ";
-        outFile << "Comment: " << comment << endl;
-    }
-
-    void showInfo() {
-        ifstream inFile("rating.dat");
-        string line;
-        while (getline(inFile, line)) {
-            cout << line << endl;
+void RatingTenant::rateOccupier() {
+    while (true) {
+        cout << "Enter your score for the occupier (-10 to 10): ";
+        cin >> score;
+        if (score >= -10 && score <= 10) {
+            break;
+        } else {
+            cout <<  "Invalid score. Please enter a score between -10 and 10." << endl;
         }
     }
 
-    double calculateAverageScore() {
+    cout << "Enter your comment for the occupier: ";
+    cin.ignore(); 
+    getline(cin, comment);
+
+    ofstream outFile("rating.dat", ios_base::app);
+    outFile << "Member score: " << score << "; ";
+    outFile << "Comment: " << comment << endl;
+}
+
+void RatingTenant::showInfo() {
+    ifstream inFile("rating.dat");
+    string line;
+    while (getline(inFile, line)) {
+        cout << line << endl;
+    }
+}
+
+double RatingTenant::calculateAverageScore() {
     ifstream inFile("rating.dat");
     string line;
     int totalScore = 0;
@@ -97,12 +86,11 @@ public:
         }
     }
     return static_cast<double>(totalScore) / numScores;
-    }
-};
+}
 
 int main() {
-Member member;
-HouseOwner house;
+Rating member;
+RatingTenant house;
     while (true) {
         cout << "\nMenu:" << endl;
         cout << "1. Rate a house" << endl;
