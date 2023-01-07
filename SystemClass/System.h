@@ -4,6 +4,12 @@
 
 #define _SYSTEM_CLASS_
 
+#define memberFile "data/members.dat"
+#define houseFile "data/house.dat"
+#define ratingFile "data/rating.dat"
+#define ratingTenantFile "data/ratingTenant.dat"
+#define requestFile "data/request.dat"
+
 #include <iostream>
 #include <string>
 #include <vector>

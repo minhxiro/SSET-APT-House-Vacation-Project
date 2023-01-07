@@ -5,9 +5,6 @@
 #define _CLASS_
 
 
-#include <iostream>
-#include <string>
-#include <vector>
 #include "../SystemClass/System.h"
 using std:: string;
 using std:: cin;
@@ -38,9 +35,7 @@ protected:
     string full_name;
     string password;
     string phonenum;
-
     int otp;
-
     bool isOwner();
 public:
     
@@ -51,7 +46,6 @@ public:
     void enterOtpCode();
     void registre();
     void showAccountInfo();
-
     void checkLogin();
     
     
@@ -68,13 +62,10 @@ public:
     
     void showAllMember();
     void viewHouseDetail(int id);
-
-
     virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
     void searchHouseByCredit(int credit);
-
     void searchHouseById();
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
