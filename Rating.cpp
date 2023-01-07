@@ -20,13 +20,13 @@ public:
         cin.ignore(); 
         getline(cin, comment);
 
-        ofstream outFile("rating_data.dat", ios_base::app);
+        ofstream outFile("rating.dat", ios_base::app);
         outFile << "\nScore: " << score << "; ";
         outFile << "Comment: " << comment;
     }
 
     void showInfo() {
-        ifstream inFile("rating_data.dat");
+        ifstream inFile("rating.dat");
         string line;
         while (getline(inFile, line)) {
             cout << line << endl;
@@ -54,13 +54,13 @@ public:
         cin.ignore(); 
         getline(cin, comment);
 
-        ofstream outFile("rating_data.dat", ios_base::app);
+        ofstream outFile("rating.dat", ios_base::app);
         outFile << "\nScore: " << score << "; ";
         outFile << "Comment: " << comment;
     }
 
     void showInfo() {
-        ifstream inFile("rating_data.dat");
+        ifstream inFile("rating.dat");
         string line;
         while (getline(inFile, line)) {
             cout << line << endl;
