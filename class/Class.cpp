@@ -8,7 +8,6 @@ using std::fstream;
 using std::regex;
 
 
-
 void Member::acceptReQuest(int acceptID) {
     vector<vector<string> > allRequest = System::extractByRow(requestFile);
     int id = this->memberHouse->houseID;
@@ -88,6 +87,132 @@ void Member::requestHouse() {
                 this->allRequest.push_back(obj);
             }
         }
+    }
+}
+
+void Member::searchHouseByDayAndRange(int day, int range) {
+    int count = 0;
+    vector<string> currentUser = System::extractByRowId(0, currentUserFile);
+    vector<vector<string> > dataByDate = System::searchByDate(1, std::to_string(day), "0", 2, houseFile);
+    cout
+            << std::left
+            << std::setw(10)
+            << "HouseID"
+            << std::left
+            << std::setw(10)
+            << "Location"
+            << std::left
+            << std::setw(20)
+            << "StartingDate"
+            << std::left
+            << std::setw(20)
+            << "EndingDate"
+            << std::left
+            << std::setw(10)
+            << "DateRange"
+            << std::left
+            << std::setw(10)
+            << "Credit"
+            << std::left
+            << std::setw(15)
+            << "Status"
+            << "\n";
+
+    for (vector<string> house: dataByDate) {
+        if (System::scoreAuth(std::stoi(currentUser[7]), house[0])) {
+            if (System::creditAuth(std::stoi(currentUser[5]), house[0])) {
+                if(range ==std::stoi(house[3])){
+                    count++;
+                    cout << std::left
+                         << std::setw(10)
+                         << house[0]
+                         << std::left
+                         << std::setw(10)
+                         << house[7]
+                         << std::left
+                         << std::setw(20)
+                         << house[2]
+                         << std::left
+                         << std::setw(20)
+                         << house[4]
+                         << std::left
+                         << std::setw(10)
+                         << house[3]
+                         << std::left
+                         << std::setw(10)
+                         << house[5]
+                         << std::left
+                         << std::setw(15)
+                         << house[8]
+                         << "\n";
+                }
+            }
+        }
+    }
+    if (count > 0) {
+        cout << "There is no available house in your searched day and period! \n";
+    }
+
+}
+
+void Member::searchHouseByRegion(string region) {
+    int count = 0;
+    vector<string> currentUser = System::extractByRowId(0, currentUserFile);
+    vector<vector<string> > dataByRegion = System::sortByCategory(region, houseFile, 7);
+    cout
+            << std::left
+            << std::setw(10)
+            << "HouseID"
+            << std::left
+            << std::setw(10)
+            << "Location"
+            << std::left
+            << std::setw(20)
+            << "StartingDate"
+            << std::left
+            << std::setw(20)
+            << "EndingDate"
+            << std::left
+            << std::setw(10)
+            << "DateRange"
+            << std::left
+            << std::setw(10)
+            << "Credit"
+            << std::left
+            << std::setw(15)
+            << "Status"
+            << "\n";
+    for (vector<string> house: dataByRegion) {
+        if (System::scoreAuth(std::stoi(currentUser[7]), house[0])) {
+            if (System::creditAuth(std::stoi(currentUser[5]), house[0])) {
+                count++;
+                cout << std::left
+                     << std::setw(10)
+                     << house[0]
+                     << std::left
+                     << std::setw(10)
+                     << house[7]
+                     << std::left
+                     << std::setw(20)
+                     << house[2]
+                     << std::left
+                     << std::setw(20)
+                     << house[4]
+                     << std::left
+                     << std::setw(10)
+                     << house[3]
+                     << std::left
+                     << std::setw(10)
+                     << house[5]
+                     << std::left
+                     << std::setw(15)
+                     << house[8]
+                     << "\n";
+            }
+        }
+    }
+    if (count > 0) {
+        cout << "There is no available house in your searched region! \n";
     }
 }
 

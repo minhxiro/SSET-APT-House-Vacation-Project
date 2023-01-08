@@ -47,8 +47,11 @@ public:
     void registre();
     void showAccountInfo();
     void checkLogin();
-    
-    
+    virtual void showAllHouse();
+    void viewHouseDetail(int id);
+    void searchHouseByCredit(int credit);
+
+
 
 };
 
@@ -58,18 +61,12 @@ private:
     vector <Member *> members;
     vector <House *> houseList;
 public:
-
-    
     void showAllMember();
-    void viewHouseDetail(int id);
-    virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
-    void searchHouseByCredit(int credit);
     void searchHouseById();
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
-    
 };
 
 //Declare member class
@@ -89,9 +86,9 @@ public:
     friend class Admin;
     virtual void showAccountInfo();
     void showAllHouse();
-    void searchHouseByRegion();
+    void searchHouseByRegion(string region);
     void searchHouseByDayAndRange(int day, int range);
-    void
+    void searchHouseByCredits(int credit);
     void reviewAllRequest();
     void acceptReQuest(int declineID);
     void declineRequest(int declineID);
