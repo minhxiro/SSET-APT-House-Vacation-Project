@@ -437,33 +437,33 @@ void User::viewHouseDetail(int id) {
 
     vector<vector<string> > houseList = System::extractByRow(houseFile);
 
-    for (int i = 0; i < houseList.size(); i++) {
-        if (id == std::stoi(houseList[i][0])) {
+    for (auto & i : houseList) {
+        if (id == std::stoi(i[0])) {
             cout
                     << std::left
                     << std::setw(10)
-                    << houseList[i][0]
+                    << i[0]
                     << std::left
                     << std::setw(10)
-                    << houseList[i][1]
+                    << i[1]
                     << std::left
                     << std::setw(20)
-                    << houseList[i][2]
+                    << i[2]
                     << std::left
                     << std::setw(20)
-                    << houseList[i][3]
+                    << i[3]
                     << std::left
                     << std::setw(10)
-                    << houseList[i][4]
+                    << i[4]
                     << std::left
                     << std::setw(10)
-                    << houseList[i][5]
+                    << i[5]
                     << std::left
                     << std::setw(15)
-                    << houseList[i][6]
+                    << i[6]
                     << std::left
                     << std::setw(15)
-                    << houseList[i][7]
+                    << i[7]
                     << "\n";
         } else {
             cout << "\nThere is no house with this ID" << "\n";
