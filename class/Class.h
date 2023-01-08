@@ -13,11 +13,11 @@ using std:: cin;
 using std:: cout;
 using std:: vector;
 
-enum city {HUE, HANOI, SAIGON}; //enum for cities
-
-enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
-
-enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
+//enum city {HUE, HANOI, SAIGON}; //enum for cities
+//
+//enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
+//
+//enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
 // Prototyping classes
 class House;
 class Admin;
@@ -51,7 +51,6 @@ public:
     bool enterOtpCode();
     void registre();
     void showAccountInfo();
-    // int checkLogin();
     bool isAdmin();
     void showMenuOption();
     void memberMenu();
@@ -59,16 +58,12 @@ public:
     void showAllHouse();
     void searchHouseById();
     void viewHouseDetail(int id);
+    void searchHouseByCredit(int credit);
 };
 
 // Declare Admin class
 class Admin : public User {
-private:
-    vector <Member *> members;
-    vector <House *> houseList;
 public:
-
-    
     void showAllMember();
     
     
@@ -77,8 +72,8 @@ public:
     void searchHouseByCredit(int credit);
     
     void searchHouseByDateRange(string dateRange);
+
     void sortByMemberScore();
-    
 };
 
 //Declare member class
@@ -89,26 +84,26 @@ private:
     House* memberHouse;
     
 
-    vector <Rating> ratingFromTenant;
     vector <RatingTenant> ratingFromOwner;
     vector <Request> allRequest;
-    vector <House *> houseList;
 public:
      
     friend class Admin;
-    city getLocation();
     virtual void showAccountInfo();
-    // void showAllHouse();
-    virtual void searchHouseByRegion();
+    void showAllHouse();
+    void searchHouseByRegion(string region);
+    void searchHouseByDayAndRange(int day, int range);
+    void searchHouseByCredits(int credit);
     void reviewAllRequest();
     void acceptReQuest(string acceptID);
     void declineRequest(string declineID);
     RatingTenant rateTentant();
-    void deleteHouseList();
-    void addHouseList();
+    void deleteHouse();
+    void addHouse();
     void viewAllHouse();
     void requestHouse();
     void cancelRequest();
+
     void rateHouse();
     friend class System;
     
@@ -121,6 +116,7 @@ private:
     string houseId;
     string tenantId;
     requestStatus status;
+
 public:
     
     friend class Member;
@@ -141,7 +137,7 @@ private:
     int consuming_point;
     int required_score;
     Rating *rate;
-    city location;
+    string location;
     friend class Admin;
     friend class Member;
 };
