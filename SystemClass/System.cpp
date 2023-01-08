@@ -273,7 +273,6 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     return dataTable;
 }
 
-
 vector<string> System::extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
     string dataLine;
@@ -560,8 +559,8 @@ bool System::verifyLogin(string userName, string password) {
     vector<string> userNames;
     vector<string> passwords;
 
-    userNames = System::extractByColumnIndex(4, memberFile);
-    passwords = System::extractByColumnIndex(5, memberFile);
+    userNames = System::extractByColumnIndex(3, memberFile);
+    passwords = System::extractByColumnIndex(4, memberFile);
 
     for (int i = 0; i < userNames.size(); i++) {
         if (userName == userNames[i]) {

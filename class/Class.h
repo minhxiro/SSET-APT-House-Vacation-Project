@@ -90,6 +90,8 @@ public:
     virtual void showAccountInfo();
     void showAllHouse();
     void searchHouseByRegion();
+    void searchHouseByDayAndRange(int day, int range);
+    void
     void reviewAllRequest();
     void acceptReQuest(int declineID);
     void declineRequest(int declineID);
@@ -99,6 +101,7 @@ public:
     void viewAllHouse();
     void requestHouse();
     void cancelRequest();
+
     void rateHouse();
     friend class System;
     

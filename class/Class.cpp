@@ -41,12 +41,9 @@ void Member::declineRequest(int declineID) {
                 allRequest.erase(allRequest.begin() + i);
 
                 System::deleteRowData(i, requestFile);
-
-
             }
         }
     }
-
 }
 
 void Member::showAllHouse() {
