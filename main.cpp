@@ -7,5 +7,5 @@
 int main(){
     Admin admin;
     admin.searchHouseByCredit();
-
+    System::addData("hihisadfasdfasdfsadfasd",currentUserFile);
 }

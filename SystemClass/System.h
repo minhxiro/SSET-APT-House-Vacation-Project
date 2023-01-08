@@ -10,6 +10,7 @@
 #define ratingFile "data/rating.dat"
 #define ratingTenantFile "data/ratingTenant.dat"
 #define requestFile "data/request.dat"
+#define currentUserFile "data/currentUser.dat"
 
 #include <iostream>
 #include <string>
@@ -42,7 +43,7 @@ public:
 
     static string addDays(int period);
 
-    vector<int> getIndex(vector<string> lst, string K);
+    static vector<int> getIndex(vector<string> lst, string K);
 
     static vector<string> splitStr(string str, char del);
 
@@ -66,6 +67,9 @@ public:
 
     static vector<vector<string> > extractByRow(string dataFile);
 
+    static vector<string> extractByRowId(int index, string dataFile);
+
+
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
     static string getCurrentDate();
@@ -74,11 +78,15 @@ public:
 
     static vector<vector<string> >  sortAscending(int index, string dataFile);
 
-    void sortByCategory(string type, string dataFile, int index);
+    static vector<vector<string> > sortByCategory(string type, string dataFile, int index);
 
-    void searchByDate(int mode, string day, string month, int index, string dataFile);
+    static vector<vector<string> > searchByDate(int mode, string day, string month, int index, string dataFile);
 
     static bool verifyLogin(string username, string password);
+
+    static bool scoreAuth(int score, string houseId);
+
+    static bool creditAuth(int score, string houseId);
 
     static string getDateAfter(int period);
 

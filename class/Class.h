@@ -47,8 +47,11 @@ public:
     void registre();
     void showAccountInfo();
     void checkLogin();
-    
-    
+    virtual void showAllHouse();
+    void viewHouseDetail(int id);
+    void searchHouseByCredit(int credit);
+
+
 
 };
 
@@ -56,6 +59,7 @@ public:
 class Admin : public User {
 public:
     void showAllMember();
+
     void viewHouseDetail();
     virtual void showAllHouse();
     void viewMemberDetail();
@@ -64,7 +68,6 @@ public:
     void searchHouseById();
     void searchHouseByDateRange(int dateRange);
     void sortByMemberScore();
-    
 };
 
 //Declare member class
@@ -82,7 +85,9 @@ public:
     friend class Admin;
     virtual void showAccountInfo();
     void showAllHouse();
-    void searchHouseByRegion();
+    void searchHouseByRegion(string region);
+    void searchHouseByDayAndRange(int day, int range);
+    void searchHouseByCredits(int credit);
     void reviewAllRequest();
     void acceptReQuest(string acceptID);
     void declineRequest(string declineID);
@@ -92,6 +97,7 @@ public:
     void viewAllHouse();
     void requestHouse();
     void cancelRequest();
+
     void rateHouse();
     friend class System;
     
