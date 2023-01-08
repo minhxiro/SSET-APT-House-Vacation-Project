@@ -74,9 +74,9 @@ void Member::declineRequest(string declineID) {
 
 
 void Member::requestHouse() {
-    int n;
     string houseID;
     string data;
+    
     // Get house ID in a vector
     cout << "Enter the house ID: ";
     cin >>houseID;
@@ -86,69 +86,28 @@ void Member::requestHouse() {
     for(int i = 0; i < listHouse.size();i++) {
         if(houseID == listHouse[i][0]) {
             cout<< "Requested\n";
-            data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + this->memberID
-                +";" + houseID + ";" + this->memberHouse->currentDate + ";" + "PENDING";
+            data = "RE" + std::to_string(System::idAutoIncrement(requestFile))+ ";" + this->memberID
+                +";" + houseID + ";" + listHouse[i][2] + ";" + "PENDING";
+            System::addData(data, requestFile);
         }
     }
 }
 
-// void Member ::rateHouse() {
-//     std :: stringstream convert;
-//     int houseID;
-//     cout << "Enter ID of the house you want to rate: ";
-//     cin >> houseID;
-//     for(House *obj : this->houseList) {
-//         if(houseID == obj->houseID) {
-//             cout << "Enter the score: "; // Prompt user to enter the score
-//             cin >> obj->rate->score;
-//             convert << obj->rate->score;
-//             System :: addData(convert.str(), ratingFile;
-//             cout << "Enter the comment:\n"; // Prompt user to enter comment
-//             getline(cin, obj->rate->comment);
-//             System :: addData(obj->rate->comment, ratingFile;
-//         }
-//         else continue;
-//     }
-// }
 
-// void Member::cancelRequest() {
-//     int houseID;
-//     int index = 0;
-//     int i = 0;
-//     vector<string> list_of_request = System::extractByColumnIndex(0, requestFile);
-//     cout << "List of house you have requested: \n";
-//     for (Request &obj: this->allRequest) {
-//         cout << obj.houseId << " ";
-//     }
-
-//     cout << "Enter the id of house that you want delete: ";
-//     cin >> houseID;
-//     for (Request &obj: this->allRequest) {
-//         if (obj.houseId == houseID) {
-//             index++;
-//         }
-//     }
-
-//     // Delete the house in the vector
-//     this->allRequest.erase(this->allRequest.begin() + index);
-//     // Delete request in other request list:
-//     for (string &obj: list_of_request) {
-//         if (std::stoi(obj) == houseID) {
-//             i++;
-//         }
-//     }
-//     System::deleteRowData(i, requestFile);
-// }
-
-
-// void Member::addHouseList() {
-//     cout << "Enter your house date: ";
-//     cin >> this->memberHouse->dateRange;
-//     System::addData(this->memberHouse->dateRange, houseFile);
-//     cout << "Enter house owner: ";
-//     getline(cin, this->fullName);
-//     System::addData(this->fullName, houseFile);
-// }
+void Member::cancelRequest() {
+    string houseID;
+    int index;
+    cout << "Enter ID of the house you want to delete: ";
+    cin >> houseID;
+    vector <vector<string> > houseRequested = System::extractByRow(requestFile);
+    for(int i = 0; i < houseRequested.size(); i++) {
+        if(houseID == houseRequested[i][2] && this->memberID == houseRequested[i][1]) {
+            index = i;
+        }
+        
+    }
+    System:: deleteRowData(index, requestFile);
+}
 
 
 void Member :: reviewAllRequest() {
@@ -775,7 +734,7 @@ void User :: logOut() {
 }
 
 void User:: memberMenu() {
-    // Member mem;
+    Member *mem;
     cout << "You have chosen to login as member, please Input your account: \n\n";
     cout << "--------Member Login------------\n\n\n\n\n";
     
@@ -794,6 +753,7 @@ void User:: memberMenu() {
                 //Current Member
                 break;
             case 2:
+                mem->searchHouseByRegion();
                break;
             case 14:
                 logOut();

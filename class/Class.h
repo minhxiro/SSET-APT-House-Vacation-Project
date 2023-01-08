@@ -99,7 +99,7 @@ public:
     city getLocation();
     virtual void showAccountInfo();
     // void showAllHouse();
-    void searchHouseByRegion();
+    virtual void searchHouseByRegion();
     void reviewAllRequest();
     void acceptReQuest(string acceptID);
     void declineRequest(string declineID);

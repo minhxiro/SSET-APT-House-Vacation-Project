@@ -24,7 +24,7 @@ User minh;
 //     cout <<"admin";
 // }
 
-minh.showMenuOption();
-// Member mem;
-// mem.requestHouse();
+// minh.showMenuOption();
+Member *mem;
+mem->cancelRequest();
 }
