@@ -1,12 +1,13 @@
 #include "Class.h"
 
+
 using std::string;
 using std::cin;
 using std::cout;
 using std::vector;
 using std::fstream;
-using std::regex;
 
+using std::regex;
 
 
 void Member::acceptReQuest(string acceptID) {
@@ -28,10 +29,12 @@ void Member::acceptReQuest(string acceptID) {
                 i[4] = "Accepted";
             } else {
                 i[4] = "Declined";
+
             }
         }
     }
 }
+
 
 void Member::declineRequest(string declineID) {
     vector<vector<string> > allRequest = System::extractByRow(requestFile);
@@ -49,56 +52,58 @@ void Member::declineRequest(string declineID) {
         for (vector<string> &i: allRequest) {
             if (i[0] == declineID) {
                 i[4] = "Declined";
+
             }
         }
     }
 }
 
-void Member::showAllHouse() {
-    cout << "List of available houses is being showed below:\n";
-    vector<string> listOfHouse;
-    listOfHouse = System::extractByColumnIndex(0, houseFile);
+// void Member::showAllHouse() {
+//     cout << "List of available houses is being showed below:\n";
+//     vector<string> listofHouse;
+//     listofHouse = System::extractByColumnIndex(0, houseFile);
 
-    cout << "House name: \n";
-    for (string &obj: listOfHouse) {
-        cout << obj << " ";
-    }
-}
+//     cout << "House name: \n";
+//     for (string &obj: listofHouse) {
+//         cout << obj << " ";
+//     }
+// }
 
-void Member::showAccountInfo() {
-    cout << "Your full name is: " << this->full_name << "\n";
-    cout << "Your phone number is: " << this->phonenum << "\n";
-    cout << "Your ID is: " << this->memberID << "\n";
-    cout << "Your credit is: " << this->credit << "\n";
-    cout << "Your rating score is: " << this->rating_score << "\n";
-}
 
 void Member::requestHouse() {
-    int n;
     string houseID;
+    string data;
+    
     // Get house ID in a vector
-    vector<string> listHouse = System::extractByColumnIndex(1, houseFile); // Note
-    cout << "How many houses you want to request? ";
-    cin >> n;
-    // Enter house ID to find house
-    for (int i = 0; i < n; i++) {
-        cout << "Enter the house ID: ";
-        getline(cin, houseID);
-        for (string &tmp: listHouse) {
-            while (houseID != tmp) {
-                cout << "Your house is not added in the list\n";
-            }
-            if (houseID == tmp) {
-                cout << "Successful to request house";
-                System::addData(houseID, requestFile);
-                Request obj;
-                obj.houseId = std::stoi(houseID);
-                this->allRequest.push_back(obj);
-            }
+    cout << "Enter the house ID: ";
+    cin >>houseID;
+    vector<vector<string> > listHouse = System::extractByRow(houseFile); // Note
+    // data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + "Mem" + std::to_string(this->memberID)
+                // +";" + "HOU" + std::to_string(this->memberHouse->houseID) + ";" + this->memberHouse->currentDate + ";" + this->memberHouse->stat;
+    for(int i = 0; i < listHouse.size();i++) {
+        if(houseID == listHouse[i][0]) {
+            cout<< "Requested\n";
+            data = "RE" + std::to_string(System::idAutoIncrement(requestFile))+ ";" + this->memberID
+                +";" + houseID + ";" + listHouse[i][2] + ";" + "PENDING";
+            System::addData(data, requestFile);
         }
     }
 }
 
+
+void Member::cancelRequest() {
+    string houseID;
+    int index;
+    cout << "Enter ID of the house you want to delete: ";
+    cin >> houseID;
+    vector <vector<string> > houseRequested = System::extractByRow(requestFile);
+    for(int i = 0; i < houseRequested.size(); i++) {
+        if(houseID == houseRequested[i][2] && this->memberID == houseRequested[i][1]) {
+            index = i;
+
+        }
+    }
+}
 
 void Member::searchHouseByDayAndRange(int day, int range) {
     int count = 0;
@@ -157,8 +162,11 @@ void Member::searchHouseByDayAndRange(int day, int range) {
                          << "\n";
                 }
             }
+
         }
+        
     }
+
     if (count > 0) {
         cout << "There is no available house in your searched day and period! \n";
     }
@@ -340,6 +348,7 @@ void Member::deleteHouse() {
     }
 }
 
+
 // Admin
 void Admin::showAllMember() {
     cout << "All the member of the system: " << "\n";
@@ -400,6 +409,7 @@ void User::showAllHouse() {
                 << "\n";
     }
 }
+
 
 void Admin::viewMemberDetail() {
 
@@ -766,41 +776,58 @@ void Admin::sortByMemberScore() {
 
 // User
 
-void User::login() {
+bool User::login() {
     cout << "Enter the user name: ";
     cin >> this->name;
     cout << "Enter password: ";
     cin >> this->password;
+
+    bool check = System::verifyLogin(this->name, this->password);
+    bool secureCode = enterOtpCode();
+    if(check && secureCode) {
+        return true;
+    }
+    else if(!check && secureCode) {
+        
+        return false;
+    }
+    return true;
+
 }
 
-void User::checkLogin() {
-    // Read data of member:
-    string *informationData = new string[1000];
-    fstream file;
-    file.open(memberFile, std::ios::in);
-    if (!file) {
-        std::cerr << "Fail to open file\n";
-    }
-    int index = 0;
-    while (!file.eof()) {
-        file >> informationData[index];
-        index++;
-    }
 
-    file.close();
-    // Check password
-    for (int i = 0; i < index; i++) {
-        if ((informationData[i].find(this->name) != std::string::npos) &&
-            (informationData[i].find(this->password) != std::string::npos)) {
-            cout << "You have logined as " << this->name << "\n";
-        } else cout << "Wrong username or password\n";
-    }
-}
 
 void User::showAccountInfo() {
-    cout << "Your full name is: " << this->full_name << "\n";
-    cout << "Your phone number is: " << this->phonenum << "\n";
+    cout << "All the member of the system: " << "\n";
+    cout
+            << std::left
+            << std::setw(8)
+            << "MemberID"
+            << std::left
+            << std::setw(15)
+            << "Full Name"
+            << std::left
+            << std::setw(21)
+            <<"Phone number"
+            << "\n";
+    vector<vector<string> > memberList = System::extractByRow(currentUserFile);
+   
+        cout
+                << std::left
+                << std::setw(8)
+                << memberList[1][0]
+                << std::left
+                << std::setw(15)
+                << memberList[1][1]
+                << std::left
+                << std::setw(21)
+                <<memberList[1][2]
+                << "\n";
+    
+
 }
+
+
 
 
 void User::registre() {
@@ -833,7 +860,7 @@ void User::registre() {
         cout << "Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces"
              << "\n";
         cout << "Please enter again: ";
-        getline(cin, this->full_name);
+        getline(cin, this->fullName);
     }
     //enter phone num
     cout << "Enter your phone number: ";
@@ -870,29 +897,226 @@ void User::registre() {
             break;
     }
 
-    data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->full_name + ";" +
+    data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->fullName + ";" +
            this->phonenum + ";" + this->name + ";" + this->password + ";" + "500" + ";" + cityLocation + ";" + "0";
     System::addData(data, memberFile);
 
 
+
 }
 
-void User::enterOtpCode() {
+
+bool User::enterOtpCode() {
     // Get the otp from system:
     int code;
     this->otp = System::sendOTP();
     cout << "Your OTP Code is: " << this->otp;
-    cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
+    cout << "\nPlease enter the code sent to you to verify if you are robot or not:\n";
     cin >> code;
     // Check OTP code
-    while (code != this->otp) {
-        this->otp = System::sendOTP();
-        cout << "Your OTP Code is: " << this->otp;
-        cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
-        cin >> code;
-    }
+    // while (code != this->otp) {
+    //     this->otp = System::sendOTP();
+    //     cout << "Your OTP Code is: " << this->otp;
+    //     cout << "\nPlease enter the code sent to you to verify if you are robot or not: \n";
+    //     cin >> code;
+    // }
     if (code == this->otp) {
-        cout << "\nYou have logined as Member: \n";
+        return true;
+    }
+    else return false;
+}
+bool User::isAdmin() {
+    bool check = System::verifyAdmin(this->name, this->password);
+    if(check) {
+        return true;
+    }
+    else return false;
+    return true;
+}
+void User::showAllHouse() {
+    cout << "All house of the system: " << "\n";
+    cout
+            << std::left
+            << std::setw(8)
+            << "HouseID"
+            << std::left
+            << std::setw(15)
+            << "OwnerID"
+            << std::left
+            << std::setw(15)
+            << "Location"
+            << std::left
+            << std::setw(15)
+            << "Status"
+            << "\n";
+
+    vector<vector<string> > houseList = System::extractByRow(houseFile);
+
+    for (int i = 0; i < houseList.size(); i++) {
+        cout
+                << std::left
+                << std::setw(8)
+                << houseList[i][0]
+                << std::left
+                << std::setw(15)
+                << houseList[i][1]
+                << std::left
+                << std::setw(15)
+                << houseList[i][6]
+                << std::left
+                << std::setw(15)
+                << houseList[i][7]
+                << "\n";
+    }
+
+}
+
+// Menu
+void User::showMenuOption() {
+    int choice;
+    string username;
+    
+    cout << "-----------Main Menu------------------------\n\n\n";
+    
+    cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:\n";
+    cin >> choice;
+    while(choice != 1 && choice != 2 && choice != 3) {
+        cout << "Invalid Input,\nEnter your choice: \n";
+        cin >> choice;
+    }
+    if(choice == 1) {
+        guestMenu();
+    }
+    else if(choice == 2) {
+        memberMenu();
+    }
+    else if(choice == 3) {
+        adminMenu();
+    }
+    
+}
+void User::guestMenu() {
+    int userSelection;
+    cout << "You have logined as guest\n\n\n";
+    cout << "---------Guest Menu----------\n\n";
+    cout << "Choose the option:\n1.Register\n2.View all house\n3.Exit to main menu\n";
+    cin >> userSelection;
+    switch(userSelection) {
+        case 1:
+            registre();
+            
+            break;
+        case 2:
+            showAllHouse();
+            
+            break;
+        case 3:
+            showMenuOption();
     }
 }
 
+void User :: logOut() {
+    std::ofstream ofs;
+    ofs.open(currentUserFile, std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+}
+
+void User:: memberMenu() {
+    Member *mem;
+    cout << "You have chosen to login as member, please Input your account: \n\n";
+    cout << "--------Member Login------------\n\n\n\n\n";
+    
+    if(login()) {
+        int userSeletion;
+        cout << "\nYou have login as \n"; // Add current Member here
+        cout << "\nPlease select the options:\n";
+        cout << "\n1.Show Account Information\n2.Search House by Region\n3.Review All Request\n4.Accept Request"
+             << "\n5.Decline Request\n6.Rate Tenant\n7.Delete House List\n8.Add House List\n9.View All House"
+             << "\n10.Request House\n11.Cancel Request\n12.Rate House\n13.Exit to main menu\n14.Log out\n";
+        cout << "\nEnter your option: ";
+        cin >> userSeletion;
+        switch(userSeletion) {
+            case 1:
+                showAccountInfo();
+                //Current Member
+                break;
+            case 2:
+                mem->searchHouseByRegion();
+               break;
+            case 14:
+                logOut();
+                showMenuOption();
+                break;
+        }
+    }
+    else {
+        cout << "Wrong user name or password\n";
+        showMenuOption();
+    }
+}
+
+void User:: adminMenu() {
+    cout << "You have chosen to login as admin, please Input your account: \n\n";
+    cout << "--------Admin Login------------\n\n\n\n\n";
+    login();
+    
+    if(isAdmin()) {
+        Admin ad;
+        int userSelection;
+        cout << "\nYou have logined as Admin\n\n";
+        cout << "Please choose your option:\n\n\n";
+        cout << "1.Show All Member\n2.View House Detail\n3.Show All House\n4.View Member Detail\n5.View All Request"
+            <<"\n6.Search House By Credit\n7.Search House By ID\n8.Search House By Date Range\n9.Sort By Member Score\n10.Exit to main menu\n11.Log Out\n";
+        cout << "Enter your option: ";
+        cin >> userSelection;
+        cout << "\n";
+        switch(userSelection) {
+            case 1:
+                ad.showAllMember();
+                break;
+            case 2:
+                int id;
+                cout <<"\nEnter House ID: ";
+                cin >> id;
+                viewHouseDetail(id);
+                break;
+                
+            case 3:
+                showAllHouse();
+                break;
+            case 4:
+                ad.viewMemberDetail();
+                break;
+            case 5:
+                ad.viewAllReQuest();
+                break;
+            case 6:
+                int credit;
+                cout << "\nEnter your expected credit: ";
+                cin >> credit;
+                ad.searchHouseByCredit(credit);
+                break;
+            case 7:
+                // ad.searchHouseById();
+                break;
+            case 8:
+                {string duration;
+                cout << "\nEnter the house date range: ";
+                getline(cin, duration);
+                ad.searchHouseByDateRange(duration);
+                break;
+                }
+            case 9:
+                ad.sortByMemberScore();
+                break;
+            case 10:
+                showMenuOption();
+                break;
+            case 11:
+                logOut();
+                showMenuOption();
+                break;
+        }
+    }
+    
+}

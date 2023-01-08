@@ -8,6 +8,7 @@ using std::vector;
 using std::regex;
 
 // System
+
 //bool System::isInteger(string num) {
 //    for (char ch: num) {
 //        if (ch == '.') {
@@ -244,6 +245,29 @@ void System::addData(string data, string dataFile) {
     }
 }
 
+vector<string> System::extractByRowId(int index, string dataFile){
+    std::fstream file;
+    string dataLine;
+    std::vector<string> dataRowsArray;
+    int count = 0;
+    file.open(dataFile, std::ios::in);
+    if (file.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        while (!file.eof()) {
+            std::stringstream ss;
+            std::getline(file, dataLine);
+            if (count == index){
+                dataRowsArray = splitStr(dataLine, ';');
+                break;
+            }
+            count ++;
+        }
+        file.close();
+    }
+    return dataRowsArray;
+}
+
 vector<vector<string> > System::extractByRow(string dataFile) {
     std::fstream file;
     string dataLine;
@@ -306,93 +330,9 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
     return dataColumnArray;
 }
 
-// void System :: showMenuOption(User &client, Member &obj) {
-//     int choice;
-//     string username;
-//     cout << "EEET2482/COSC2082 ASSIGNMENT\nVACATION HOUSE EXCHANGE APPLICATION\n";
-//     cout << "Instructors: Mr. Linh Tran & Phong Ngo\nGroup: Group Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\n";
-//     cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:";
-//     cin >> choice;
-//     while(choice != 1 && choice != 2 && choice != 3) {
-//         cout << "Invalid Input,\nEnter your choice: ";
-//         cin >> choice;
-//     }
-//     if(choice == 1) {
-//         client.registre();
-//     }
-//     else if(choice == 2) {
-//         int memberChoice;
-//         client.login();
-//         client.checkLogin();
-//         client.enterOtpCode();
-//         cout << "This is your menu:\n0.Exit\n1.View Information\n";
-//         cout << "Enter your choice: ";
-//         cin >> memberChoice;
 
-//         switch (memberChoice) {
-//             case 0:
-//                 this->showMenuOption(client, obj);
-//                 break;
-//             case 1:
-//                 obj.showAccountInfo();
-//                 break;
-//             default:
-//                 while(memberChoice != 0 && memberChoice != 1) {
-//                     cout << "You must enter invalid option: \n";
-//                     cout << "Enter your choice: ";
-//                     cin >> memberChoice;
-//                 }
-//         }
-//     }
-//     else if(choice == 3) {
-//         Admin ad;
-//         int credit;
-//         string dateRange;
-//         cout << "You have logined as Admin, select your action:\n1.Show All Member\n2.View House Detail\n3.Show all house"
-//              <<"\n4.View Member Detail\n5.View All Request\n6.Search house by credit\n7.Search house by ID"
-//              << "\n8.Search House By Date Range\n9.Sort By Member Score\n";
-//         int adminChoice;
-//         cout << "Enter your option: ";
-//         cin >> adminChoice;
-//         switch(adminChoice) {
-//             case 1:
-//                 ad.showAllMember();
-//                 break;
-//             case 2:
-//                 ad.viewHouseDetail(obj.memberID);
-//                 break;
-//             case 3:
-//                 ad.showAllHouse();
-//                 break;
-//             case 4:
-//                 ad.viewMemberDetail();
-//                 break;
-//             case 5:
-//                 ad.viewAllReQuest();
-//                 break;
-//             case 6:
-//                 cout << "Enter credit: ";
-//                 cin >> credit;
-//                 ad.searchHouseByCredit(credit);
-//                 break;
-//             case 7:
 
-//                 break;
-//             case 8:
-//                 cout << "Enter date range: ";
-//                 getline(cin, dateRange);
-//                 ad.searchHouseByDateRange(dateRange);
-//                 break;
-//             case 9:
-//                 ad.sortByMemberScore();
-//                 break;
-//             default:
-//                 cout << "Invalid input\n";
-//                 break;
-//         }
-//     }
 
-// }
 
 void System::updateRowAtIndex(int index, string data, string dataFile, string newDataFile) {
     std::ifstream readFile;
@@ -580,10 +520,12 @@ bool System::verifyLogin(string userName, string password) {
         if (userName == userNames[i]) {
             if (password == passwords[i]) {
                 userInfo = System::extractByRowId(i, memberFile);
-                for (int j = 0; j < userInfo.size(); j++) {
-                    if (j == 0) {
+
+                for(int j = 0; j < userInfo.size(); j++){
+                    if(j == 0){
                         userInfoData += userInfo[j];
-                    } else {
+                    }else{
+
                         userInfoData += ";" + userInfo[j];
                     }
                 }
@@ -598,6 +540,29 @@ bool System::verifyLogin(string userName, string password) {
     }
     return true;
 }
+
+
+bool System:: verifyAdmin(string userName, string password) {
+    vector<string> userNames;
+    vector<string> passwords;
+
+    userNames = System::extractByColumnIndex(0, adminFile);
+    passwords = System::extractByColumnIndex(1, adminFile);
+
+    for (int i = 0; i < userNames.size(); i++) {
+        if (userName == userNames[i]) {
+            if (password == passwords[i]) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 bool System::scoreAuth(int score, string houseId) {
     vector<vector<string> > houseData = System::extractByRow(houseFile);
@@ -625,6 +590,7 @@ bool System::creditAuth(int credit, string houseId) {
         }
     }
     return false;
+
 }
 
 

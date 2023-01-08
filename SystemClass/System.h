@@ -10,6 +10,7 @@
 #define ratingFile "data/rating.dat"
 #define ratingTenantFile "data/ratingTenant.dat"
 #define requestFile "data/request.dat"
+#define adminFile "data/admin.dat"
 #define currentUserFile "data/currentUser.dat"
 
 #include <iostream>
@@ -23,6 +24,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <regex>
+
 
 using std:: string;
 using std:: cin;
@@ -90,8 +92,14 @@ public:
 
     static string getDateAfter(int period);
 
-    // void showMenuOption(User &client, Member &obj);
+    static bool verifyLogin(string username, string password);
 
+    static bool verifyAdmin(string username, string password);
+     static bool scoreAuth(int score, string houseId);
+
+    static bool creditAuth(int score, string houseId);
+
+    static string getDateAfter(int period);
     static int sendOTP();
 };
 #endif

@@ -5,7 +5,9 @@
 #define _CLASS_
 
 
+
 #include "../SystemClass/System.h"
+
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -31,8 +33,11 @@ class User;
 
 class User {
 protected:
+    double ratingScore;
+    int credit;
+    string memberID;
     string name;
-    string full_name;
+    string fullName;
     string password;
     string phonenum;
     int otp;
@@ -40,48 +45,48 @@ protected:
 public:
     
 
-
-
-    void login();
-    void enterOtpCode();
+    void logOut();
+    void guestMenu();
+    bool login();
+    bool enterOtpCode();
     void registre();
     void showAccountInfo();
-    void checkLogin();
-    virtual void showAllHouse();
+    bool isAdmin();
+    void showMenuOption();
+    void memberMenu();
+    void adminMenu();
+    void showAllHouse();
+    void searchHouseById();
     void viewHouseDetail(int id);
     void searchHouseByCredit(int credit);
-
-
-
 };
 
 // Declare Admin class
 class Admin : public User {
 public:
     void showAllMember();
-
-    void viewHouseDetail();
-    virtual void showAllHouse();
+    
+    
     void viewMemberDetail();
     void viewAllReQuest();
-    void searchHouseByCredit();
-    void searchHouseById();
-    void searchHouseByDateRange(int dateRange);
+    void searchHouseByCredit(int credit);
+    
+    void searchHouseByDateRange(string dateRange);
+
     void sortByMemberScore();
 };
 
 //Declare member class
 class Member : public User {
 private:
-    string memberID;
     string location;
     House* memberHouse;
-    double rating_score;
-    int credit;
-    vector <Rating> ratingFromTenant;
+    
+
     vector <RatingTenant> ratingFromOwner;
     vector <Request> allRequest;
 public:
+     
     friend class Admin;
     virtual void showAccountInfo();
     void showAllHouse();
@@ -106,10 +111,11 @@ public:
 // Declare Request class
 class Request {
 private:
-    int request;
-    int houseId;
-    int tenantId;
-    string status;
+    string requestID;
+    string houseId;
+    string tenantId;
+    requestStatus status;
+
 public:
     
     friend class Member;
@@ -120,12 +126,12 @@ public:
 // Declare house class
 class House {
 private:
-    Member* owner;
-    int ownerID;
+    User owner;
+    string ownerID;
     string currentDate;
     string houseID;
-    int dateRange;
-    string stat;
+    string dateRange;
+    houseStatus stat;
     string description;
     int consuming_point;
     int required_score;
@@ -139,12 +145,12 @@ private:
 // Declare Rating
 class Rating {
 private:
-    int ratingID;
+    string ratingID;
     int score;
     string comment;
     string currentDate;
-    int tenantID;
-    int houseID;
+    string tenantID;
+    string houseID;
 
     friend class House;
     friend class Member;
@@ -155,12 +161,12 @@ public:
 // Declare Rating TEnant
 class RatingTenant {
 private:
-    int ratingId;
+    string ratingId;
     int score;
     string comment;
     string currentDate;
-    int tenantID;
-    int ownerID;
+    string tenantID;
+    string ownerID;
 public:
 
     
