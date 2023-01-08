@@ -47,16 +47,18 @@ public:
 
 
     void guestMenu();
-    void login();
-    void enterOtpCode();
+    bool login();
+    bool enterOtpCode();
     void registre();
     void showAccountInfo(int j);
-    int checkLogin();
+    // int checkLogin();
     bool isAdmin();
     void showMenuOption();
     void memberMenu();
     void adminMenu();
-    void viewHouseList();
+    void showAllHouse();
+    void searchHouseById();
+    void viewHouseDetail(int id);
 };
 
 // Declare Admin class
@@ -68,12 +70,12 @@ public:
 
     
     void showAllMember();
-    void viewHouseDetail(int id);
-    virtual void showAllHouse();
+    
+    
     void viewMemberDetail();
     void viewAllReQuest();
     void searchHouseByCredit(int credit);
-    void searchHouseById();
+    
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
     

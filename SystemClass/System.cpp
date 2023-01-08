@@ -360,6 +360,27 @@ void System::searchByDate(int mode, string day, string month, int index, string 
     }
 }
 
+bool System::verifyLogin(string userName, string password) {
+    vector<string> userNames;
+    vector<string> passwords;
+
+    userNames = System::extractByColumnIndex(3, memberFile);
+    passwords = System::extractByColumnIndex(4, memberFile);
+
+    for (int i = 0; i < userNames.size(); i++) {
+        if (userName == userNames[i]) {
+            if (password == passwords[i]) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
 int System::sendOTP() {
     srand(time(NULL)); // User ran to get random number as OTP code
 	int res = rand();

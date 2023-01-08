@@ -217,7 +217,7 @@ void Admin::showAllMember() {
     }
 }
 
-void Admin::showAllHouse() {
+void showAllHouse() {
     cout << "All house of the system: " << "\n";
     cout
             << std::left
@@ -297,7 +297,7 @@ void Admin::viewMemberDetail() {
     }
 }
 
-void Admin::viewHouseDetail(int id) {
+void User :: viewHouseDetail(int id) {
     cout << "\nHouse with this ID will be displayed " << "\n";
     cout
             << std::left
@@ -589,47 +589,25 @@ void Admin::sortByMemberScore() {
 
 // User
 
-void User::login() {
+bool User::login() {
     cout << "Enter the user name: ";
     cin >> this->name;
     cout << "Enter password: ";
     cin >> this->password;
 
-
+    bool check = System::verifyLogin(this->name, this->password);
+    bool secureCode = enterOtpCode();
+    if(check && secureCode) {
+        return true;
+    }
+    else if(!check && secureCode) {
+        
+        return false;
+    }
+    return true;
 }
 
-int User::checkLogin() {
-    int code = 0;
-    int j = 0;
-    // Read data of member:
-    string *informationData = new string[1000];
-    fstream file;
-    file.open(memberFile, std::ios::in);
-    if (!file) {
-        std::cerr << "Fail to open file\n";
-    }
-    int index = 0;
-    while (!file.eof()) {
-        file >> informationData[index];
-        index++;
-    }
 
-    file.close();
-    // Check password
-    for (int i = 0; i < index; i++) {
-         j++;
-        if ((informationData[i].find(this->name) != std::string::npos) &&
-            (informationData[i].find(this->password) != std::string::npos)) {
-            cout << "You have logined as " << this->name << "\n";
-            code++;
-            break;
-        } 
-    }
-    if(code == 0) {
-        cout << "Wrong password or user name";
-    }
-    return j;
-}
 
 void User::showAccountInfo(int j) {
     vector <string> tmp;
@@ -735,24 +713,24 @@ void User::registre() {
 }
 
 
-void User::enterOtpCode() {
+bool User::enterOtpCode() {
     // Get the otp from system:
     int code;
     this->otp = System::sendOTP();
     cout << "Your OTP Code is: " << this->otp;
-    cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
+    cout << "\nPlease enter the code sent to you to verify if you are robot or not:\n";
     cin >> code;
     // Check OTP code
-    while (code != this->otp) {
-        this->otp = System::sendOTP();
-        cout << "Your OTP Code is: " << this->otp;
-        cout << "\nPlease enter the code sent to you to verify if you are robot or not: ";
-        cin >> code;
-    }
+    // while (code != this->otp) {
+    //     this->otp = System::sendOTP();
+    //     cout << "Your OTP Code is: " << this->otp;
+    //     cout << "\nPlease enter the code sent to you to verify if you are robot or not: \n";
+    //     cin >> code;
+    // }
     if (code == this->otp) {
-        cout << "\nYou have logined as Member: \n";
+        return true;
     }
-
+    else return false;
 }
 bool User::isAdmin() {
     int code = 0;
@@ -783,7 +761,7 @@ bool User::isAdmin() {
     }
     else return false;
 }
-void User::viewHouseList() {
+void User::showAllHouse() {
     cout << "All house of the system: " << "\n";
     cout
             << std::left
@@ -853,9 +831,11 @@ void User::guestMenu() {
     switch(userSelection) {
         case 1:
             registre();
+            
             break;
         case 2:
-            viewHouseList();
+            showAllHouse();
+            
             break;
         case 3:
             showMenuOption();
@@ -863,12 +843,18 @@ void User::guestMenu() {
 }
 
 void User:: memberMenu() {
-    
+    // Member mem;
     cout << "You have chosen to login as member, please Input your account: \n\n";
     cout << "--------Member Login------------\n\n\n\n\n";
-    login();
-    checkLogin();
-    enterOtpCode();
+    
+    if(login()) {
+        cout << "\nYou have login as Member\n"; // Add current Member here
+        
+    }
+    else {
+        cout << "Wrong user name or password\n";
+        showMenuOption();
+    }
 }
 
 void User:: adminMenu() {
@@ -893,8 +879,9 @@ void User:: adminMenu() {
                 int id;
                 cout <<"\nEnter House ID: ";
                 cin >> id;
-                ad.viewHouseDetail(id);
+                viewHouseDetail(id);
                 break;
+                
             case 3:
                 ad.showAllHouse();
                 break;

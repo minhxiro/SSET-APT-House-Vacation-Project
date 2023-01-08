@@ -22,6 +22,7 @@
 #include <ctime>
 #include <regex>
 
+
 using std:: string;
 using std:: cin;
 using std:: cout;
@@ -73,7 +74,7 @@ public:
 
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
-    
+    static bool verifyLogin(string username, string password);
 
     
     static int sendOTP();
