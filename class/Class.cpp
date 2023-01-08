@@ -570,16 +570,16 @@ void User::showAccountInfo() {
             << "Full Name"
             << "\n";
     vector<vector<string> > memberList = System::extractByRow(currentUserFile);
-    for (int i = 0; i < memberList.size(); i++) {
+   
         cout
                 << std::left
                 << std::setw(8)
-                << memberList[i][0]
+                << memberList[1][0]
                 << std::left
                 << std::setw(15)
-                << memberList[i][1]
+                << memberList[1][1]
                 << "\n";
-    }
+    
 }
 
 
