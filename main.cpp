@@ -12,8 +12,11 @@ using std:: fstream;
 
 int main() {
 
-    User user;
-//    user.registre();
-    user.showAccountInfo();
-
+//     User user;
+// //    user.registre();
+//     user.login();
+//     int num = user.checkLogin();
+//     user.showAccountInfo(num);
+Member minh;
+minh.deleteHouseList();
 }
