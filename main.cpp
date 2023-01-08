@@ -3,5 +3,5 @@
 
 
 int main(){
-    cout << System::addDays(8);
+    System::addData("hihisadfasdfasdfsadfasd",currentUserFile);
 }

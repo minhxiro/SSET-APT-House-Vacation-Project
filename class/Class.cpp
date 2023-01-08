@@ -92,7 +92,7 @@ void Member::requestHouse() {
 
 void Member::searchHouseByDayAndRange(int day, int range) {
     int count = 0;
-    vector<string> currentUser = System::extractByRowId(0, currentUserFile);
+    vector<string> currentUser = System::extractByRowId(1, currentUserFile);
     vector<vector<string> > dataByDate = System::searchByDate(1, std::to_string(day), "0", 2, houseFile);
     cout
             << std::left
@@ -157,7 +157,7 @@ void Member::searchHouseByDayAndRange(int day, int range) {
 
 void Member::searchHouseByRegion(string region) {
     int count = 0;
-    vector<string> currentUser = System::extractByRowId(0, currentUserFile);
+    vector<string> currentUser = System::extractByRowId(1, currentUserFile);
     vector<vector<string> > dataByRegion = System::sortByCategory(region, houseFile, 7);
     cout
             << std::left
@@ -325,7 +325,7 @@ void Admin::showAllMember() {
     }
 }
 
-void Admin::showAllHouse() {
+void User::showAllHouse() {
     cout << "All house of the system: " << "\n";
     cout
             << std::left
@@ -405,7 +405,7 @@ void Admin::viewMemberDetail() {
     }
 }
 
-void Admin::viewHouseDetail(int id) {
+void User::viewHouseDetail(int id) {
     cout << "\nHouse with this ID will be displayed " << "\n";
     cout
             << std::left
@@ -574,7 +574,7 @@ void Admin::searchHouseByDateRange(string dateRange) {
 
 }
 
-void Admin::searchHouseByCredit(int credit) {
+void User::searchHouseByCredit(int credit) {
     cout << "\nAll houses with this credit will be displayed: " << "\n";
     cout
             << std::left

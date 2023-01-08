@@ -40,12 +40,10 @@ bool System::isLeapYear(int year) {
     }
 }
 
-int System::overloadDays(int day, int month, int year)
-{
+int System::overloadDays(int day, int month, int year) {
     int overload = day;
 
-    switch (month - 1)
-    {
+    switch (month - 1) {
         case 11:
             overload += 30;
         case 10:
@@ -78,17 +76,15 @@ int System::overloadDays(int day, int month, int year)
 
 // Given a year and days elapsed in it, finds
 // date by storing results in d and m.
-void System::getDatesAfter(int overload, int year, int *day, int *month)
-{
-    int monthLst[13] = { 0, 31, 28, 31, 30, 31, 30,
-                         31, 31, 30, 31, 30, 31 };
+void System::getDatesAfter(int overload, int year, int *day, int *month) {
+    int monthLst[13] = {0, 31, 28, 31, 30, 31, 30,
+                        31, 31, 30, 31, 30, 31};
 
     if (System::isLeapYear(year))
         monthLst[2] = 29;
 
     int i;
-    for (i = 1; i <= 12; i++)
-    {
+    for (i = 1; i <= 12; i++) {
         if (overload <= monthLst[i])
             break;
         overload = overload - monthLst[i];
@@ -99,35 +95,29 @@ void System::getDatesAfter(int overload, int year, int *day, int *month)
 }
 
 // Add x days to the given date.
-string System::addDays(int period)
-{
+string System::addDays(int period) {
     int targetDay, targetMonth, targetYear;
     targetDay = std::stoi(System::splitStr(System::getCurrentDate(), '/')[0]);
     targetMonth = std::stoi(System::splitStr(System::getCurrentDate(), '/')[1]);
     targetYear = std::stoi(System::splitStr(System::getCurrentDate(), '/')[2]);
 
     int overload = System::overloadDays(targetDay, targetMonth, targetYear);
-    int remainDays = System::isLeapYear(targetYear)?(366-overload):(365-overload);
+    int remainDays = System::isLeapYear(targetYear) ? (366 - overload) : (365 - overload);
 
 
     int yearTemp, overloadTemp;
-    if (period <= remainDays)
-    {
+    if (period <= remainDays) {
         yearTemp = targetYear;
         overloadTemp = overload + period;
-    }
-
-    else
-    {
+    } else {
 
         period -= remainDays;
         yearTemp = targetYear + 1;
-        int yearTempDays = System::isLeapYear(yearTemp)?366:365;
-        while (period >= yearTempDays)
-        {
+        int yearTempDays = System::isLeapYear(yearTemp) ? 366 : 365;
+        while (period >= yearTempDays) {
             period -= yearTempDays;
             yearTemp++;
-            yearTempDays = System::isLeapYear(yearTemp)?366:365;
+            yearTempDays = System::isLeapYear(yearTemp) ? 366 : 365;
         }
         overloadTemp = period;
     }
@@ -273,7 +263,7 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     return dataTable;
 }
 
-vector<string> System::extractByRowId(int index, string dataFile){
+vector<string> System::extractByRowId(int index, string dataFile) {
     std::fstream file;
     string dataLine;
     std::vector<string> dataRowsArray;
@@ -285,11 +275,11 @@ vector<string> System::extractByRowId(int index, string dataFile){
         while (!file.eof()) {
             std::stringstream ss;
             std::getline(file, dataLine);
-            if (count == index){
+            if (count == index) {
                 dataRowsArray = splitStr(dataLine, ';');
                 break;
             }
-            count ++;
+            count++;
         }
         file.close();
     }
@@ -590,10 +580,10 @@ bool System::verifyLogin(string userName, string password) {
         if (userName == userNames[i]) {
             if (password == passwords[i]) {
                 userInfo = System::extractByRowId(i, memberFile);
-                for(int j = 0; j < userInfo.size(); j++){
-                    if(j == 0){
+                for (int j = 0; j < userInfo.size(); j++) {
+                    if (j == 0) {
                         userInfoData += userInfo[j];
-                    }else{
+                    } else {
                         userInfoData += ";" + userInfo[j];
                     }
                 }
@@ -609,32 +599,33 @@ bool System::verifyLogin(string userName, string password) {
     return true;
 }
 
-bool System::scoreAuth(int score, string houseId){
+bool System::scoreAuth(int score, string houseId) {
     vector<vector<string> > houseData = System::extractByRow(houseFile);
-    for(vector<string> house: houseData){
-        if(house[0] == houseId){
-            if (score < std::stoi(house[6])){
+    for (vector<string> house: houseData) {
+        if (house[0] == houseId) {
+            if (score < std::stoi(house[6])) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }
     }
+    return false;
 }
 
-bool System::creditAuth(int credit, string houseId){
+bool System::creditAuth(int credit, string houseId) {
     vector<vector<string> > houseData = System::extractByRow(houseFile);
-    for(vector<string> house: houseData){
-        if(house[0] == houseId){
-            if (credit < std::stoi(house[5])){
+    for (vector<string> house: houseData) {
+        if (house[0] == houseId) {
+            if (credit < std::stoi(house[5])) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }
     }
+    return false;
 }
-
 
 
 int System::sendOTP() {
