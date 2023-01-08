@@ -238,7 +238,7 @@ void System::addData(string data, string dataFile) {
     if (file.fail()) {
         cout << "Cannot reach the database \n";
     } else {
-        file << "\n" + data;
+        file << "\n"+data;
         cout << "Your information has been successfully added! \n";
         file.close();
     }
@@ -440,10 +440,10 @@ void System::deleteRowData(int index, string dataFile) {
             if (count == index) {
                 continue;
             } else {
-                if ((count - 1) == 1) {
+                if ((count) == 1) {
                     writeFile << tempData;
                 } else {
-                    writeFile << "\n" + tempData;
+                    writeFile << "\n"+tempData;
                 }
             }
         }

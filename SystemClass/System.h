@@ -4,6 +4,7 @@
 
 #define _SYSTEM_CLASS_
 
+#define cookieFile "data/currentUser.dat"
 #define memberFile "data/members.dat"
 #define houseFile "data/house.dat"
 #define ratingFile "data/rating.dat"
