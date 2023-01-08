@@ -24,6 +24,7 @@ public:
     : score(score), comment(comment), houseID(houseID){}
     void rateHouse();
     void showInfo();
+    void avgInfo();
     double calculateAverageScoreForHouse(string houseID);
 };
 // Declare Rating TEnant
@@ -38,5 +39,5 @@ public:
     : score(score), comment(comment), occupierID(occupierID){} 
     void rateOccupier(); 
     void showInfo(); 
-    double calculateAverageScoreForMember(string occupierID);
+    // double calculateAverageScoreForMember(string occupierID);
 };

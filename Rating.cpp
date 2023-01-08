@@ -27,10 +27,10 @@ void Rating::rateHouse() {
     getline(cin, comment);
 
     ofstream outFile("rating.dat", ios_base::app);
-    outFile << "Rate ID: " << "RA" << System::idAutoIncrement("rating.dat") << "; ";
-    outFile << "House score: " << score << "; ";
-    outFile << "Comment: " << comment << "; ";
-    outFile << "Current date: " << System::getCurrentDate() << endl;
+    outFile << "RAH" << System::idAutoIncrement("rating.dat") << ";";
+    outFile << score << ";";
+    outFile << comment << ";";
+    outFile << System::getCurrentDate() << endl;
 }
 
 void Rating::showInfo() {
@@ -42,27 +42,23 @@ void Rating::showInfo() {
 }
 
 double Rating::calculateAverageScoreForHouse(string houseID) {
-    ifstream inFile("rating.dat");
-    string line;
+    // Extract the house ID column and the score column from the rating.dat file
+    vector<string> houseIDs = System::extractByColumnIndex1(4, "rating.dat");
+    vector<string> scores = System::extractByColumnIndex1(1, "rating.dat");
+
     int totalScore = 0;
     int numScores = 0;
-    while (getline(inFile, line)) {
-        size_t idPos = line.find("House ID: ");
-        if (idPos != string::npos) {
-            string id = line.substr(idPos + 10, 7);
-            if (id == houseID) {
-                size_t scorePos = line.find("House score: ");
-                if (scorePos != string::npos) {
-                    int score = stoi(line.substr(scorePos + 13, 3));
-                    totalScore += score;
-                    numScores++;
-                }
-            }
+    // Iterate through the house IDs and scores and add up the scores for the given house ID
+    for (int i = 0; i < houseIDs.size(); i++) {
+        if (houseIDs[i] == houseID) {
+            totalScore += stoi(scores[i]);
+            numScores++;
         }
     }
     if (numScores == 0) {
         return 0; // no scores found for given house ID
     }
+    // Calculate and return the average score
     return static_cast<double>(totalScore) / numScores;
 }
 
@@ -92,10 +88,10 @@ void RatingTenant::rateOccupier() {
     getline(cin, comment);
 
     ofstream outFile("ratingTenant.dat", ios_base::app);
-    outFile << "Rate ID: " << "RA" << System::idAutoIncrement("ratingTenant.dat") << "; ";
-    outFile << "Member score: " << score << "; ";
-    outFile << "Comment: " << comment << "; ";
-    outFile << "Current date: " << System::getCurrentDate() << endl;
+    outFile << "RAM" << System::idAutoIncrement("ratingTenant.dat") << ";";
+    outFile << score << ";";
+    outFile << comment << ";";
+    outFile << System::getCurrentDate() << endl;
 }
 
 void RatingTenant::showInfo() {
@@ -106,30 +102,26 @@ void RatingTenant::showInfo() {
     }
 }
 
-double RatingTenant::calculateAverageScoreForMember(string occupierID) {
-    ifstream inFile("ratingTenant.dat");
-    string line;
-    int totalScore = 0;
-    int numScores = 0;
-    while (getline(inFile, line)) {
-        size_t idPos = line.find("Member ID: ");
-        if (idPos != string::npos) {
-            string id = line.substr(idPos + 11, 7);
-            if (id == occupierID) {
-                size_t scorePos = line.find("Member score: ");
-                if (scorePos != string::npos) {
-                    int score = stoi(line.substr(scorePos + 14, 3));
-                    totalScore += score;
-                    numScores++;
-                }
-            }
-        }
-    }
-    if (numScores == 0) {
-        return 0; // no scores found for given house ID
-    }
-    return static_cast<double>(totalScore) / numScores;
-}
+// double RatingTenant::calculateAverageScoreForMember(string occupierID) {
+//     // Extract the member ID column and the score column from the rating.dat file
+//     vector<string> occupierIDs = System::extractByColumnIndex(4, "ratingTenant.dat");
+//     vector<string> scores = System::extractByColumnIndex(1, "ratingTenant.dat");
+
+//     int totalScore = 0;
+//     int numScores = 0;
+//     // Iterate through the member IDs and scores and add up the scores for the given member ID
+//     for (int i = 0; i < occupierIDs.size(); i++) {
+//         if (occupierIDs[i] == occupierID) {
+//             totalScore += stoi(scores[i]);
+//             numScores++;
+//         }
+//     }
+//     if (numScores == 0) {
+//         return 0; // no scores found for given member ID
+//     }
+//     // Calculate and return the average score
+//     return static_cast<double>(totalScore) / numScores;
+// }
 
 int main() {
 Rating member;
@@ -163,8 +155,8 @@ string temp;
         } else if (selection == 5) {
             cout << "Enter occupier ID: ";
             cin >> temp;
-            double M_avgScore = house.calculateAverageScoreForMember(temp);
-            cout << "Average member score: " << M_avgScore << endl;  
+            // double M_avgScore = house.calculateAverageScoreForMember(temp);
+            // cout << "Average member score: " << M_avgScore << endl;  
         } else if (selection == 6) {
             exit(0);
         } else {
