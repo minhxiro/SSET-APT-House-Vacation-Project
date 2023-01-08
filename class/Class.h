@@ -79,8 +79,7 @@ public:
 //Declare member class
 class Member : public User {
 private:
-    
-    city location;
+    string location;
     House* memberHouse;
     
 

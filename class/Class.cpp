@@ -52,6 +52,7 @@ void Member::declineRequest(string declineID) {
         for (vector<string> &i: allRequest) {
             if (i[0] == declineID) {
                 i[4] = "Declined";
+
             }
         }
     }
@@ -99,6 +100,7 @@ void Member::cancelRequest() {
     for(int i = 0; i < houseRequested.size(); i++) {
         if(houseID == houseRequested[i][2] && this->memberID == houseRequested[i][1]) {
             index = i;
+
         }
     }
 }
@@ -822,6 +824,7 @@ void User::showAccountInfo() {
                 <<memberList[1][2]
                 << "\n";
     
+
 }
 
 
@@ -894,7 +897,7 @@ void User::registre() {
             break;
     }
 
-    data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->full_name + ";" +
+    data = "MEM" + std::to_string(System::idAutoIncrement(memberFile)) + ";" + this->fullName + ";" +
            this->phonenum + ";" + this->name + ";" + this->password + ";" + "500" + ";" + cityLocation + ";" + "0";
     System::addData(data, memberFile);
 
