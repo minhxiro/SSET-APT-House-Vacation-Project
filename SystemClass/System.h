@@ -76,7 +76,7 @@ public:
 
     static bool verifyLogin(string username, string password);
 
-    
+    static bool verifyAdmin(string username, string password);
     static int sendOTP();
 };
 #endif

@@ -60,16 +60,16 @@ void Member::declineRequest(int declineID) {
 
 }
 
-void Member::showAllHouse() {
-    cout << "List of available houses is being showed below:\n";
-    vector<string> listofHouse;
-    listofHouse = System::extractByColumnIndex(0, houseFile);
+// void Member::showAllHouse() {
+//     cout << "List of available houses is being showed below:\n";
+//     vector<string> listofHouse;
+//     listofHouse = System::extractByColumnIndex(0, houseFile);
 
-    cout << "House name: \n";
-    for (string &obj: listofHouse) {
-        cout << obj << " ";
-    }
-}
+//     cout << "House name: \n";
+//     for (string &obj: listofHouse) {
+//         cout << obj << " ";
+//     }
+// }
 
 
 void Member::requestHouse() {
@@ -217,42 +217,42 @@ void Admin::showAllMember() {
     }
 }
 
-void showAllHouse() {
-    cout << "All house of the system: " << "\n";
-    cout
-            << std::left
-            << std::setw(8)
-            << "HouseID"
-            << std::left
-            << std::setw(15)
-            << "OwnerID"
-            << std::left
-            << std::setw(15)
-            << "Location"
-            << std::left
-            << std::setw(15)
-            << "Status"
-            << "\n";
+// void showAllHouse() {
+//     cout << "All house of the system: " << "\n";
+//     cout
+//             << std::left
+//             << std::setw(8)
+//             << "HouseID"
+//             << std::left
+//             << std::setw(15)
+//             << "OwnerID"
+//             << std::left
+//             << std::setw(15)
+//             << "Location"
+//             << std::left
+//             << std::setw(15)
+//             << "Status"
+//             << "\n";
 
-    vector<vector<string> > houseList = System::extractByRow(houseFile);
+//     vector<vector<string> > houseList = System::extractByRow(houseFile);
 
-    for (int i = 0; i < houseList.size(); i++) {
-        cout
-                << std::left
-                << std::setw(8)
-                << houseList[i][0]
-                << std::left
-                << std::setw(15)
-                << houseList[i][1]
-                << std::left
-                << std::setw(15)
-                << houseList[i][6]
-                << std::left
-                << std::setw(15)
-                << houseList[i][7]
-                << "\n";
-    }
-}
+//     for (int i = 0; i < houseList.size(); i++) {
+//         cout
+//                 << std::left
+//                 << std::setw(8)
+//                 << houseList[i][0]
+//                 << std::left
+//                 << std::setw(15)
+//                 << houseList[i][1]
+//                 << std::left
+//                 << std::setw(15)
+//                 << houseList[i][6]
+//                 << std::left
+//                 << std::setw(15)
+//                 << houseList[i][7]
+//                 << "\n";
+//     }
+// }
 
 void Admin::viewMemberDetail() {
 
@@ -733,33 +733,12 @@ bool User::enterOtpCode() {
     else return false;
 }
 bool User::isAdmin() {
-    int code = 0;
-    string *informationData = new string[1000];
-    fstream file;
-    file.open(adminFile, std::ios::in);
-    if (!file) {
-        std::cerr << "Fail to open file\n";
-    }
-    int index = 0;
-    while (!file.eof()) {
-        file >> informationData[index];
-        index++;
-    }
-
-    file.close();
-    // Check password
-    for (int i = 0; i < index; i++) {
-        if ((informationData[i].find(this->name) != std::string::npos) &&
-            (informationData[i].find(this->password) != std::string::npos)) {
-            
-            code++;
-            break;
-        } 
-    }
-    if(code == 1) {
+    bool check = System::verifyAdmin(this->name, this->password);
+    if(check) {
         return true;
     }
     else return false;
+    return true;
 }
 void User::showAllHouse() {
     cout << "All house of the system: " << "\n";
@@ -858,9 +837,10 @@ void User:: memberMenu() {
 }
 
 void User:: adminMenu() {
-    cout << "You have chosen to login as member, please Input your account: \n\n";
+    cout << "You have chosen to login as admin, please Input your account: \n\n";
     cout << "--------Admin Login------------\n\n\n\n\n";
     login();
+    
     if(isAdmin()) {
         Admin ad;
         int userSelection;
@@ -883,7 +863,7 @@ void User:: adminMenu() {
                 break;
                 
             case 3:
-                ad.showAllHouse();
+                showAllHouse();
                 break;
             case 4:
                 ad.viewMemberDetail();

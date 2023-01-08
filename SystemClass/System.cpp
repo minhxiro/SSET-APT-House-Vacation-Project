@@ -381,6 +381,27 @@ bool System::verifyLogin(string userName, string password) {
     return true;
 }
 
+bool System:: verifyAdmin(string userName, string password) {
+    vector<string> userNames;
+    vector<string> passwords;
+
+    userNames = System::extractByColumnIndex(0, adminFile);
+    passwords = System::extractByColumnIndex(1, adminFile);
+
+    for (int i = 0; i < userNames.size(); i++) {
+        if (userName == userNames[i]) {
+            if (password == passwords[i]) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
 int System::sendOTP() {
     srand(time(NULL)); // User ran to get random number as OTP code
 	int res = rand();

@@ -98,7 +98,7 @@ public:
     friend class Admin;
     city getLocation();
     virtual void showAccountInfo();
-    void showAllHouse();
+    // void showAllHouse();
     void searchHouseByRegion();
     void reviewAllRequest();
     void acceptReQuest(int declineID);
