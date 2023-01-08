@@ -9,6 +9,7 @@
 #define ratingFile "data/rating.dat"
 #define ratingTenantFile "data/ratingTenant.dat"
 #define requestFile "data/request.dat"
+#define currentUserFile "data/currentUser.dat"
 
 #include <iostream>
 #include <string>
@@ -33,7 +34,15 @@ public:
 //    bool isInteger(string num);
     static string trimString(string str);
 
-    vector<int> getIndex(vector<string> lst, string K);
+    static bool isLeapYear(int year);
+
+    static int overloadDays(int day, int month, int year);
+
+    static void getDatesAfter(int overload, int year, int *day, int *month);
+
+    static string addDays(int period);
+
+    static vector<int> getIndex(vector<string> lst, string K);
 
     static vector<string> splitStr(string str, char del);
 
@@ -49,10 +58,6 @@ public:
 
     bool inputRangeAuthenticate(string &range);
 
-    bool creditAuth(int credits);
-
-    bool scoreAuth(int scores);
-
     static void deleteRowData(int index, string dataFile);
 
     void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
@@ -61,17 +66,28 @@ public:
 
     static vector<vector<string> > extractByRow(string dataFile);
 
+    static vector<string> extractByRowId(int index, string dataFile);
+
+
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
-    string getCurrentDate();
+    static string getCurrentDate();
 
     static int idAutoIncrement(string dataFile);
 
     static vector<vector<string> >  sortAscending(int index, string dataFile);
 
-    void sortByCategory(string type, string dataFile, int index);
+    static vector<vector<string> > sortByCategory(string type, string dataFile, int index);
 
-    void searchByDate(int mode, string day, string month, int index, string dataFile);
+    static vector<vector<string> > searchByDate(int mode, string day, string month, int index, string dataFile);
+
+    static bool verifyLogin(string username, string password);
+
+    static bool scoreAuth(int score, string houseId);
+
+    static bool creditAuth(int score, string houseId);
+
+    static string getDateAfter(int period);
 
     // void showMenuOption(User &client, Member &obj);
 

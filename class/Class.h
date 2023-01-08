@@ -11,11 +11,11 @@ using std:: cin;
 using std:: cout;
 using std:: vector;
 
-enum city {HUE, HANOI, SAIGON}; //enum for cities
-
-enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
-
-enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
+//enum city {HUE, HANOI, SAIGON}; //enum for cities
+//
+//enum requestStatus {PENDING, DENIED, APPROVED}; // enum for request status
+//
+//enum houseStatus {AVAILABLE, UNAVAILABLE}; // enum for house status
 // Prototyping classes
 class House;
 class Admin;
@@ -47,8 +47,11 @@ public:
     void registre();
     void showAccountInfo();
     void checkLogin();
-    
-    
+    virtual void showAllHouse();
+    void viewHouseDetail(int id);
+    void searchHouseByCredit(int credit);
+
+
 
 };
 
@@ -58,25 +61,19 @@ private:
     vector <Member *> members;
     vector <House *> houseList;
 public:
-
-    
     void showAllMember();
-    void viewHouseDetail(int id);
-    virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
-    void searchHouseByCredit(int credit);
     void searchHouseById();
     void searchHouseByDateRange(string dateRange);
     void sortByMemberScore();
-    
 };
 
 //Declare member class
 class Member : public User {
 private:
     int memberID;
-    city location;
+    string location;
     House* memberHouse;
     double rating_score;
     int credit;
@@ -87,10 +84,11 @@ private:
     vector <House *> houseList;
 public:
     friend class Admin;
-    city getLocation();
     virtual void showAccountInfo();
     void showAllHouse();
-    void searchHouseByRegion();
+    void searchHouseByRegion(string region);
+    void searchHouseByDayAndRange(int day, int range);
+    void searchHouseByCredits(int credit);
     void reviewAllRequest();
     void acceptReQuest(int declineID);
     void declineRequest(int declineID);
@@ -100,6 +98,7 @@ public:
     void viewAllHouse();
     void requestHouse();
     void cancelRequest();
+
     void rateHouse();
     friend class System;
     
@@ -111,7 +110,7 @@ private:
     int request;
     int houseId;
     int tenantId;
-    requestStatus status;
+    string status;
 public:
     
     friend class Member;
@@ -127,12 +126,12 @@ private:
     string currentDate;
     int houseID;
     string dateRange;
-    houseStatus stat;
+    string stat;
     string description;
     int consuming_point;
     int required_score;
     Rating *rate;
-    city location;
+    string location;
     friend class Admin;
     friend class Member;
 };

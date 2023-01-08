@@ -1,19 +1,13 @@
 
 #include "System.h"
 
-using std:: string;
-using std:: cin;
-using std:: cout;
-using std :: vector;
+using std::string;
+using std::cin;
+using std::cout;
+using std::vector;
 using std::regex;
 
 // System
-const string DATA_PATH = "data/";
-const string member_file = "members.dat";
-const string house_file = "house.dat";
-const string rating_file = "rating.dat";
-const string ratingTenant_file = "ratingTenant.dat";
-const string request_file = "request.dat";
 //bool System::isInteger(string num) {
 //    for (char ch: num) {
 //        if (ch == '.') {
@@ -22,6 +16,8 @@ const string request_file = "request.dat";
 //    }
 //    return true;
 //}
+
+
 
 
 string System::trimString(string str) {
@@ -35,6 +31,105 @@ string System::trimString(string str) {
     }
     return finalStr;
 }
+
+bool System::isLeapYear(int year) {
+    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int System::overloadDays(int day, int month, int year) {
+    int overload = day;
+
+    switch (month - 1) {
+        case 11:
+            overload += 30;
+        case 10:
+            overload += 31;
+        case 9:
+            overload += 30;
+        case 8:
+            overload += 31;
+        case 7:
+            overload += 31;
+        case 6:
+            overload += 30;
+        case 5:
+            overload += 31;
+        case 4:
+            overload += 30;
+        case 3:
+            overload += 31;
+        case 2:
+            overload += 28;
+        case 1:
+            overload += 31;
+    }
+
+    if (System::isLeapYear(year) && month > 2)
+        overload += 1;
+
+    return overload;
+}
+
+// Given a year and days elapsed in it, finds
+// date by storing results in d and m.
+void System::getDatesAfter(int overload, int year, int *day, int *month) {
+    int monthLst[13] = {0, 31, 28, 31, 30, 31, 30,
+                        31, 31, 30, 31, 30, 31};
+
+    if (System::isLeapYear(year))
+        monthLst[2] = 29;
+
+    int i;
+    for (i = 1; i <= 12; i++) {
+        if (overload <= monthLst[i])
+            break;
+        overload = overload - monthLst[i];
+    }
+
+    *day = overload;
+    *month = i;
+}
+
+// Add x days to the given date.
+string System::addDays(int period) {
+    int targetDay, targetMonth, targetYear;
+    targetDay = std::stoi(System::splitStr(System::getCurrentDate(), '/')[0]);
+    targetMonth = std::stoi(System::splitStr(System::getCurrentDate(), '/')[1]);
+    targetYear = std::stoi(System::splitStr(System::getCurrentDate(), '/')[2]);
+
+    int overload = System::overloadDays(targetDay, targetMonth, targetYear);
+    int remainDays = System::isLeapYear(targetYear) ? (366 - overload) : (365 - overload);
+
+
+    int yearTemp, overloadTemp;
+    if (period <= remainDays) {
+        yearTemp = targetYear;
+        overloadTemp = overload + period;
+    } else {
+
+        period -= remainDays;
+        yearTemp = targetYear + 1;
+        int yearTempDays = System::isLeapYear(yearTemp) ? 366 : 365;
+        while (period >= yearTempDays) {
+            period -= yearTempDays;
+            yearTemp++;
+            yearTempDays = System::isLeapYear(yearTemp) ? 366 : 365;
+        }
+        overloadTemp = period;
+    }
+
+    int monthTemp, dayTemp;
+    System::getDatesAfter(overloadTemp, yearTemp, &dayTemp, &monthTemp);
+
+    string finalDate;
+    finalDate = std::to_string(dayTemp) + "/" + std::to_string(monthTemp) + "/" + std::to_string(yearTemp);
+    return finalDate;
+}
+
 
 vector<int> System::getIndex(vector<string> lst, string K) {
     vector<int> indices;
@@ -168,6 +263,28 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     return dataTable;
 }
 
+vector<string> System::extractByRowId(int index, string dataFile) {
+    std::fstream file;
+    string dataLine;
+    std::vector<string> dataRowsArray;
+    int count = 0;
+    file.open(dataFile, std::ios::in);
+    if (file.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        while (!file.eof()) {
+            std::stringstream ss;
+            std::getline(file, dataLine);
+            if (count == index) {
+                dataRowsArray = splitStr(dataLine, ';');
+                break;
+            }
+            count++;
+        }
+        file.close();
+    }
+    return dataRowsArray;
+}
 
 vector<string> System::extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
@@ -211,7 +328,7 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
 //         cout << "This is your menu:\n0.Exit\n1.View Information\n";
 //         cout << "Enter your choice: ";
 //         cin >> memberChoice;
-        
+
 //         switch (memberChoice) {
 //             case 0:
 //                 this->showMenuOption(client, obj);
@@ -259,7 +376,7 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
 //                 ad.searchHouseByCredit(credit);
 //                 break;
 //             case 7:
-                
+
 //                 break;
 //             case 8:
 //                 cout << "Enter date range: ";
@@ -274,7 +391,7 @@ vector<string> System::extractByColumnIndex(int index, string dataFile) {
 //                 break;
 //         }
 //     }
-    
+
 // }
 
 void System::updateRowAtIndex(int index, string data, string dataFile, string newDataFile) {
@@ -383,9 +500,10 @@ vector<vector<string> > System::sortAscending(int index, string dataFile) {
 
 
 //This function require the index of column that need to be compare to the type, a type (ex: Hue, Sg, Hn) and then cout all the row of the same type 
-void System::sortByCategory(string type, string dataFile, int index) {
+vector<vector<string> > System::sortByCategory(string type, string dataFile, int index) {
     std::fstream file;
-    std::vector<vector<string> > data;
+    vector<vector<string> > data;
+    vector<vector<string> > filteredData;
     int count = 0;
     type = trimString(type);
     transform(type.begin(), type.end(), type.begin(), ::tolower);
@@ -393,23 +511,25 @@ void System::sortByCategory(string type, string dataFile, int index) {
     data = extractByRow(dataFile);
     for (vector<string> dataStr: data) {
         if (dataStr[index] == type) {
-            count ++;
-            for (int j = 0; j < dataStr.size(); j++) {
-                cout << dataStr[j] << "\t";
-            }
-            cout << "\n";
+            count++;
+            filteredData.push_back(dataStr);
         }
     }
-    if(count == 0){
+    if (count == 0) {
         cout << "Your input cannot be found in the database \n";
     }
+    return filteredData;
+
 }
 
-void System::searchByDate(int mode, string day, string month, int index, string dataFile) {
+vector<vector<string> > System::searchByDate(int mode, string day, string month, int index, string dataFile) {
     //mode 1: search by day of the request (searchByDate(1,<the day>,0) let month = 0)
     //mode 2: search by month of the request (searchByDate(2,0,<the month>) let day = 0)
     vector<vector<string> > data = extractByRow(dataFile);
     vector<int> indexLst;
+    vector<vector<string> > filteredDataDays;
+    vector<vector<string> > filteredDataMonths;
+
     if (mode == 1) {
         vector<string> days;
         //get the date column
@@ -418,16 +538,14 @@ void System::searchByDate(int mode, string day, string month, int index, string 
             days.push_back(splitStr(date, '/')[0]);
         }
         indexLst = getIndex(days, day);
-        if(indexLst.size() == 0){
+        if (indexLst.size() == 0) {
             cout << "Your input day cannot be found in the database \n";
-        }else{
+        } else {
             for (int i: indexLst) {
-                for (int j = 0; j < data[i].size(); j++) {
-                    cout << data[i][j] << "\t";
-                }
-                cout << "\n";
+                filteredDataDays.push_back(data[i]);
             }
         }
+        return filteredDataDays;
     }
     if (mode == 2) {
         vector<string> months;
@@ -437,24 +555,85 @@ void System::searchByDate(int mode, string day, string month, int index, string 
             months.push_back(splitStr(date, '/')[1]);
         }
         indexLst = getIndex(months, month);
-        if(indexLst.size() == 0){
+        if (indexLst.size() == 0) {
             cout << "Your input month cannot be found in the database \n";
-        }else{
+        } else {
 
             for (int i: indexLst) {
-                for (int j = 0; j < data[i].size(); j++) {
-                    cout << data[i][j] << "\t";
-                }
-                cout << "\n";
+                filteredDataMonths.push_back(data[i]);
             }
         }
+        return filteredDataMonths;
     }
 }
 
+bool System::verifyLogin(string userName, string password) {
+    vector<string> userNames;
+    vector<string> passwords;
+    vector<string> userInfo;
+    string userInfoData;
+
+    userNames = System::extractByColumnIndex(3, memberFile);
+    passwords = System::extractByColumnIndex(4, memberFile);
+
+    for (int i = 0; i < userNames.size(); i++) {
+        if (userName == userNames[i]) {
+            if (password == passwords[i]) {
+                userInfo = System::extractByRowId(i, memberFile);
+                for (int j = 0; j < userInfo.size(); j++) {
+                    if (j == 0) {
+                        userInfoData += userInfo[j];
+                    } else {
+                        userInfoData += ";" + userInfo[j];
+                    }
+                }
+                System::addData(userInfoData, currentUserFile);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool System::scoreAuth(int score, string houseId) {
+    vector<vector<string> > houseData = System::extractByRow(houseFile);
+    for (vector<string> house: houseData) {
+        if (house[0] == houseId) {
+            if (score < std::stoi(house[6])) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool System::creditAuth(int credit, string houseId) {
+    vector<vector<string> > houseData = System::extractByRow(houseFile);
+    for (vector<string> house: houseData) {
+        if (house[0] == houseId) {
+            if (credit < std::stoi(house[5])) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
 int System::sendOTP() {
     srand(time(NULL)); // User ran to get random number as OTP code
-	int res = rand();
-	return res;
+    int res = rand();
+    return res;
 }
+
+
 
 
