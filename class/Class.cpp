@@ -568,6 +568,9 @@ void User::showAccountInfo() {
             << std::left
             << std::setw(15)
             << "Full Name"
+            << std::left
+            << std::setw(21)
+            <<"Phone number"
             << "\n";
     vector<vector<string> > memberList = System::extractByRow(currentUserFile);
    
@@ -578,6 +581,9 @@ void User::showAccountInfo() {
                 << std::left
                 << std::setw(15)
                 << memberList[1][1]
+                << std::left
+                << std::setw(21)
+                <<memberList[1][2]
                 << "\n";
     
 }
