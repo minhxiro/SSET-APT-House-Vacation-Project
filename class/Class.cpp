@@ -10,11 +10,11 @@ using std::regex;
 
 void Member::acceptReQuest(string acceptID) {
     vector<vector<string> > allRequest = System::extractByRow(requestFile);
-    string tempHouID = "HOU" + std::to_string(this->memberHouse->houseID); //temp houseID to compare
+
     int count = 0; //count variable to count the request of a particular house
     for (vector<string> &i: allRequest) {
         //count the appearance
-        if (i[2] == tempHouID) {
+        if (i[2] == this->memberHouse->houseID) {
             count++;
         }
     }
@@ -34,11 +34,10 @@ void Member::acceptReQuest(string acceptID) {
 
 void Member::declineRequest(string declineID) {
     vector<vector<string> > allRequest = System::extractByRow(requestFile);
-    string tempHouID = "HOU" + std::to_string(this->memberHouse->houseID); //temp houseID to compare
     int count = 0; //count variable to count the request of a particular house
     for (vector<string> &i: allRequest) {
         //count the appearance
-        if (i[2] == tempHouID) {
+        if (i[2] == this->memberHouse->houseID) {
             count++;
         }
     }
@@ -131,12 +130,116 @@ void Member::cancelRequest() {
 
 
 void Member::addHouse() {
-    cout << "Enter your house date: ";
-    cin >> this->memberHouse->dateRange;
-    System::addData(this->memberHouse->dateRange, houseFile);
-    cout << "Enter house owner: ";
-    getline(cin, this->full_name);
-    System::addData(this->full_name, houseFile);
+    //get MemberID
+    vector<vector<string> > currentMem = System::extractByRow(cookieFile);
+    this->memberID = currentMem[0][0];
+    //get location
+    this->location = currentMem[0][6];
+    //check the member have added a house or not
+    vector<string> memID = System::extractByColumnIndex(1, houseFile);
+    bool added = false;
+    for (string id: memID) {
+        if (this->memberID == id) {
+            added = true;
+        }
+    }
+    if (added) {
+        std::cout << "\nYou have added the house, can not continue to add\n";
+    } else {
+        //Enter the date range to be availabled
+        cout << "\nEnter the date range: ";
+        int dateRange;
+        cin >> dateRange;
+        //enter credit per day of the house
+        cout << "\nEnter credit per day of your house: ";
+        int creditPoint;
+        cin >> creditPoint;
+        //enter min score
+        cout << "\nEnter minimum score to rent the house: ";
+        int score;
+        cin >> score;
+        //enter description
+        cout << "Enter description for the house: ";
+        string descriptionInput;
+        do {
+            getline(cin, descriptionInput);
+        } while (descriptionInput == "");
+        //get final date
+        string finalDate = System::addDays(dateRange);
+        //combine all string
+        string data = "HOU" + std::to_string(System::idAutoIncrement(houseFile)) + ";" + this->memberID
+                      + ";" + System::getCurrentDate() + ";" + finalDate + ";" + std::to_string(dateRange) + ";" +
+                      std::to_string(creditPoint) + ";" +
+                      std::to_string(score) + ";" + this->location + ";" + "AVAILABLE" + ";" + '"' + descriptionInput +
+                      '"';
+        cout << descriptionInput;
+        System::addData(data, houseFile);
+    }
+}
+
+void Member::deleteHouse() {
+    int choice; //variable to input choice
+    cout << "\nDo you want to delete your house: \n"
+            "\n1.Yes 2.No\n";
+    //enter choice
+    cin >> choice;
+    //check choice is valid or not
+    while (true) {
+        if (choice != 1 && choice != 2) {
+            cout << "\nYour choice is invalid, please enter again: ";
+            cin >> choice;
+        } else {
+            break;
+        }
+    }
+    //get MemberID
+    vector<vector<string> > currentMem = System::extractByRow(cookieFile);
+    this->memberID = currentMem[0][0];
+    //check the member have added a house or not
+    vector<string> memID = System::extractByColumnIndex(1, houseFile);
+    bool added = false;
+    for (string id: memID) {
+        if (this->memberID == id) {
+            added = true;
+        }
+    }
+    if (added) {
+        //get list of house
+        vector<vector<string> > houseList = System::extractByRow(houseFile);
+        int index; //to store index of row
+        // check member ID
+        for (int i = 0; i < houseList.size(); i++) {
+            if (houseList[i][1] == this->memberID) {
+                index = i +1;
+                houseList.erase(houseList.begin() + i);
+                System::deleteRowData(index,houseFile);
+                cout << "\nYou have deleted successfully\n";
+            }
+        }
+    } else {
+        cout << "\nYou haven't added a house yet, do you want to add a house: \n"
+                "1.Yes 2.No \n";
+        int addChoice; //variable to input choice
+        //enter choice
+        cin >> addChoice;
+        //check choice is valid or not
+        while (true) {
+            if (addChoice != 1 && addChoice != 2) {
+                cout << "\nYour choice is invalid, please enter again: ";
+                cin >> addChoice;
+            } else {
+                break;
+            }
+        }
+        switch (addChoice) {
+            case 1:
+                Member::addHouse();
+                break;
+            case 2:
+                break;
+
+        }
+    }
 }
 
 void Member::reviewAllRequest() {
@@ -151,17 +254,7 @@ void Member::reviewAllRequest() {
 }
 
 // Delete house
-void Member::deleteHouseList() {
-    int index = 0;
 
-    vector<string> housid = System::extractByColumnIndex(0, houseFile);
-    for (string &obj: housid) {
-        if (this->memberHouse->houseID == std::stoi(obj)) {
-            index++;
-        }
-    }
-    System::deleteRowData(index, houseFile);
-}
 
 
 // House
@@ -391,13 +484,13 @@ void Admin::viewAllReQuest() {
 
 }
 
-void Admin::searchHouseByDateRange(string dateRange) {
+void Admin::searchHouseByDateRange(int dateRange) {
     //count variable to count the appearance
     int count = 0;
     vector<vector<string> > houseList = System::extractByRow(houseFile);
 
     for (int i = 0; i < houseList.size(); i++) {
-        if (dateRange == houseList[i][3]) {
+        if (std::to_string(dateRange) == houseList[i][3]) {
             count++;
             cout << "\nAll houses with this date range will be displayed: " << "\n";
             cout
@@ -627,14 +720,18 @@ void User::showAccountInfo() {
 void User::registre() {
     string data;
     string cityLocation;
-    cout << "Enter your user name: ";
+    //enter username
+    cout << "Enter your username: ";
     getline(cin, this->name);
+    //check username
     while (!System::inputUsernameAuthentication(this->name)) {
         cout << "Username should only contain 8 to 15 character and no white spaces!!!, enter again: ";
         getline(cin, this->name);
     }
+    //enter password
     cout << "Enter your password: ";
     getline(cin, this->password);
+    //check password
     while (!System::inputPasswordAuthenticate(this->password)) {
         cout
                 << "Minimum 8 and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
@@ -642,22 +739,26 @@ void User::registre() {
         cout << "Please enter again: ";
         getline(cin, this->password);
     }
-
+    //enter full name
     cout << "Enter your full name: ";
     getline(cin, this->full_name);
+    //check full name
     while (!System::inputNameAuthentication(this->full_name)) {
         cout << "Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces"
              << "\n";
         cout << "Please enter again: ";
         getline(cin, this->full_name);
     }
+    //enter phone num
     cout << "Enter your phone number: ";
     getline(cin, this->phonenum);
+    //check phoneNum
     while (!System::inputPhoneAuthenticate(this->phonenum)) {
         cout << "phone number must have 11 numbers and start with 0" << "\n";
         cout << "Please enter again: ";
         getline(cin, this->phonenum);
     }
+    //enter location
     cout << "\n 1.HANOI \n 2.HUE \n 3.SAIGON";
     cout << "Enter your city location: ";
     string choice;

@@ -54,12 +54,7 @@ public:
 
 // Declare Admin class
 class Admin : public User {
-private:
-    vector <Member *> members;
-    vector <House *> houseList;
 public:
-
-    
     void showAllMember();
     void viewHouseDetail(int id);
     virtual void showAllHouse();
@@ -67,7 +62,7 @@ public:
     void viewAllReQuest();
     void searchHouseByCredit(int credit);
     void searchHouseById();
-    void searchHouseByDateRange(string dateRange);
+    void searchHouseByDateRange(int dateRange);
     void sortByMemberScore();
     
 };
@@ -75,7 +70,7 @@ public:
 //Declare member class
 class Member : public User {
 private:
-    int memberID;
+    string memberID;
     string location;
     House* memberHouse;
     double rating_score;
@@ -92,7 +87,7 @@ public:
     void acceptReQuest(string acceptID);
     void declineRequest(string declineID);
     RatingTenant rateTentant();
-    void deleteHouseList();
+    void deleteHouse();
     void addHouse();
     void viewAllHouse();
     void requestHouse();
@@ -122,8 +117,8 @@ private:
     Member* owner;
     int ownerID;
     string currentDate;
-    int houseID;
-    string dateRange;
+    string houseID;
+    int dateRange;
     string stat;
     string description;
     int consuming_point;

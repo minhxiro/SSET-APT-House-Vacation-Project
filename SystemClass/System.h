@@ -4,6 +4,7 @@
 
 #define _SYSTEM_CLASS_
 
+#define cookieFile "data/currentUser.dat"
 #define memberFile "data/members.dat"
 #define houseFile "data/house.dat"
 #define ratingFile "data/rating.dat"
@@ -33,6 +34,14 @@ public:
 //    bool isInteger(string num);
     static string trimString(string str);
 
+    static bool isLeapYear(int year);
+
+    static int overloadDays(int day, int month, int year);
+
+    static void getDatesAfter(int overload, int year, int *day, int *month);
+
+    static string addDays(int period);
+
     vector<int> getIndex(vector<string> lst, string K);
 
     static vector<string> splitStr(string str, char del);
@@ -59,7 +68,7 @@ public:
 
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
-    string getCurrentDate();
+    static string getCurrentDate();
 
     static int idAutoIncrement(string dataFile);
 
@@ -70,6 +79,8 @@ public:
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
     static bool verifyLogin(string username, string password);
+
+    static string getDateAfter(int period);
 
     // void showMenuOption(User &client, Member &obj);
 
