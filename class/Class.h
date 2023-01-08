@@ -56,6 +56,7 @@ public:
     void showMenuOption();
     void memberMenu();
     void adminMenu();
+    void viewHouseList();
 };
 
 // Declare Admin class

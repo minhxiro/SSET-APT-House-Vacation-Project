@@ -18,9 +18,11 @@ int main() {
 //     int num = user.checkLogin();
 //     user.showAccountInfo(num);
 User minh;
-minh.login();
-bool check = minh.isAdmin();
-if(minh.isAdmin()) {
-    cout <<"admin";
-}
+// minh.login();
+// bool check = minh.isAdmin();
+// if(minh.isAdmin()) {
+//     cout <<"admin";
+// }
+
+minh.showMenuOption();
 }

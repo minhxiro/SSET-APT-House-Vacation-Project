@@ -783,14 +783,50 @@ bool User::isAdmin() {
     }
     else return false;
 }
-Menu
+void User::viewHouseList() {
+    cout << "All house of the system: " << "\n";
+    cout
+            << std::left
+            << std::setw(8)
+            << "HouseID"
+            << std::left
+            << std::setw(15)
+            << "OwnerID"
+            << std::left
+            << std::setw(15)
+            << "Location"
+            << std::left
+            << std::setw(15)
+            << "Status"
+            << "\n";
+
+    vector<vector<string> > houseList = System::extractByRow(houseFile);
+
+    for (int i = 0; i < houseList.size(); i++) {
+        cout
+                << std::left
+                << std::setw(8)
+                << houseList[i][0]
+                << std::left
+                << std::setw(15)
+                << houseList[i][1]
+                << std::left
+                << std::setw(15)
+                << houseList[i][6]
+                << std::left
+                << std::setw(15)
+                << houseList[i][7]
+                << "\n";
+    }
+}
+
+// Menu
 void User::showMenuOption() {
     int choice;
     string username;
-    User client;
-    Member obj;
-    cout << "EEET2482/COSC2082 ASSIGNMENT\nVACATION HOUSE EXCHANGE APPLICATION\n";
-    cout << "Instructors: Mr. Linh Tran & Phong Ngo\nGroup: Group Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\n";
+    
+    cout << "-----------Main Menu------------------------\n\n\n";
+    
     cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:\n";
     cin >> choice;
     while(choice != 1 && choice != 2 && choice != 3) {
@@ -810,16 +846,19 @@ void User::showMenuOption() {
 }
 void User::guestMenu() {
     int userSelection;
-    cout << "You have logined as guest\n";
-    cout << "Choose the option:\n1.Register\n2.Exit to Menu\n";
+    cout << "You have logined as guest\n\n\n";
+    cout << "---------Guest Menu----------\n\n";
+    cout << "Choose the option:\n1.Register\n2.View all house\n3.Exit to main menu\n";
     cin >> userSelection;
     switch(userSelection) {
         case 1:
             registre();
             break;
         case 2:
-            showMenuOption();
+            viewHouseList();
             break;
+        case 3:
+            showMenuOption();
     }
 }
 
@@ -837,7 +876,57 @@ void User:: adminMenu() {
     cout << "--------Admin Login------------\n\n\n\n\n";
     login();
     if(isAdmin()) {
-        cout << "\nYou are Admin\n";
+        Admin ad;
+        int userSelection;
+        cout << "\nYou have logined as Admin\n\n";
+        cout << "Please choose your option:\n\n\n";
+        cout << "1.Show All Member\n2.View House Detail\n3.Show All House\n4.View Member Detail\n5.View All Request"
+            <<"\n6.Search House By Credit\n7.Search House By ID\n8.Search House By Date Range\n9.Sort By Member Score\n10.Exit to main menu\n";
+        cout << "Enter your option: ";
+        cin >> userSelection;
+        cout << "\n";
+        switch(userSelection) {
+            case 1:
+                ad.showAllMember();
+                break;
+            case 2:
+                int id;
+                cout <<"\nEnter House ID: ";
+                cin >> id;
+                ad.viewHouseDetail(id);
+                break;
+            case 3:
+                ad.showAllHouse();
+                break;
+            case 4:
+                ad.viewMemberDetail();
+                break;
+            case 5:
+                ad.viewAllReQuest();
+                break;
+            case 6:
+                int credit;
+                cout << "\nEnter your expected credit: ";
+                cin >> credit;
+                ad.searchHouseByCredit(credit);
+                break;
+            case 7:
+                // ad.searchHouseById();
+                break;
+            case 8:
+                {string duration;
+                cout << "\nEnter the house date range: ";
+                getline(cin, duration);
+                ad.searchHouseByDateRange(duration);
+                break;
+                }
+            case 9:
+                ad.sortByMemberScore();
+                break;
+            case 10:
+                showMenuOption();
+                break;
+        }
     }
     
 }
