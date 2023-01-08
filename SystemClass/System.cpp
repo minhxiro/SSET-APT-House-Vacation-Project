@@ -144,6 +144,29 @@ void System::addData(string data, string dataFile) {
     }
 }
 
+vector<string> System::extractByRowId(int index, string dataFile){
+    std::fstream file;
+    string dataLine;
+    std::vector<string> dataRowsArray;
+    int count = 0;
+    file.open(dataFile, std::ios::in);
+    if (file.fail()) {
+        cout << "Cannot reach the database \n";
+    } else {
+        while (!file.eof()) {
+            std::stringstream ss;
+            std::getline(file, dataLine);
+            if (count == index){
+                dataRowsArray = splitStr(dataLine, ';');
+                break;
+            }
+            count ++;
+        }
+        file.close();
+    }
+    return dataRowsArray;
+}
+
 vector<vector<string> > System::extractByRow(string dataFile) {
     std::fstream file;
     string dataLine;
@@ -363,6 +386,8 @@ void System::searchByDate(int mode, string day, string month, int index, string 
 bool System::verifyLogin(string userName, string password) {
     vector<string> userNames;
     vector<string> passwords;
+    vector<string> userInfo;
+    string userInfoData;
 
     userNames = System::extractByColumnIndex(3, memberFile);
     passwords = System::extractByColumnIndex(4, memberFile);
@@ -370,6 +395,15 @@ bool System::verifyLogin(string userName, string password) {
     for (int i = 0; i < userNames.size(); i++) {
         if (userName == userNames[i]) {
             if (password == passwords[i]) {
+                userInfo = System::extractByRowId(i, memberFile);
+                for(int j = 0; j < userInfo.size(); j++){
+                    if(j == 0){
+                        userInfoData += userInfo[j];
+                    }else{
+                        userInfoData += ";" + userInfo[j];
+                    }
+                }
+                System::addData(userInfoData, currentUserFile);
                 return true;
             } else {
                 return false;

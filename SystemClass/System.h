@@ -10,6 +10,7 @@
 #define ratingTenantFile "data/ratingTenant.dat"
 #define requestFile "data/request.dat"
 #define adminFile "data/admin.dat"
+#define currentUserFile "data/currentUser.dat"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -62,6 +63,8 @@ public:
 
     static vector<vector<string> > extractByRow(string dataFile);
 
+    static vector<string> extractByRowId(int index, string dataFile);
+
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
     string getCurrentDate();
@@ -77,6 +80,11 @@ public:
     static bool verifyLogin(string username, string password);
 
     static bool verifyAdmin(string username, string password);
+     static bool scoreAuth(int score, string houseId);
+
+    static bool creditAuth(int score, string houseId);
+
+    static string getDateAfter(int period);
     static int sendOTP();
 };
 #endif

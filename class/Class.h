@@ -35,7 +35,7 @@ class User {
 protected:
     double ratingScore;
     int credit;
-    int memberID;
+    string memberID;
     string name;
     string fullName;
     string password;
@@ -45,12 +45,12 @@ protected:
 public:
     
 
-
+    void logOut();
     void guestMenu();
     bool login();
     bool enterOtpCode();
     void registre();
-    void showAccountInfo(int j);
+    void showAccountInfo();
     // int checkLogin();
     bool isAdmin();
     void showMenuOption();
@@ -101,8 +101,8 @@ public:
     // void showAllHouse();
     void searchHouseByRegion();
     void reviewAllRequest();
-    void acceptReQuest(int declineID);
-    void declineRequest(int declineID);
+    void acceptReQuest(string acceptID);
+    void declineRequest(string declineID);
     RatingTenant rateTentant();
     void deleteHouseList();
     void addHouseList();
@@ -117,9 +117,9 @@ public:
 // Declare Request class
 class Request {
 private:
-    int request;
-    int houseId;
-    int tenantId;
+    string requestID;
+    string houseId;
+    string tenantId;
     requestStatus status;
 public:
     
@@ -132,9 +132,9 @@ public:
 class House {
 private:
     User owner;
-    int ownerID;
+    string ownerID;
     string currentDate;
-    int houseID;
+    string houseID;
     string dateRange;
     houseStatus stat;
     string description;
@@ -150,12 +150,12 @@ private:
 // Declare Rating
 class Rating {
 private:
-    int ratingID;
+    string ratingID;
     int score;
     string comment;
     string currentDate;
-    int tenantID;
-    int houseID;
+    string tenantID;
+    string houseID;
 
     friend class House;
     friend class Member;
@@ -166,12 +166,12 @@ public:
 // Declare Rating TEnant
 class RatingTenant {
 private:
-    int ratingId;
+    string ratingId;
     int score;
     string comment;
     string currentDate;
-    int tenantID;
-    int ownerID;
+    string tenantID;
+    string ownerID;
 public:
 
     

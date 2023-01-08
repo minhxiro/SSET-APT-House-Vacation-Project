@@ -16,48 +16,49 @@ city Member::getLocation() {
 
 // Member
 
-void Member::acceptReQuest(int acceptID) {
+void Member::acceptReQuest(string acceptID) {
     vector<vector<string> > allRequest = System::extractByRow(requestFile);
-    int id = this->memberHouse->houseID;
-    if (allRequest.size() == 0) {
-        std::cerr << "There are no requests to accept" << "\n";
 
-
-    }
-    for (int i = 0; i < allRequest.size(); i++) {
-        //if the requestID is not  equal to accepted requestID, the system will delete the request from data file
-        if (std::stoi(allRequest[i][0]) != acceptID && std::stoi(allRequest[i][1]) == id) {
-            allRequest.erase(allRequest.begin() + i);
-
-            System::deleteRowData(i, requestFile);
-
-
+    int count = 0; //count variable to count the request of a particular house
+    for (vector<string> &i: allRequest) {
+        //count the appearance
+        if (i[2] == this->memberHouse->houseID) {
+            count++;
         }
-
     }
-    cout << "Request " << acceptID << " have been accepted" << "\n";
-
-}
-
-void Member::declineRequest(int declineID) {
-    vector<vector<string> > allRequest = System::extractByRow(requestFile);
-    int id = this->memberHouse->houseID;
-    if (allRequest.size() == 1) {
-        std::cerr << "The request have been accepted, can not be declined" << "\n";
-
-
+    //if count = 0 then there is no request to that house
+    if (count == 0) {
+        cout << "\nThere are no requests to your house!!\n";
     } else {
-        for (int i = 0; i < allRequest.size(); i++) {
-            if (std::stoi(allRequest[i][0]) == declineID && std::stoi(allRequest[i][1]) == id) {
-                allRequest.erase(allRequest.begin() + i);
-
-                System::deleteRowData(i, requestFile);
-
-
+        for (vector<string> &i: allRequest) {
+            if (i[0] == acceptID) {
+                i[4] = "Accepted";
+            } else {
+                i[4] = "Declined";
             }
         }
     }
+}
 
+void Member::declineRequest(string declineID) {
+    vector<vector<string> > allRequest = System::extractByRow(requestFile);
+    int count = 0; //count variable to count the request of a particular house
+    for (vector<string> &i: allRequest) {
+        //count the appearance
+        if (i[2] == this->memberHouse->houseID) {
+            count++;
+        }
+    }
+    //if count = 0 then there is no request to that house
+    if (count == 0) {
+        cout << "\nThere are no requests to your house!!\n";
+    } else {
+        for (vector<string> &i: allRequest) {
+            if (i[0] == declineID) {
+                i[4] = "Declined";
+            }
+        }
+    }
 }
 
 // void Member::showAllHouse() {
@@ -77,31 +78,16 @@ void Member::requestHouse() {
     string houseID;
     string data;
     // Get house ID in a vector
-
-    vector<string> listHouse = System::extractByColumnIndex(0, houseFile); // Note
-
-    cout << "How many houses you want to request? ";
-    cin >> n;
-    // Enter house ID to find house
-    for (int i = 0; i < n; i++) {
-        cout << "Enter the house ID: ";
-        cin.ignore();
-        getline(cin, houseID);
-
-        for (string &tmp: listHouse) {
-            // while (houseID != tmp) {
-            //     cout << "Your house is not added in the list\n";
-
-            // }
-            if (houseID == tmp) {
-                cout << "Successful to request house";
-                //Note is here
-                // data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + "Mem" + std::to_string(this->memberID)
+    cout << "Enter the house ID: ";
+    cin >>houseID;
+    vector<vector<string> > listHouse = System::extractByRow(houseFile); // Note
+    // data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + "Mem" + std::to_string(this->memberID)
                 // +";" + "HOU" + std::to_string(this->memberHouse->houseID) + ";" + this->memberHouse->currentDate + ";" + this->memberHouse->stat;
-                Request obj;
-                obj.houseId = std::stoi(houseID);
-                this->allRequest.push_back(obj);
-            }
+    for(int i = 0; i < listHouse.size();i++) {
+        if(houseID == listHouse[i][0]) {
+            cout<< "Requested\n";
+            data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + this->memberID
+                +";" + houseID + ";" + this->memberHouse->currentDate + ";" + "PENDING";
         }
     }
 }
@@ -125,44 +111,44 @@ void Member::requestHouse() {
 //     }
 // }
 
-void Member::cancelRequest() {
-    int houseID;
-    int index = 0;
-    int i = 0;
-    vector<string> list_of_request = System::extractByColumnIndex(0, requestFile);
-    cout << "List of house you have requested: \n";
-    for (Request &obj: this->allRequest) {
-        cout << obj.houseId << " ";
-    }
+// void Member::cancelRequest() {
+//     int houseID;
+//     int index = 0;
+//     int i = 0;
+//     vector<string> list_of_request = System::extractByColumnIndex(0, requestFile);
+//     cout << "List of house you have requested: \n";
+//     for (Request &obj: this->allRequest) {
+//         cout << obj.houseId << " ";
+//     }
 
-    cout << "Enter the id of house that you want delete: ";
-    cin >> houseID;
-    for (Request &obj: this->allRequest) {
-        if (obj.houseId == houseID) {
-            index++;
-        }
-    }
+//     cout << "Enter the id of house that you want delete: ";
+//     cin >> houseID;
+//     for (Request &obj: this->allRequest) {
+//         if (obj.houseId == houseID) {
+//             index++;
+//         }
+//     }
 
-    // Delete the house in the vector
-    this->allRequest.erase(this->allRequest.begin() + index);
-    // Delete request in other request list:
-    for (string &obj: list_of_request) {
-        if (std::stoi(obj) == houseID) {
-            i++;
-        }
-    }
-    System::deleteRowData(i, requestFile);
-}
+//     // Delete the house in the vector
+//     this->allRequest.erase(this->allRequest.begin() + index);
+//     // Delete request in other request list:
+//     for (string &obj: list_of_request) {
+//         if (std::stoi(obj) == houseID) {
+//             i++;
+//         }
+//     }
+//     System::deleteRowData(i, requestFile);
+// }
 
 
-void Member::addHouseList() {
-    cout << "Enter your house date: ";
-    cin >> this->memberHouse->dateRange;
-    System::addData(this->memberHouse->dateRange, houseFile);
-    cout << "Enter house owner: ";
-    getline(cin, this->fullName);
-    System::addData(this->fullName, houseFile);
-}
+// void Member::addHouseList() {
+//     cout << "Enter your house date: ";
+//     cin >> this->memberHouse->dateRange;
+//     System::addData(this->memberHouse->dateRange, houseFile);
+//     cout << "Enter house owner: ";
+//     getline(cin, this->fullName);
+//     System::addData(this->fullName, houseFile);
+// }
 
 
 void Member :: reviewAllRequest() {
@@ -178,17 +164,17 @@ void Member :: reviewAllRequest() {
 }
 
 // Delete house
-void Member::deleteHouseList() {
-    int index = 0;
+// void Member::deleteHouseList() {
+//     int index = 0;
 
-    vector<string> housid = System::extractByColumnIndex(0, houseFile);
-    for (string &obj: housid) {
-        if (this->memberHouse->houseID == std::stoi(obj)) {
-            index++;
-        }
-    }
-    System::deleteRowData(index, houseFile);
-}
+//     vector<string> housid = System::extractByColumnIndex(0, houseFile);
+//     for (string &obj: housid) {
+//         if (this->memberHouse->houseID == std::stoi(obj)) {
+//             index++;
+//         }
+//     }
+//     System::deleteRowData(index, houseFile);
+// }
 
 
 // House
@@ -217,42 +203,6 @@ void Admin::showAllMember() {
     }
 }
 
-// void showAllHouse() {
-//     cout << "All house of the system: " << "\n";
-//     cout
-//             << std::left
-//             << std::setw(8)
-//             << "HouseID"
-//             << std::left
-//             << std::setw(15)
-//             << "OwnerID"
-//             << std::left
-//             << std::setw(15)
-//             << "Location"
-//             << std::left
-//             << std::setw(15)
-//             << "Status"
-//             << "\n";
-
-//     vector<vector<string> > houseList = System::extractByRow(houseFile);
-
-//     for (int i = 0; i < houseList.size(); i++) {
-//         cout
-//                 << std::left
-//                 << std::setw(8)
-//                 << houseList[i][0]
-//                 << std::left
-//                 << std::setw(15)
-//                 << houseList[i][1]
-//                 << std::left
-//                 << std::setw(15)
-//                 << houseList[i][6]
-//                 << std::left
-//                 << std::setw(15)
-//                 << houseList[i][7]
-//                 << "\n";
-//     }
-// }
 
 void Admin::viewMemberDetail() {
 
@@ -609,36 +559,27 @@ bool User::login() {
 
 
 
-void User::showAccountInfo(int j) {
-    vector <string> tmp;
-     string *informationData = new string[1000];
-    fstream file;
-    file.open(memberFile, std::ios::in);
-    if (!file) {
-        std::cerr << "Fail to open file\n";
+void User::showAccountInfo() {
+    cout << "All the member of the system: " << "\n";
+    cout
+            << std::left
+            << std::setw(8)
+            << "MemberID"
+            << std::left
+            << std::setw(15)
+            << "Full Name"
+            << "\n";
+    vector<vector<string> > memberList = System::extractByRow(currentUserFile);
+    for (int i = 0; i < memberList.size(); i++) {
+        cout
+                << std::left
+                << std::setw(8)
+                << memberList[i][0]
+                << std::left
+                << std::setw(15)
+                << memberList[i][1]
+                << "\n";
     }
-    int index = 0;
-    while (!file.eof()) {
-        file >> informationData[index];
-        index++;
-    }
-
-    file.close();
-    for(int i = 0; i < index;i++) {
-        if(i == j) {
-            tmp = System::splitStr(informationData[i], ';');
-        }
-    }
-    this->fullName = tmp[1];
-    this->phonenum = tmp[2];
-    this->memberID = std::stoi(tmp[0]);
-    this->credit = std::stoi(tmp[5]);
-    this->ratingScore = std::stoi(tmp[7]);
-    cout << "Your full name is: " << this->fullName << "\n";
-    cout << "Your phone number is: " << this->phonenum << "\n";
-    cout << "Your ID is: " << this->memberID << "\n";
-    cout << "Your credit is: " << this->credit << "\n";
-    cout << "Your rating score is: " << this->ratingScore << "\n";
 }
 
 
@@ -821,14 +762,38 @@ void User::guestMenu() {
     }
 }
 
+void User :: logOut() {
+    std::ofstream ofs;
+    ofs.open(currentUserFile, std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+}
+
 void User:: memberMenu() {
     // Member mem;
     cout << "You have chosen to login as member, please Input your account: \n\n";
     cout << "--------Member Login------------\n\n\n\n\n";
     
     if(login()) {
-        cout << "\nYou have login as Member\n"; // Add current Member here
-        
+        int userSeletion;
+        cout << "\nYou have login as \n"; // Add current Member here
+        cout << "\nPlease select the options:\n";
+        cout << "\n1.Show Account Information\n2.Search House by Region\n3.Review All Request\n4.Accept Request"
+             << "\n5.Decline Request\n6.Rate Tenant\n7.Delete House List\n8.Add House List\n9.View All House"
+             << "\n10.Request House\n11.Cancel Request\n12.Rate House\n13.Exit to main menu\n14.Log out\n";
+        cout << "\nEnter your option: ";
+        cin >> userSeletion;
+        switch(userSeletion) {
+            case 1:
+                showAccountInfo();
+                //Current Member
+                break;
+            case 2:
+               break;
+            case 14:
+                logOut();
+                showMenuOption();
+                break;
+        }
     }
     else {
         cout << "Wrong user name or password\n";
@@ -847,7 +812,7 @@ void User:: adminMenu() {
         cout << "\nYou have logined as Admin\n\n";
         cout << "Please choose your option:\n\n\n";
         cout << "1.Show All Member\n2.View House Detail\n3.Show All House\n4.View Member Detail\n5.View All Request"
-            <<"\n6.Search House By Credit\n7.Search House By ID\n8.Search House By Date Range\n9.Sort By Member Score\n10.Exit to main menu\n";
+            <<"\n6.Search House By Credit\n7.Search House By ID\n8.Search House By Date Range\n9.Sort By Member Score\n10.Exit to main menu\n11.Log Out\n";
         cout << "Enter your option: ";
         cin >> userSelection;
         cout << "\n";
@@ -891,6 +856,10 @@ void User:: adminMenu() {
                 ad.sortByMemberScore();
                 break;
             case 10:
+                showMenuOption();
+                break;
+            case 11:
+                logOut();
                 showMenuOption();
                 break;
         }

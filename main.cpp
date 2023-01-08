@@ -25,4 +25,6 @@ User minh;
 // }
 
 minh.showMenuOption();
+// Member mem;
+// mem.requestHouse();
 }
