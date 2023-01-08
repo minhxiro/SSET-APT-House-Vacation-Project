@@ -5,8 +5,7 @@
 
 
 int main(){
-    Member member;
-    member.deleteHouse();
-    member.addHouse();
+    Admin admin;
+    admin.searchHouseByCredit();
 
 }

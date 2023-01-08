@@ -210,9 +210,9 @@ void Member::deleteHouse() {
         // check member ID
         for (int i = 0; i < houseList.size(); i++) {
             if (houseList[i][1] == this->memberID) {
-                index = i +1;
+                index = i + 1;
                 houseList.erase(houseList.begin() + i);
-                System::deleteRowData(index,houseFile);
+                System::deleteRowData(index, houseFile);
                 cout << "\nYou have deleted successfully\n";
             }
         }
@@ -312,10 +312,10 @@ void Admin::showAllHouse() {
                 << houseList[i][1]
                 << std::left
                 << std::setw(15)
-                << houseList[i][6]
+                << houseList[i][7]
                 << std::left
                 << std::setw(35)
-                << houseList[i][7]
+                << houseList[i][8]
                 << "\n";
     }
 }
@@ -375,75 +375,95 @@ void Admin::viewMemberDetail() {
     }
 }
 
-void Admin::viewHouseDetail(int id) {
+// view house with input id from console
+void Admin::viewHouseDetail() {
+    int id;
+    cout << "\nPleease enter the id of the house you want to view: ";
+    cin >> id;
     //tempID to compare with houseID
     string tempID = "HOU" + std::to_string(id);
     //parameter to count the appearance
     int count = 0;
     vector<vector<string> > houseList = System::extractByRow(houseFile);
-
-    for (int i = 0; i < houseList.size(); i++) {
-        if (tempID == houseList[i][0]) {
+    // check if there is house with that id or not
+    for (vector<string> &j: houseList) {
+        if (tempID == j[0]) {
             count++;
-            cout << "\nHouse with this ID will be displayed : " << "\n";
-            cout
-                    << std::left
-                    << std::setw(10)
-                    << "HouseID"
-                    << std::left
-                    << std::setw(10)
-                    << "OwnerID"
-                    << std::left
-                    << std::setw(20)
-                    << "CurrentDate"
-                    << std::left
-                    << std::setw(20)
-                    << "DateRange"
-                    << std::left
-                    << std::setw(10)
-                    << "Credit"
-                    << std::left
-                    << std::setw(10)
-                    << "minScore"
-                    << std::left
-                    << std::setw(15)
-                    << "Location"
-                    << std::left
-                    << std::setw(35)
-                    << "Description"
-                    << "\n";
-            cout
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][0]
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][1]
-                    << std::left
-                    << std::setw(20)
-                    << houseList[i][2]
-                    << std::left
-                    << std::setw(20)
-                    << houseList[i][3]
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][4]
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][5]
-                    << std::left
-                    << std::setw(15)
-                    << houseList[i][6]
-                    << std::left
-                    << std::setw(35)
-                    << houseList[i][7]
-                    << "\n";
         }
     }
     //if count = 0 then there is no matching house
     if (count == 0) {
         cout << "\nThere is no house with this ID\n";
     }
+        // there is house with that id
+    else {
+        cout << "\nHouse with this ID will be displayed : " << "\n";
+        cout
+                << std::left
+                << std::setw(10)
+                << "HouseID"
+                << std::left
+                << std::setw(10)
+                << "OwnerID"
+                << std::left
+                << std::setw(20)
+                << "CurrentDate"
+                << std::left
+                << std::setw(20)
+                << "FinalDate"
+                << std::left
+                << std::setw(20)
+                << "DateRange"
+                << std::left
+                << std::setw(10)
+                << "Credit"
+                << std::left
+                << std::setw(15)
+                << "minScore"
+                << std::left
+                << std::setw(15)
+                << "Location"
+                << std::left
+                << std::setw(35)
+                << "Description"
+                << "\n";
+        for (vector<string> &i: houseList) {
+            if (tempID == i[0]) {
+                count++;
+                cout
+                        << std::left
+                        << std::setw(10)
+                        << i[0]
+                        << std::left
+                        << std::setw(10)
+                        << i[1]
+                        << std::left
+                        << std::setw(20)
+                        << i[2]
+                        << std::left
+                        << std::setw(20)
+                        << i[3]
+                        << std::left
+                        << std::setw(20)
+                        << i[4]
+                        << std::left
+                        << std::setw(10)
+                        << i[5]
+                        << std::left
+                        << std::setw(15)
+                        << i[6]
+                        << std::left
+                        << std::setw(15)
+                        << i[7]
+                        << std::left
+                        << std::setw(35)
+                        << i[8]
+                        << "\n";
+            }
+        }
+    }
+
+
 }
 
 void Admin::viewAllReQuest() {
@@ -465,20 +485,20 @@ void Admin::viewAllReQuest() {
             << std::setw(10)
             << "status"
             << "\n";
-    for (int i = 0; i < requestList.size(); i++) {
+    for (vector<string> &i: requestList) {
         cout
                 << std::left
                 << std::setw(10)
-                << requestList[i][0]
+                << i[0]
                 << std::left
                 << std::setw(10)
-                << requestList[i][1]
+                << i[1]
                 << std::left
                 << std::setw(10)
-                << requestList[i][2]
+                << i[2]
                 << std::left
                 << std::setw(10)
-                << requestList[i][3]
+                << i[3]
                 << "\n";
     }
 
@@ -553,71 +573,86 @@ void Admin::searchHouseByDateRange(int dateRange) {
 
 }
 
-void Admin::searchHouseByCredit(int credit) {
+void Admin::searchHouseByCredit() {
+    int credit;
+    cout << "\nPleease enter credit of the house you want to view: ";
+    cin >> credit;
     //count variable to count the appearance
     int count = 0;
     vector<vector<string> > houseList = System::extractByRow(houseFile);
-
-    for (int i = 0; i < houseList.size(); i++) {
-        if (credit == std::stoi(houseList[i][4])) {
+    // check if there is house with that id or not
+    for (int j = 0; j < houseList.size(); j++) {
+        if (std::to_string(credit) == houseList[j][5]) {
             count++;
-            cout << "\nAll houses with this credit will be displayed: " << "\n";
-            cout
-                    << std::left
-                    << std::setw(10)
-                    << "HouseID"
-                    << std::left
-                    << std::setw(10)
-                    << "OwnerID"
-                    << std::left
-                    << std::setw(20)
-                    << "CurrentDate"
-                    << std::left
-                    << std::setw(20)
-                    << "DateRange"
-                    << std::left
-                    << std::setw(10)
-                    << "Credit"
-                    << std::left
-                    << std::setw(10)
-                    << "minScore"
-                    << std::left
-                    << std::setw(15)
-                    << "Location"
-                    << std::left
-                    << std::setw(15)
-                    << "Status"
-                    << "\n";
-            cout
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][0]
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][1]
-                    << std::left
-                    << std::setw(20)
-                    << houseList[i][2]
-                    << std::left
-                    << std::setw(20)
-                    << houseList[i][3]
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][4]
-                    << std::left
-                    << std::setw(10)
-                    << houseList[i][5]
-                    << std::left
-                    << std::setw(15)
-                    << houseList[i][6]
-                    << std::left
-                    << std::setw(15)
-                    << houseList[i][7]
-                    << "\n";
         }
     }
     if (count == 0) {
         cout << "\nThere is no house matching with this credit\n";
+    } else {
+        cout << "\nAll houses with this credit will be displayed: " << "\n";
+        cout
+                << std::left
+                << std::setw(10)
+                << "HouseID"
+                << std::left
+                << std::setw(10)
+                << "OwnerID"
+                << std::left
+                << std::setw(20)
+                << "CurrentDate"
+                << std::left
+                << std::setw(20)
+                << "FinalDate"
+                << std::left
+                << std::setw(20)
+                << "DateRange"
+                << std::left
+                << std::setw(10)
+                << "Credit"
+                << std::left
+                << std::setw(15)
+                << "minScore"
+                << std::left
+                << std::setw(15)
+                << "Location"
+                << std::left
+                << std::setw(35)
+                << "Description"
+                << "\n";
+        for (vector<string> &i: houseList) {
+            if (std::to_string(credit) == i[5]) {
+                count++;
+                cout
+                        << std::left
+                        << std::setw(10)
+                        << i[0]
+                        << std::left
+                        << std::setw(10)
+                        << i[1]
+                        << std::left
+                        << std::setw(20)
+                        << i[2]
+                        << std::left
+                        << std::setw(20)
+                        << i[3]
+                        << std::left
+                        << std::setw(20)
+                        << i[4]
+                        << std::left
+                        << std::setw(10)
+                        << i[5]
+                        << std::left
+                        << std::setw(15)
+                        << i[6]
+                        << std::left
+                        << std::setw(15)
+                        << i[7]
+                        << std::left
+                        << std::setw(35)
+                        << i[8]
+                        << "\n";
+            }
+        }
     }
 }
 

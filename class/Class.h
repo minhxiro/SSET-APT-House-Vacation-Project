@@ -56,11 +56,11 @@ public:
 class Admin : public User {
 public:
     void showAllMember();
-    void viewHouseDetail(int id);
+    void viewHouseDetail();
     virtual void showAllHouse();
     void viewMemberDetail();
     void viewAllReQuest();
-    void searchHouseByCredit(int credit);
+    void searchHouseByCredit();
     void searchHouseById();
     void searchHouseByDateRange(int dateRange);
     void sortByMemberScore();
