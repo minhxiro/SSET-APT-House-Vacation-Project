@@ -8,12 +8,7 @@ using std :: vector;
 using std::regex;
 
 // System
-const string DATA_PATH = "data/";
-const string member_file = "members.dat";
-const string house_file = "house.dat";
-const string rating_file = "rating.dat";
-const string ratingTenant_file = "ratingTenant.dat";
-const string request_file = "request.dat";
+
 //bool System::isInteger(string num) {
 //    for (char ch: num) {
 //        if (ch == '.') {

@@ -96,8 +96,8 @@ void Member::requestHouse() {
             if (houseID == tmp) {
                 cout << "Successful to request house";
                 //Note is here
-                data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + "Mem" + std::to_string(this->memberID)
-                +";" + "HOU" + std::to_string(this->memberHouse->houseID) + ";" + this->memberHouse->currentDate + ";" + this->memberHouse->stat;
+                // data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + "Mem" + std::to_string(this->memberID)
+                // +";" + "HOU" + std::to_string(this->memberHouse->houseID) + ";" + this->memberHouse->currentDate + ";" + this->memberHouse->stat;
                 Request obj;
                 obj.houseId = std::stoi(houseID);
                 this->allRequest.push_back(obj);
@@ -754,97 +754,90 @@ void User::enterOtpCode() {
     }
 
 }
-// Menu
-// void showMenuOption() {
-//     int choice;
-//     string username;
-//     User client;
-//     Member obj;
-//     cout << "EEET2482/COSC2082 ASSIGNMENT\nVACATION HOUSE EXCHANGE APPLICATION\n";
-//     cout << "Instructors: Mr. Linh Tran & Phong Ngo\nGroup: Group Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\n";
-//     cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:";
-//     cin >> choice;
-//     while(choice != 1 && choice != 2 && choice != 3) {
-//         cout << "Invalid Input,\nEnter your choice: ";
-//         cin >> choice;
-//     }
-//     if(choice == 1) {
-//         User::guestMenu();
-//     }
-//     else if(choice == 2) {
-//         int memberChoice;
-//         client.login();
-//         client.checkLogin();
-//         client.enterOtpCode();
-//         cout << "This is your menu:\n0.Exit\n1.View Information\n";
-//         cout << "Enter your choice: ";
-//         cin >> memberChoice;
-        
-//         switch (memberChoice) {
-//             case 0:
-//                 this->showMenuOption();
-//                 break;
-//             case 1:
-//                 obj.showAccountInfo();
-//                 break;
-//             default:
-//                 while(memberChoice != 0 && memberChoice != 1) {
-//                     cout << "You must enter invalid option: \n";
-//                     cout << "Enter your choice: ";
-//                     cin >> memberChoice;
-//                 }
-//         }
-//     }
-//     else if(choice == 3) {
-//         Admin ad;
-//         int credit;
-//         string dateRange;
-//         cout << "You have logined as Admin, select your action:\n1.Show All Member\n2.View House Detail\n3.Show all house"
-//              <<"\n4.View Member Detail\n5.View All Request\n6.Search house by credit\n7.Search house by ID"
-//              << "\n8.Search House By Date Range\n9.Sort By Member Score\n";
-//         int adminChoice;
-//         cout << "Enter your option: ";
-//         cin >> adminChoice;
-//         switch(adminChoice) {
-//             case 1:
-//                 ad.showAllMember();
-//                 break;
-//             case 2:
-//                 ad.viewHouseDetail(obj.memberID);
-//                 break;
-//             case 3:
-//                 ad.showAllHouse();
-//                 break;
-//             case 4:
-//                 ad.viewMemberDetail();
-//                 break;
-//             case 5:
-//                 ad.viewAllReQuest();
-//                 break;
-//             case 6:
-//                 cout << "Enter credit: ";
-//                 cin >> credit;
-//                 ad.searchHouseByCredit(credit);
-//                 break;
-//             case 7:
-                
-//                 break;
-//             case 8:
-//                 cout << "Enter date range: ";
-//                 getline(cin, dateRange);
-//                 ad.searchHouseByDateRange(dateRange);
-//                 break;
-//             case 9:
-//                 ad.sortByMemberScore();
-//                 break;
-//             default:
-//                 cout << "Invalid input\n";
-//                 break;
-//         }
-//     }
-    
-// }
-void User::guestMenu() {
-    cout << "You have logined as guest\n";
+bool User::isAdmin() {
+    int code = 0;
+    string *informationData = new string[1000];
+    fstream file;
+    file.open(adminFile, std::ios::in);
+    if (!file) {
+        std::cerr << "Fail to open file\n";
+    }
+    int index = 0;
+    while (!file.eof()) {
+        file >> informationData[index];
+        index++;
+    }
 
+    file.close();
+    // Check password
+    for (int i = 0; i < index; i++) {
+        if ((informationData[i].find(this->name) != std::string::npos) &&
+            (informationData[i].find(this->password) != std::string::npos)) {
+            
+            code++;
+            break;
+        } 
+    }
+    if(code == 1) {
+        return true;
+    }
+    else return false;
+}
+Menu
+void User::showMenuOption() {
+    int choice;
+    string username;
+    User client;
+    Member obj;
+    cout << "EEET2482/COSC2082 ASSIGNMENT\nVACATION HOUSE EXCHANGE APPLICATION\n";
+    cout << "Instructors: Mr. Linh Tran & Phong Ngo\nGroup: Group Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\nsXXXXXXX, Student Name\n";
+    cout << "Use the app as 1. Guest   2. Member   3. Admin\nEnter your choice:\n";
+    cin >> choice;
+    while(choice != 1 && choice != 2 && choice != 3) {
+        cout << "Invalid Input,\nEnter your choice: \n";
+        cin >> choice;
+    }
+    if(choice == 1) {
+        guestMenu();
+    }
+    else if(choice == 2) {
+        memberMenu();
+    }
+    else if(choice == 3) {
+        adminMenu();
+    }
+    
+}
+void User::guestMenu() {
+    int userSelection;
+    cout << "You have logined as guest\n";
+    cout << "Choose the option:\n1.Register\n2.Exit to Menu\n";
+    cin >> userSelection;
+    switch(userSelection) {
+        case 1:
+            registre();
+            break;
+        case 2:
+            showMenuOption();
+            break;
+    }
+}
+
+void User:: memberMenu() {
+    
+    cout << "You have chosen to login as member, please Input your account: \n\n";
+    cout << "--------Member Login------------\n\n\n\n\n";
+    login();
+    checkLogin();
+    enterOtpCode();
+}
+
+void User:: adminMenu() {
+    cout << "You have chosen to login as member, please Input your account: \n\n";
+    cout << "--------Admin Login------------\n\n\n\n\n";
+    login();
+    if(isAdmin()) {
+        cout << "\nYou are Admin\n";
+    }
+    
 }

@@ -9,7 +9,7 @@
 #define ratingFile "data/rating.dat"
 #define ratingTenantFile "data/ratingTenant.dat"
 #define requestFile "data/request.dat"
-
+#define adminFile "data/admin.dat"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -74,7 +74,7 @@ public:
     void searchByDate(int mode, string day, string month, int index, string dataFile);
 
     
-    
+
     
     static int sendOTP();
 };

@@ -52,9 +52,10 @@ public:
     void registre();
     void showAccountInfo(int j);
     int checkLogin();
-    
-    
-
+    bool isAdmin();
+    void showMenuOption();
+    void memberMenu();
+    void adminMenu();
 };
 
 // Declare Admin class

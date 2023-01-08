@@ -17,6 +17,10 @@ int main() {
 //     user.login();
 //     int num = user.checkLogin();
 //     user.showAccountInfo(num);
-Member minh;
-minh.deleteHouseList();
+User minh;
+minh.login();
+bool check = minh.isAdmin();
+if(minh.isAdmin()) {
+    cout <<"admin";
+}
 }
