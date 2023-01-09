@@ -245,28 +245,6 @@ void System::addData(string data, string dataFile) {
     }
 }
 
-vector<string> System::extractByRowId(int index, string dataFile){
-    std::fstream file;
-    string dataLine;
-    std::vector<string> dataRowsArray;
-    int count = 0;
-    file.open(dataFile, std::ios::in);
-    if (file.fail()) {
-        cout << "Cannot reach the database \n";
-    } else {
-        while (!file.eof()) {
-            std::stringstream ss;
-            std::getline(file, dataLine);
-            if (count == index){
-                dataRowsArray = splitStr(dataLine, ';');
-                break;
-            }
-            count ++;
-        }
-        file.close();
-    }
-    return dataRowsArray;
-}
 
 vector<vector<string> > System::extractByRow(string dataFile) {
     std::fstream file;
@@ -446,7 +424,7 @@ vector<vector<string> > System::sortByCategory(string type, string dataFile, int
     vector<vector<string> > filteredData;
     int count = 0;
     type = trimString(type);
-    transform(type.begin(), type.end(), type.begin(), ::tolower);
+    // transform(type.begin(), type.end(), type.begin(), ::tolower);
 
     data = extractByRow(dataFile);
     for (vector<string> dataStr: data) {

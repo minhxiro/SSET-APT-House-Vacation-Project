@@ -86,20 +86,13 @@ public:
 
     static bool verifyLogin(string username, string password);
 
-    static bool scoreAuth(int score, string houseId);
-
     static bool creditAuth(int score, string houseId);
-
-    static string getDateAfter(int period);
-
-    static bool verifyLogin(string username, string password);
 
     static bool verifyAdmin(string username, string password);
-     static bool scoreAuth(int score, string houseId);
 
-    static bool creditAuth(int score, string houseId);
+    static bool scoreAuth(int score, string houseId);
 
-    static string getDateAfter(int period);
+
     static int sendOTP();
 };
 #endif

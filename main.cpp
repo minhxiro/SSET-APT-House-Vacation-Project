@@ -17,7 +17,6 @@ User minh;
 //     cout <<"admin";
 // }
 
-// minh.showMenuOption();
-Member *mem;
-mem->cancelRequest();
+User ::showMenuOption();
+
 }

@@ -75,15 +75,16 @@ void Member::requestHouse() {
     string data;
     
     // Get house ID in a vector
-    cout << "Enter the house ID: ";
+    cout << "\nEnter the house ID: ";
     cin >>houseID;
     vector<vector<string> > listHouse = System::extractByRow(houseFile); // Note
+    vector <string> currentMember = System::extractByRowId(1, currentUserFile);
     // data = "RE" + std::to_string(System::idAutoIncrement(memberFile))+ ";" + "Mem" + std::to_string(this->memberID)
                 // +";" + "HOU" + std::to_string(this->memberHouse->houseID) + ";" + this->memberHouse->currentDate + ";" + this->memberHouse->stat;
     for(int i = 0; i < listHouse.size();i++) {
         if(houseID == listHouse[i][0]) {
             cout<< "Requested\n";
-            data = "RE" + std::to_string(System::idAutoIncrement(requestFile))+ ";" + this->memberID
+            data = "RE" + std::to_string(System::idAutoIncrement(requestFile))+ ";" + currentMember[0]
                 +";" + houseID + ";" + listHouse[i][2] + ";" + "PENDING";
             System::addData(data, requestFile);
         }
@@ -93,16 +94,20 @@ void Member::requestHouse() {
 
 void Member::cancelRequest() {
     string houseID;
-    int index;
     cout << "Enter ID of the house you want to delete: ";
     cin >> houseID;
     vector <vector<string> > houseRequested = System::extractByRow(requestFile);
+    vector <vector<string> > currentMember = System::extractByRow(currentUserFile);
+    string userID = currentMember[0][0];
     for(int i = 0; i < houseRequested.size(); i++) {
-        if(houseID == houseRequested[i][2] && this->memberID == houseRequested[i][1]) {
-            index = i;
-
+        if(houseID == houseRequested[i][2]) {
+            if(userID == houseRequested[i][1]) {
+                System::deleteRowData(i, requestFile);
+                // cout << "\nRequest canceled\n";
+            }  
         }
     }
+    
 }
 
 void Member::searchHouseByDayAndRange(int day, int range) {
@@ -229,7 +234,7 @@ void Member::searchHouseByRegion(string region) {
             }
         }
     }
-    if (count > 0) {
+    if (count == 0) {
         cout << "There is no available house in your searched region! \n";
     }
 }
@@ -282,7 +287,81 @@ void Member::addHouse() {
         System::addData(data, houseFile);
     }
 }
-
+void Member::viewAllHouse() {
+    int count = 0;
+    vector<vector<string> > houseList = System::extractByRow(houseFile);
+    vector<string> currentUser = System::extractByRowId(1, currentUserFile);
+    cout << "\nHouse with this ID will be displayed : " << "\n";
+        cout
+                << std::left
+                << std::setw(10)
+                << "HouseID"
+                << std::left
+                << std::setw(10)
+                << "OwnerID"
+                << std::left
+                << std::setw(20)
+                << "CurrentDate"
+                << std::left
+                << std::setw(20)
+                << "FinalDate"
+                << std::left
+                << std::setw(20)
+                << "DateRange"
+                << std::left
+                << std::setw(10)
+                << "Credit"
+                << std::left
+                << std::setw(15)
+                << "minScore"
+                << std::left
+                << std::setw(15)
+                << "Location"
+                << std::left
+                << std::setw(35)
+                << "Description"
+                << "\n";
+    for(vector<string> &i: houseList) {
+        if(i[8] == "AVAILABLE") {
+            if(System::creditAuth(std::stoi(currentUser[5]), i[0])) {
+                if(System::scoreAuth(std::stoi(currentUser[7]), i[0])) {
+                    count++;
+                    cout    << std::left
+                << std::setw(10)
+                << i[0]
+                << std::left
+                << std::setw(10)
+                << i[1]
+                << std::left
+                << std::setw(20)
+                << i[2]
+                << std::left
+                << std::setw(20)
+                << i[3]
+                << std::left
+                << std::setw(20)
+                << i[4]
+                << std::left
+                << std::setw(10)
+                << i[5]
+                << std::left
+                << std::setw(15)
+                << i[6]
+                << std::left
+                << std::setw(15)
+                << i[7]
+                << std::left
+                << std::setw(35)
+                << i[9]
+                << "\n";
+                }
+            }
+        }
+    }
+    if(count == 0) {
+        cout << "\nYou do not satisfy the house requirements\n";
+    }
+}
 void Member::deleteHouse() {
     int choice; //variable to input choice
     cout << "\nDo you want to delete your house: \n"
@@ -373,42 +452,42 @@ void Admin::showAllMember() {
     }
 }
 
-void User::showAllHouse() {
-    cout << "All house of the system: " << "\n";
-    cout
-            << std::left
-            << std::setw(8)
-            << "HouseID"
-            << std::left
-            << std::setw(15)
-            << "OwnerID"
-            << std::left
-            << std::setw(15)
-            << "Location"
-            << std::left
-            << std::setw(35)
-            << "Description"
-            << "\n";
+// void User::showAllHouse() {
+//     cout << "All house of the system: " << "\n";
+//     cout
+//             << std::left
+//             << std::setw(8)
+//             << "HouseID"
+//             << std::left
+//             << std::setw(15)
+//             << "OwnerID"
+//             << std::left
+//             << std::setw(15)
+//             << "Location"
+//             << std::left
+//             << std::setw(35)
+//             << "Description"
+//             << "\n";
 
-    vector<vector<string> > houseList = System::extractByRow(houseFile);
+//     vector<vector<string> > houseList = System::extractByRow(houseFile);
 
-    for (int i = 0; i < houseList.size(); i++) {
-        cout
-                << std::left
-                << std::setw(8)
-                << houseList[i][0]
-                << std::left
-                << std::setw(15)
-                << houseList[i][1]
-                << std::left
-                << std::setw(15)
-                << houseList[i][7]
-                << std::left
-                << std::setw(35)
-                << houseList[i][8]
-                << "\n";
-    }
-}
+//     for (int i = 0; i < houseList.size(); i++) {
+//         cout
+//                 << std::left
+//                 << std::setw(8)
+//                 << houseList[i][0]
+//                 << std::left
+//                 << std::setw(15)
+//                 << houseList[i][1]
+//                 << std::left
+//                 << std::setw(15)
+//                 << houseList[i][7]
+//                 << std::left
+//                 << std::setw(35)
+//                 << houseList[i][8]
+//                 << "\n";
+//     }
+// }
 
 
 void Admin::viewMemberDetail() {
@@ -783,11 +862,14 @@ bool User::login() {
     cin >> this->password;
 
     bool check = System::verifyLogin(this->name, this->password);
+    if(!check) {
+        return false;
+    }
     bool secureCode = enterOtpCode();
     if(check && secureCode) {
         return true;
     }
-    else if(!check && secureCode) {
+    else if(check && !secureCode) {
         
         return false;
     }
@@ -839,6 +921,7 @@ void User::registre() {
     //check username
     while (!System::inputUsernameAuthentication(this->name)) {
         cout << "Username should only contain 8 to 15 character and no white spaces!!!, enter again: ";
+        
         getline(cin, this->name);
     }
     //enter password
@@ -854,9 +937,9 @@ void User::registre() {
     }
     //enter full name
     cout << "Enter your full name: ";
-    getline(cin, this->full_name);
+    getline(cin, this->fullName);
     //check full name
-    while (!System::inputNameAuthentication(this->full_name)) {
+    while (!System::inputNameAuthentication(this->fullName)) {
         cout << "Name must contain 8 to 20 characters and no digits, no special characters, and no white spaces"
              << "\n";
         cout << "Please enter again: ";
@@ -867,7 +950,7 @@ void User::registre() {
     getline(cin, this->phonenum);
     //check phoneNum
     while (!System::inputPhoneAuthenticate(this->phonenum)) {
-        cout << "phone number must have 11 numbers and start with 0" << "\n";
+        cout << "phone number must have 10 numbers and start with 0" << "\n";
         cout << "Please enter again: ";
         getline(cin, this->phonenum);
     }
@@ -962,10 +1045,10 @@ void User::showAllHouse() {
                 << houseList[i][1]
                 << std::left
                 << std::setw(15)
-                << houseList[i][6]
+                << houseList[i][7]
                 << std::left
                 << std::setw(15)
-                << houseList[i][7]
+                << houseList[i][8]
                 << "\n";
     }
 
@@ -985,7 +1068,11 @@ void User::showMenuOption() {
         cin >> choice;
     }
     if(choice == 1) {
-        guestMenu();
+        while(1) {
+            guestMenu();
+            
+        }
+        
     }
     else if(choice == 2) {
         memberMenu();
@@ -996,15 +1083,21 @@ void User::showMenuOption() {
     
 }
 void User::guestMenu() {
+    User mem;
     int userSelection;
     cout << "You have logined as guest\n\n\n";
-    cout << "---------Guest Menu----------\n\n";
+    while(true) {
+        cout << "---------Guest Menu----------\n\n";
     cout << "Choose the option:\n1.Register\n2.View all house\n3.Exit to main menu\n";
     cin >> userSelection;
+    if(userSelection == 4) {
+        break;
+    }
+    cin.ignore();
     switch(userSelection) {
         case 1:
-            registre();
-            
+            mem.registre();
+            memberMenu();
             break;
         case 2:
             showAllHouse();
@@ -1012,6 +1105,12 @@ void User::guestMenu() {
             break;
         case 3:
             showMenuOption();
+            break;
+        default:
+            cout << "Your input is invalid\n";
+            break;
+    }
+
     }
 }
 
@@ -1023,50 +1122,91 @@ void User :: logOut() {
 
 void User:: memberMenu() {
     Member *mem;
+    User user;
     cout << "You have chosen to login as member, please Input your account: \n\n";
     cout << "--------Member Login------------\n\n\n\n\n";
     
-    if(login()) {
-        int userSeletion;
-        cout << "\nYou have login as \n"; // Add current Member here
+    if(user.login()) {
+        while(true) {
+            int userSeletion;
+            cout << "\nYou have login as Member"; // Add current Member here
         cout << "\nPlease select the options:\n";
         cout << "\n1.Show Account Information\n2.Search House by Region\n3.Review All Request\n4.Accept Request"
              << "\n5.Decline Request\n6.Rate Tenant\n7.Delete House List\n8.Add House List\n9.View All House"
              << "\n10.Request House\n11.Cancel Request\n12.Rate House\n13.Exit to main menu\n14.Log out\n";
         cout << "\nEnter your option: ";
         cin >> userSeletion;
+        cout << "\n";
+        if(userSeletion == 14) {
+            logOut();
+            showMenuOption();
+            break;
+            
+        }
         switch(userSeletion) {
             case 1:
                 showAccountInfo();
                 //Current Member
+                logOut();
                 break;
             case 2:
-                mem->searchHouseByRegion();
-               break;
-            case 14:
-                logOut();
-                showMenuOption();
+                {string region;
+                cout << "Enter the region: ";
+                cin >>region;
+                mem->searchHouseByRegion(region);
+                break;}
+            case 3:
+                // mem->reviewAllRequest(); 
                 break;
+            case 4:
+                mem->acceptReQuest("RE2");
+                break;
+            case 5:
+                mem->declineRequest("RE2");
+                break;
+            case 6:
+                //mem->rateTenant();
+                break;;
+            case 7:
+                mem->deleteHouse();
+                break;
+            case 8:
+                mem->addHouse();
+                break;
+            case 10:
+                Member::requestHouse();
+                break;
+            case 9:
+            mem->viewAllHouse();
+            break;
+            case 11:
+            mem->cancelRequest();
+            break;
+            default:
+                cout << "Invalid Input\n";
+                break;
+        }
         }
     }
     else {
-        cout << "Wrong user name or password\n";
+        cout << "\n\n!!WRONG USERNAME OR PASSWORD!!\n\n";
         showMenuOption();
     }
 }
 
 void User:: adminMenu() {
+    User user;
     cout << "You have chosen to login as admin, please Input your account: \n\n";
     cout << "--------Admin Login------------\n\n\n\n\n";
-    login();
+    user.login();
     
-    if(isAdmin()) {
+    if(user.isAdmin()) {
         Admin ad;
         int userSelection;
         cout << "\nYou have logined as Admin\n\n";
         cout << "Please choose your option:\n\n\n";
         cout << "1.Show All Member\n2.View House Detail\n3.Show All House\n4.View Member Detail\n5.View All Request"
-            <<"\n6.Search House By Credit\n7.Search House By ID\n8.Search House By Date Range\n9.Sort By Member Score\n10.Exit to main menu\n11.Log Out\n";
+            <<"\n6.Search House By Credit\n8.Search House By Date Range\n9.Sort By Member Score\n10.Exit to main menu\n11.Log Out\n";
         cout << "Enter your option: ";
         cin >> userSelection;
         cout << "\n";
@@ -1075,10 +1215,7 @@ void User:: adminMenu() {
                 ad.showAllMember();
                 break;
             case 2:
-                int id;
-                cout <<"\nEnter House ID: ";
-                cin >> id;
-                viewHouseDetail(id);
+                ad.viewHouseDetail();
                 break;
                 
             case 3:
@@ -1091,18 +1228,12 @@ void User:: adminMenu() {
                 ad.viewAllReQuest();
                 break;
             case 6:
-                int credit;
-                cout << "\nEnter your expected credit: ";
-                cin >> credit;
-                ad.searchHouseByCredit(credit);
-                break;
-            case 7:
-                // ad.searchHouseById();
+                ad.searchHouseByCredit();
                 break;
             case 8:
-                {string duration;
+                {int duration;
                 cout << "\nEnter the house date range: ";
-                getline(cin, duration);
+                cin >> duration;
                 ad.searchHouseByDateRange(duration);
                 break;
                 }

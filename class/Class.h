@@ -45,20 +45,20 @@ protected:
 public:
     
 
-    void logOut();
-    void guestMenu();
+    static void logOut();
+    static void guestMenu();
     bool login();
     bool enterOtpCode();
     void registre();
-    void showAccountInfo();
+    static void showAccountInfo();
     bool isAdmin();
-    void showMenuOption();
-    void memberMenu();
-    void adminMenu();
-    void showAllHouse();
+    static void showMenuOption();
+    static void memberMenu();
+    static void adminMenu();
+    static void showAllHouse();
     void searchHouseById();
     void viewHouseDetail(int id);
-    void searchHouseByCredit(int credit);
+    void searchHouseByCredit();
 };
 
 // Declare Admin class
@@ -66,12 +66,12 @@ class Admin : public User {
 public:
     void showAllMember();
     
-    
+    void viewHouseDetail();
     void viewMemberDetail();
     void viewAllReQuest();
-    void searchHouseByCredit(int credit);
+    void searchHouseByCredit();
     
-    void searchHouseByDateRange(string dateRange);
+    void searchHouseByDateRange(int dateRange);
 
     void sortByMemberScore();
 };
@@ -100,7 +100,7 @@ public:
     void deleteHouse();
     void addHouse();
     void viewAllHouse();
-    void requestHouse();
+    static void requestHouse();
     void cancelRequest();
 
     void rateHouse();
@@ -114,7 +114,7 @@ private:
     string requestID;
     string houseId;
     string tenantId;
-    requestStatus status;
+    string status;
 
 public:
     
@@ -131,7 +131,7 @@ private:
     string currentDate;
     string houseID;
     string dateRange;
-    houseStatus stat;
+    string stat;
     string description;
     int consuming_point;
     int required_score;
