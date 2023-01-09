@@ -407,9 +407,14 @@ void System::updateRowAtIndex(int index, string data, string dataFile, string ne
         while (!readFile.eof()) {
             getline(readFile, tempData);
             count++;
-            if (count == index) {
+            if (count == index && count == 1) {
+                writeFile << data;
+            }
+            else if(count == index && count != 1){
                 writeFile << "\n" + data;
-            } else {
+
+            }
+            else {
                 if (count == 1) {
                     writeFile << tempData;
                 } else {
@@ -506,8 +511,7 @@ vector<vector<string> > System::sortByCategory(string type, string dataFile, int
     vector<vector<string> > filteredData;
     int count = 0;
     type = trimString(type);
-    transform(type.begin(), type.end(), type.begin(), ::tolower);
-
+//    transform(type.begin(), type.end(), type.begin(), ::tolower);
     data = extractByRow(dataFile);
     for (vector<string> dataStr: data) {
         if (dataStr[index] == type) {
@@ -625,6 +629,16 @@ bool System::creditAuth(int credit, string houseId) {
         }
     }
     return false;
+}
+
+int System::getAverage(int index, string dataFile) {
+    double score;
+    vector<string> scores = extractByColumnIndex(index ,dataFile);
+    for(string scorePoint : scores){
+        score += std::stod(scorePoint);
+    }
+    score = score / (scores.size() + 1);
+    return score;
 }
 
 

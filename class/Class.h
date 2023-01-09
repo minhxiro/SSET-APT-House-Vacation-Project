@@ -98,7 +98,6 @@ public:
     void viewAllHouse();
     void requestHouse();
     void cancelRequest();
-
     void rateHouse();
     friend class System;
     
@@ -121,7 +120,7 @@ public:
 // Declare house class
 class House {
 private:
-    User owner;
+    Member owner;
     int ownerID;
     string currentDate;
     int houseID;

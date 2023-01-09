@@ -10,6 +10,7 @@
 #define ratingTenantFile "data/ratingTenant.dat"
 #define requestFile "data/request.dat"
 #define currentUserFile "data/currentUser.dat"
+#define houseDetailFile "data/houseDetail.data"
 
 #include <iostream>
 #include <string>
@@ -60,14 +61,13 @@ public:
 
     static void deleteRowData(int index, string dataFile);
 
-    void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
+    static void updateRowAtIndex(int index, string data, string dataFile, string newDataFile);
 
     static void addData(string data, string dataFile);
 
     static vector<vector<string> > extractByRow(string dataFile);
 
     static vector<string> extractByRowId(int index, string dataFile);
-
 
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
@@ -88,6 +88,8 @@ public:
     static bool creditAuth(int score, string houseId);
 
     static string getDateAfter(int period);
+
+    static int getAverage(int index, string dataFile);
 
     // void showMenuOption(User &client, Member &obj);
 

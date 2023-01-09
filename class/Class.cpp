@@ -211,7 +211,7 @@ void Member::searchHouseByRegion(string region) {
             }
         }
     }
-    if (count > 0) {
+    if (count == 0) {
         cout << "There is no available house in your searched region! \n";
     }
 }

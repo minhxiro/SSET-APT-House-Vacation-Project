@@ -3,5 +3,7 @@
 
 
 int main(){
-    System::addData("hihisadfasdfasdfsadfasd",currentUserFile);
+    Member mem;
+    mem.searchHouseByRegion("SAIGON");
+    cout << System::getAverage(,houseFile);
 }
