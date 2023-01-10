@@ -163,29 +163,6 @@ vector<vector<string> > System::extractByRow(string dataFile) {
     return dataTable;
 }
 
-vector<string> System::extractByColumnIndex1(int index, string dataFile) {
-    ifstream file(dataFile);
-    if (!file.is_open()) {
-        cout << "Cannot reach the database \n";
-        return {};
-    }
-
-    vector<string> dataColumnArray;
-    string line;
-    while (getline(file, line)) {
-        stringstream ss(line);
-        string cell;
-        for (int i = 0; getline(ss, cell, ';'); ++i) {
-            if (i == index) {
-                dataColumnArray.push_back(cell);
-                break;
-            }
-        }
-    }
-
-    return dataColumnArray;
-}
-
 vector<string> System::extractByColumnIndex(int index, string dataFile) {
     std::fstream file;
     string dataLine;

@@ -62,8 +62,6 @@ public:
 
     static vector<string> extractByColumnIndex(int index, string dataFile);
 
-    static vector<string> extractByColumnIndex1(int index, string dataFile);
-
     static string getCurrentDate();
 
     static int idAutoIncrement(string dataFile);
